@@ -4,22 +4,29 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-// import { data } from "../../data";
 import { Ticket, Tickets } from "@/types/ticketsTypes";
-import { useQuery } from "@tanstack/react-query";
-import { getTickets } from "@/api/ticketsAPI";
 
-function TicketsTable() {
-    const { data, isLoading } = useQuery<Tickets>({
-        queryKey: ["tickets"],
-        queryFn: () => getTickets(),
-        retry: false,
-    });
+import { formatDate } from "@/utils/utils";
+import { useNavigate } from "react-router-dom";
+
+type TicketsTableProps = {
+    tickets: Tickets;
+    isLoading: boolean;
+};
+
+function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
+    const navigate = useNavigate();
 
     const columns: ColumnDef<Ticket>[] = [
         {
             header: "Ticket ID",
             accessorKey: "_id",
+            cell: (info) => {
+                // Generate the custom ID format
+                const rowIndex = info.row.index + 1; // Starting index from 1 instead of 0
+                const formattedId = `T-${rowIndex.toString().padStart(4, "0")}`;
+                return formattedId;
+            },
         },
         // {
         //     header: "Name",
@@ -40,20 +47,32 @@ function TicketsTable() {
         {
             header: "Created",
             accessorKey: "createdAt",
+            cell: (info) => {
+                const isoString = info.getValue<string>();
+                return formatDate(isoString);
+            },
         },
-        // {
-        //     header: "Actions",
-        //     id: "actions",
-        //     cell: ({ row }) => (
-        //         <button className="text-red-500 hover:text-red-700">
-        //             View Details
-        //         </button>
-        //     ),
-        // },
+        {
+            header: "Actions",
+            id: "actions",
+            cell: ({ row }) => (
+                <button
+                    className="border border-slate-300 hover:bg-slate-100 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                    onClick={() =>
+                        navigate(
+                            location.pathname +
+                                `?viewTicket=${row.original._id}`
+                        )
+                    }
+                >
+                    View Details
+                </button>
+            ),
+        },
     ];
 
     const table = useReactTable({
-        data: data || [],
+        data: tickets || [],
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -63,7 +82,7 @@ function TicketsTable() {
     }
     return (
         <div className="mt-10 overflow-x-auto">
-            <table className="min-w-full bg-white ">
+            <table className="min-w-full">
                 <thead className="text-slate-500">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>

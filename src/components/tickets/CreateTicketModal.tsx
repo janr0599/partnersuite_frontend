@@ -68,9 +68,9 @@ export default function CreateTicketModal() {
                 <Dialog
                     as="div"
                     className="relative z-10"
-                    onClose={() =>
-                        navigate(location.pathname, { replace: true })
-                    }
+                    onClose={() => {
+                        navigate(location.pathname, { replace: true });
+                    }}
                 >
                     <TransitionChild
                         as={Fragment}

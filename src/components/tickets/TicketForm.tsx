@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { FieldErrors, UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import { TicketFormData } from "@/types/ticketsTypes";
 import ErrorMessage from "../ErrorMessage";
+import { categoryTranslations } from "@/locales/en";
 
 type TaskFormProps = {
     register: UseFormRegister<TicketFormData>;
@@ -17,12 +18,12 @@ function TicketForm({ register, errors, setFocus }: TaskFormProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
-                <label htmlFor="title" className="font-normal text-lg">
+                <label htmlFor="title" className="font-semibold text-md">
                     Title
                 </label>
                 <input
                     id="title"
-                    className="w-full p-3 border border-gray-200 rounded-lg"
+                    className="w-full p-3 border border-gray-200 rounded-md"
                     type="text"
                     placeholder="Title"
                     {...register("title", {
@@ -34,23 +35,31 @@ function TicketForm({ register, errors, setFocus }: TaskFormProps) {
                 )}
             </div>
             <div className="flex flex-col gap-2">
-                <label htmlFor="category" className="font-normal text-lg">
+                <label htmlFor="category" className="font-semibold text-md">
                     Category
                 </label>
                 <select
-                    id="title"
-                    className="w-full p-3 border border-gray-200 rounded-lg"
+                    id="category"
+                    className="w-full p-3 border border-gray-200 rounded-md"
                     {...register("category", {
                         required: "category is required",
                     })}
-                />
-                {errors.title && (
-                    <ErrorMessage>{errors.title.message}</ErrorMessage>
+                >
+                    {Object.entries(categoryTranslations).map(
+                        ([key, value]) => (
+                            <option key={key} value={key}>
+                                {value}
+                            </option>
+                        )
+                    )}
+                </select>
+                {errors.category && (
+                    <ErrorMessage>{errors.category.message}</ErrorMessage>
                 )}
             </div>
 
-            <div className="flex flex-col gap-5">
-                <label htmlFor="description" className="font-normal text-lg">
+            <div className="flex flex-col gap-2">
+                <label htmlFor="description" className="font-semibold text-md">
                     Task Description
                 </label>
                 <textarea
