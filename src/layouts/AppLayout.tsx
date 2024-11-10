@@ -1,6 +1,7 @@
 import SidebarMenu from "@/components/SideBarMenu";
 import { Outlet } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
+import { ToastContainer } from "react-toastify";
 
 function AppLayout() {
     return (
@@ -21,6 +22,7 @@ function AppLayout() {
                     </main>
                 </div>
             </div>
+            <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
         </>
     );
 }

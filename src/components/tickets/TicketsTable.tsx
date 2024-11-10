@@ -4,20 +4,22 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { data } from "../../data";
-import { Ticket } from "@/types/ticketsTypes";
+// import { data } from "../../data";
+import { Ticket, Tickets } from "@/types/ticketsTypes";
+import { useQuery } from "@tanstack/react-query";
+import { getTickets } from "@/api/ticketsAPI";
 
 function TicketsTable() {
-    // const { data } = useQuery<Project>({
-    //     queryKey: ["tickets"],
-    //     queryFn: () => getTickets(),
-    //     retry: false,
-    // });
+    const { data, isLoading } = useQuery<Tickets>({
+        queryKey: ["tickets"],
+        queryFn: () => getTickets(),
+        retry: false,
+    });
 
     const columns: ColumnDef<Ticket>[] = [
         {
             header: "Ticket ID",
-            accessorKey: "id",
+            accessorKey: "_id",
         },
         // {
         //     header: "Name",
@@ -37,7 +39,7 @@ function TicketsTable() {
         },
         {
             header: "Created",
-            accessorKey: "date",
+            accessorKey: "createdAt",
         },
         // {
         //     header: "Actions",
@@ -51,20 +53,24 @@ function TicketsTable() {
     ];
 
     const table = useReactTable({
-        data,
+        data: data || [],
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
     return (
         <div className="mt-10 overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200">
-                <thead className="bg-gray-800">
+            <table className="min-w-full bg-white ">
+                <thead className="text-slate-500">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
-                                    className="px-4 py-2 border-b border-gray-200 text-left text-lg font-medium text-white"
+                                    className="px-4 py-2 border-b border-slate-300 text-left text-md font-medium"
                                 >
                                     {header.isPlaceholder
                                         ? null
@@ -79,11 +85,11 @@ function TicketsTable() {
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="even:bg-gray-100">
+                        <tr key={row.id} className="">
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-2 border-b border-gray-200 text-base font-bold"
+                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium"
                                 >
                                     {flexRender(
                                         cell.column.columnDef.cell,
