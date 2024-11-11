@@ -8,9 +8,9 @@ import {
 } from "@headlessui/react";
 import { FiX } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ticket, Tickets } from "@/types/ticketsTypes";
-import { getTicketById } from "@/api/ticketsAPI";
+import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
 import { statusTranslations } from "@/locales/en";
@@ -35,6 +35,30 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
         retry: false,
     });
 
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation({
+        mutationFn: updateTicketStatus,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            queryClient.invalidateQueries({
+                queryKey: ["tickets"],
+            });
+            toast.success(message);
+            navigate(location.pathname, { replace: true });
+        },
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const status = e.target.value as Ticket["status"];
+
+        mutate({
+            ticketId,
+            status,
+        });
+    };
+
     useEffect(() => {
         if (isError) {
             toast.error(error.message);
@@ -47,7 +71,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
     if (tickets) {
         const ticketIndex =
             tickets.findIndex((ticket) => ticket._id === ticketId) + 1;
-        formattedId = `T-${ticketIndex.toString().padStart(3, "0")}`;
+        formattedId = `T-${ticketIndex.toString().padStart(4, "0")}`;
     }
 
     if (data)
@@ -157,7 +181,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
                                         <select
                                             className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg"
                                             defaultValue={data.status}
-                                            // onChange={handleChange}
+                                            onChange={handleChange}
                                         >
                                             {Object.entries(
                                                 statusTranslations

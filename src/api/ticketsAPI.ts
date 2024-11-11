@@ -51,3 +51,24 @@ export const getTicketById = async (id: Ticket["_id"]) => {
         throw new Error("An unexpected error occurred");
     }
 };
+
+export const updateTicketStatus = async ({
+    ticketId,
+    status,
+}: {
+    ticketId: Ticket["_id"];
+    status: Ticket["status"];
+}) => {
+    try {
+        const { data } = await api.patch<{ message: string }>(
+            `/tickets/${ticketId}`,
+            { status }
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
