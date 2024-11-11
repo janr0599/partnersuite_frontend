@@ -14,6 +14,7 @@ import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
 import { statusTranslations } from "@/locales/en";
+import CommentsPanel from "../comments/CommentsPanel";
 
 type TicketDetailsModalProps = {
     tickets: Tickets;
@@ -193,7 +194,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
                                         </select>
                                     </div>
 
-                                    {/* <CommentsPanel notes={data.notes} /> */}
+                                    <CommentsPanel comments={data.comments} />
                                 </DialogPanel>
                             </TransitionChild>
                         </div>

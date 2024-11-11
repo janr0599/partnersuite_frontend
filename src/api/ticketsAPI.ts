@@ -39,11 +39,13 @@ export const createTicket = async (formData: TicketFormData) => {
 export const getTicketById = async (id: Ticket["_id"]) => {
     try {
         const { data } = await api.get<{ ticket: Ticket }>(`/tickets/${id}`);
+        console.log(data.ticket);
         const validation = ticketSchema.safeParse(data.ticket);
         if (!validation.success) {
             throw new Error("Invalid data");
         }
-        return data.ticket;
+        console.log(validation.data);
+        return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
