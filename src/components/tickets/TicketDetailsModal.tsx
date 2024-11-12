@@ -180,7 +180,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
                                             Status:
                                         </label>
                                         <select
-                                            className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg"
+                                            className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700"
                                             defaultValue={data.status}
                                             onChange={handleChange}
                                         >
