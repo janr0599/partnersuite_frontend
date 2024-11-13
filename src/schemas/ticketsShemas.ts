@@ -14,6 +14,7 @@ export const ticketSchema = z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
 });
+
 export const ticketsSchema = z.array(
     ticketSchema.pick({
         _id: true,
@@ -29,4 +30,13 @@ export const ticketFormSchema = ticketSchema.pick({
     title: true,
     description: true,
     category: true,
+});
+
+export const tableTicketSchema = ticketSchema.pick({
+    _id: true,
+    title: true,
+    description: true,
+    category: true,
+    status: true,
+    createdAt: true,
 });

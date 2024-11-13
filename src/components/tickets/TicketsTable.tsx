@@ -4,7 +4,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { Ticket, Tickets } from "@/types/ticketsTypes";
+import { TableTicket, Tickets } from "@/types/ticketsTypes";
 
 import { formatDate } from "@/utils/utils";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ type TicketsTableProps = {
 function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
     const navigate = useNavigate();
 
-    const columns: ColumnDef<Ticket>[] = [
+    const columns: ColumnDef<TableTicket>[] = [
         {
             header: "Ticket ID",
             accessorKey: "_id",
@@ -57,7 +57,7 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
             id: "actions",
             cell: ({ row }) => (
                 <button
-                    className="border border-slate-300 hover:bg-slate-100 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                    className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
                     onClick={() =>
                         navigate(
                             location.pathname +
@@ -81,7 +81,7 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
         return <p>Loading...</p>;
     }
     return (
-        <div className="mt-10 overflow-x-auto">
+        <div className="mt-8 overflow-x-auto">
             <table className="min-w-full">
                 <thead className="text-slate-500">
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -104,7 +104,10 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="">
+                        <tr
+                            key={row.id}
+                            className="hover:bg-slate-100 transition-colors"
+                        >
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}

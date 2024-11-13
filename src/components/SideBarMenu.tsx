@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { IconType } from "react-icons";
 import {
+    FiBookOpen,
     FiChevronsRight,
     FiDollarSign,
     FiHome,
@@ -8,6 +9,7 @@ import {
     FiUsers,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 function SidebarMenu() {
     const [open, setOpen] = useState(true);
@@ -27,6 +29,7 @@ function SidebarMenu() {
                 <Option
                     Icon={FiHome}
                     title="Dashboard"
+                    route="/"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
@@ -35,6 +38,7 @@ function SidebarMenu() {
                 <Option
                     Icon={FiTag}
                     title="Tickets"
+                    route="/tickets"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
@@ -44,6 +48,7 @@ function SidebarMenu() {
                 <Option
                     Icon={FiDollarSign}
                     title="Top-up Requests"
+                    route="/top-up-requests"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
@@ -52,14 +57,16 @@ function SidebarMenu() {
                 <Option
                     Icon={FiUsers}
                     title="Affiliates"
+                    route="/affiliates"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
                 />
 
                 <Option
-                    Icon={FiTag}
+                    Icon={FiBookOpen}
                     title="FAQs"
+                    route="/faqs"
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
@@ -76,6 +83,7 @@ export default SidebarMenu;
 const Option = ({
     Icon,
     title,
+    route,
     selected,
     setSelected,
     open,
@@ -83,15 +91,20 @@ const Option = ({
 }: {
     Icon: IconType;
     title: string;
+    route: string;
     selected: string;
     setSelected: Dispatch<SetStateAction<string>>;
     open: boolean;
     notifs?: number;
 }) => {
+    const navigate = useNavigate();
     return (
         <motion.button
             layout
-            onClick={() => setSelected(title)}
+            onClick={() => {
+                setSelected(title);
+                navigate(route);
+            }}
             className={`relative flex h-10 w-full items-center rounded-md transition-colors ${
                 selected === title
                     ? "bg-slate-200 text-black"

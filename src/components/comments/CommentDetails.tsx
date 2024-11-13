@@ -39,15 +39,17 @@ function CommentDetails({ comment }: CommentDetailProps) {
 
     const handleDeleteComment = () => {
         Swal.fire({
-            text: "Are you sure you want to delete this comment?",
+            title: "Delete comment?",
             showCancelButton: true,
-            confirmButtonColor: "#000",
-            confirmButtonText: "Yes, delete",
+            confirmButtonColor: "#ef4444",
+            confirmButtonText: "Delete",
+            reverseButtons: true,
             customClass: {
                 cancelButton:
-                    "text-red-500 bg-transparent hover:bg-slate-200 transition-colors",
-                confirmButton: "hover:opacity-80 transition-opacity",
-                popup: "w-[300px] md:w-[500px] text-sm md:text-base",
+                    "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
+                confirmButton: "hover:bg-red-600 transition-colors",
+                popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
+                title: "text-black font-bold text-left text-lg w-full p-3 rounded-md",
             },
         }).then((result) => {
             if (result.isConfirmed) {

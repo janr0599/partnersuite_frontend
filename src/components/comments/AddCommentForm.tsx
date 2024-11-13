@@ -104,12 +104,12 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
                         value={comment ? "Update" : "Add comment"}
                         className={` ${
                             comment ? "text-sm" : "text-base"
-                        } w-full px-4 py-2 font-bold bg-black hover:opacity-80 text-white rounded-lg cursor-pointer transition-oapcity md:w-1/4`}
+                        } w-full px-4 py-2 font-bold bg-black hover:opacity-80 text-white rounded-lg cursor-pointer transition-opacity md:w-1/4`}
                     />
                     {comment && (
                         <button
                             onClick={onCancel}
-                            className="text-red-500 w-full p-2 rounded-lg font-black bg-transparent hover:bg-slate-200 transition-colors md:w-1/4"
+                            className="text-black w-full p-2 rounded-lg font-bold bg-slate-200 hover:bg-slate-300 transition-colors md:w-1/4"
                         >
                             Cancel
                         </button>
