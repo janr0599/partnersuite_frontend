@@ -10,8 +10,14 @@ import {
 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { AuthenticatedUser } from "@/types/authTypes";
+import { isManager } from "@/utils/policies";
 
-function SidebarMenu() {
+type SideBarMenuProps = {
+    user: AuthenticatedUser;
+};
+
+function SidebarMenu({ user }: SideBarMenuProps) {
     const [open, setOpen] = useState(true);
     const [selected, setSelected] = useState("Dashboard");
 
@@ -26,14 +32,16 @@ function SidebarMenu() {
             <TitleSection open={open} />
 
             <div className="space-y-1">
-                <Option
-                    Icon={FiHome}
-                    title="Dashboard"
-                    route="/"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                />
+                {isManager(user) && (
+                    <Option
+                        Icon={FiHome}
+                        title="Dashboard"
+                        route="/"
+                        selected={selected}
+                        setSelected={setSelected}
+                        open={open}
+                    />
+                )}
 
                 <Option
                     Icon={FiTag}
@@ -54,14 +62,16 @@ function SidebarMenu() {
                     open={open}
                 />
 
-                <Option
-                    Icon={FiUsers}
-                    title="Affiliates"
-                    route="/affiliates"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                />
+                {isManager(user) && (
+                    <Option
+                        Icon={FiUsers}
+                        title="Affiliates"
+                        route="/affiliates"
+                        selected={selected}
+                        setSelected={setSelected}
+                        open={open}
+                    />
+                )}
 
                 <Option
                     Icon={FiBookOpen}
