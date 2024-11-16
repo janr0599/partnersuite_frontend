@@ -1,4 +1,4 @@
-// import { formatDate } from "@/utils/utils";
+import { formatDate } from "@/utils/utils";
 // import { useAuth } from "@/hooks/useAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { Comment } from "@/types/commentsTypes";
 import { deleteComment } from "@/api/commentsAPI";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-import AddCommentform from "./AddCommentform";
+import AddCommentForm from "./AddCommentForm";
 import Swal from "sweetalert2";
 
 type CommentDetailProps = {
@@ -16,7 +16,7 @@ type CommentDetailProps = {
 
 function CommentDetails({ comment }: CommentDetailProps) {
     // const { data, isLoading } = useAuth();
-    // const canDelete = useMemo(() => data?._id === note.createdBy._id, [data]);\
+    // const canDelete = useMemo(() => data?._id === comment.createdBy._id, [data]);\
     const canDelete = true;
     const [editingComment, setEditingComment] = useState<Comment | null>(null);
     const location = useLocation();
@@ -75,13 +75,13 @@ function CommentDetails({ comment }: CommentDetailProps) {
                     <div>
                         <p className="text-sm">
                             {comment.content}{" "}
-                            {/* <span className="text-slate-400 text-sm">
-                                    ({comment.createdBy.name})
-                                </span> */}
+                            <span className="text-slate-400 text-sm">
+                                ({comment.createdBy.name})
+                            </span>
                         </p>
-                        {/* <p className="text-sm text-slate-400">
-                                {formatDate(comment.createdAt)}
-                            </p> */}
+                        <p className="text-xs text-slate-400">
+                            {formatDate(comment.createdAt)}
+                        </p>
                     </div>
                     {canDelete && (
                         <div className="inline-flex gap-x-2">
@@ -95,7 +95,7 @@ function CommentDetails({ comment }: CommentDetailProps) {
                     )}
                 </div>
             ) : (
-                <AddCommentform
+                <AddCommentForm
                     comment={editingComment}
                     onCancel={() => setEditingComment(null)}
                 />

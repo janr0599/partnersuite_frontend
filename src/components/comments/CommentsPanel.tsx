@@ -1,5 +1,5 @@
 import { Ticket } from "@/types/ticketsTypes";
-import AddCommentform from "./AddCommentform";
+import AddCommentForm from "./AddCommentForm";
 import CommentDetails from "./CommentDetails";
 
 type CommentsPanelProps = {
@@ -28,7 +28,7 @@ function CommentsPanel({ comments }: CommentsPanelProps) {
                     </p>
                 )}
             </div>
-            <AddCommentform />
+            <AddCommentForm />
         </>
     );
 }

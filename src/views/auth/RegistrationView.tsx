@@ -49,7 +49,9 @@ function RegistrationView() {
                 noValidate
             >
                 <div className="text-center">
-                    <h1 className="text-5xl font-black">Registration</h1>
+                    <h1 className="text-5xl font-black">
+                        Manager Registration
+                    </h1>
                     <p className="text-xl font-light mt-5">
                         Enter your information to create an account
                     </p>
@@ -145,13 +147,13 @@ function RegistrationView() {
                 <nav className="mt-10 flex flex-col space-y-4">
                     <Link
                         to={"/auth/login"}
-                        className="text-center font-normal"
+                        className="text-center font-normal hover:underline"
                     >
                         Already have an account? Login
                     </Link>
                     <Link
                         to={"/auth/forgot-password"}
-                        className="text-center font-normal"
+                        className="text-center font-normal hover:underline"
                     >
                         Trouble logging in? Reset your password.
                     </Link>

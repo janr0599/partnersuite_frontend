@@ -8,6 +8,8 @@ import { TableTicket, Tickets } from "@/types/ticketsTypes";
 
 import { formatDate } from "@/utils/utils";
 import { useNavigate } from "react-router-dom";
+import { categoryTranslations, statusTranslations } from "@/locales/en";
+import { FiAlertCircle, FiCheckCircle, FiClock } from "react-icons/fi";
 
 type TicketsTableProps = {
     tickets: Tickets;
@@ -16,6 +18,7 @@ type TicketsTableProps = {
 
 function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
     const navigate = useNavigate();
+    console.log(tickets);
 
     const columns: ColumnDef<TableTicket>[] = [
         {
@@ -28,10 +31,10 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
                 return formattedId;
             },
         },
-        // {
-        //     header: "Name",
-        //     accessorKey: "name",
-        // },
+        {
+            header: "Affiliate",
+            accessorKey: "createdBy.name",
+        },
         {
             header: "Title",
             accessorKey: "title",
@@ -39,10 +42,16 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
         {
             header: "Status",
             accessorKey: "status",
+            cell: (info) => {
+                return statusTranslations[info.getValue<string>()];
+            },
         },
         {
             header: "Category",
             accessorKey: "category",
+            cell: (info) => {
+                return categoryTranslations[info.getValue<string>()];
+            },
         },
         {
             header: "Created",
@@ -111,12 +120,26 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium"
+                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium
+                                    "
                                 >
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext()
-                                    )}
+                                    <div className="inline-flex items-center gap-2">
+                                        {cell.getValue<string>() === "open" && (
+                                            <FiAlertCircle className="text-sm text-yellow-600" />
+                                        )}
+                                        {cell.getValue<string>() ===
+                                            "in_progress" && (
+                                            <FiClock className="text-sm text-blue-600" />
+                                        )}
+                                        {cell.getValue<string>() ===
+                                            "closed" && (
+                                            <FiCheckCircle className="text-sm text-green-600" />
+                                        )}
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </div>
                                 </td>
                             ))}
                         </tr>

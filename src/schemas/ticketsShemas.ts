@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { commentSchema } from "./commentsSchema";
+import { authenticatedUserSchema } from "./authSchemas";
 
 export const ticketStatusSchema = z.enum(["open", "in_progress", "closed"]);
 
 export const ticketSchema = z.object({
     _id: z.string(),
-    // name: z.string(),
+    createdBy: authenticatedUserSchema,
     title: z.string().trim().min(1, "title is required"),
     description: z.string().trim().min(1, "description is required"),
     category: z.string().min(1, "category is required"),
@@ -22,6 +23,7 @@ export const ticketsSchema = z.array(
         description: true,
         category: true,
         status: true,
+        createdBy: true,
         createdAt: true,
     })
 );
@@ -38,5 +40,6 @@ export const tableTicketSchema = ticketSchema.pick({
     description: true,
     category: true,
     status: true,
+    createdBy: true,
     createdAt: true,
 });

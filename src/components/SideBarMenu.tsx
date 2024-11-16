@@ -9,17 +9,46 @@ import {
     FiUsers,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthenticatedUser } from "@/types/authTypes";
 import { isManager } from "@/utils/policies";
+import { useQuery } from "@tanstack/react-query";
+import { getTickets } from "@/api/ticketsAPI";
+import { Tickets } from "@/types/ticketsTypes";
 
 type SideBarMenuProps = {
     user: AuthenticatedUser;
 };
 
 function SidebarMenu({ user }: SideBarMenuProps) {
+    const location = useLocation();
+    const dynamicSelected = location.pathname.split("/")[1];
+
+    const defaultSelected = (): string => {
+        if (dynamicSelected === "tickets") {
+            return "Tickets";
+        } else if (dynamicSelected === "") {
+            return "Dashboard";
+        } else if (dynamicSelected === "top-up-requests") {
+            return "Top-up Requests";
+        } else if (dynamicSelected === "affiliates") {
+            return "Affiliates";
+        } else if (dynamicSelected === "faqs") {
+            return "FAQs";
+        }
+        return "Dashboard";
+    };
+
+    const { data } = useQuery<Tickets>({
+        queryKey: ["tickets"],
+        queryFn: () => getTickets(),
+        retry: false,
+    });
+
+    const openTickets = data?.filter((ticket) => ticket.status === "open");
+
     const [open, setOpen] = useState(true);
-    const [selected, setSelected] = useState("Dashboard");
+    const [selected, setSelected] = useState(defaultSelected);
 
     return (
         <motion.nav
@@ -50,7 +79,7 @@ function SidebarMenu({ user }: SideBarMenuProps) {
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
-                    notifs={3}
+                    notifs={openTickets?.length}
                 />
 
                 <Option

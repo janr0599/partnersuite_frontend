@@ -13,14 +13,17 @@ import { Ticket, Tickets } from "@/types/ticketsTypes";
 import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
-import { statusTranslations } from "@/locales/en";
+import { categoryTranslations, statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
+import { isManager } from "@/utils/policies";
+import { useAuth } from "@/hooks/useauth";
 
 type TicketDetailsModalProps = {
     tickets: Tickets;
 };
 
 export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
+    const { data: user, isLoading: userLoading } = useAuth();
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -75,7 +78,9 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
         formattedId = `T-${ticketIndex.toString().padStart(4, "0")}`;
     }
 
-    if (data)
+    if (userLoading) return "Loading...";
+
+    if (data && user)
         return (
             <Transition appear show={show} as={Fragment}>
                 <Dialog
@@ -171,28 +176,53 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
                                             Category
                                         </label>
                                         <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
-                                            {data.category}
+                                            {
+                                                categoryTranslations[
+                                                    data.category
+                                                ]
+                                            }
                                         </p>
                                     </div>
 
-                                    <div className="mb-10 space-y-3">
-                                        <label className="font-semibold block">
-                                            Status:
-                                        </label>
-                                        <select
-                                            className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700"
-                                            defaultValue={data.status}
-                                            onChange={handleChange}
-                                        >
-                                            {Object.entries(
-                                                statusTranslations
-                                            ).map(([key, value]) => (
-                                                <option key={key} value={key}>
-                                                    {value}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
+                                    {isManager(user) ? (
+                                        <div className="mb-10 space-y-3">
+                                            <label className="font-semibold block">
+                                                Status:
+                                            </label>
+                                            <select
+                                                className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700"
+                                                defaultValue={data.status}
+                                                onChange={handleChange}
+                                            >
+                                                {Object.entries(
+                                                    statusTranslations
+                                                ).map(([key, value]) => (
+                                                    <option
+                                                        key={key}
+                                                        value={key}
+                                                    >
+                                                        {value}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col gap-2">
+                                            <label
+                                                htmlFor="title"
+                                                className="font-semibold text-md"
+                                            >
+                                                Status
+                                            </label>
+                                            <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
+                                                {
+                                                    statusTranslations[
+                                                        data.status
+                                                    ]
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
 
                                     <CommentsPanel comments={data.comments} />
                                 </DialogPanel>

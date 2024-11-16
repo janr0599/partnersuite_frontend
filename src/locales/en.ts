@@ -11,3 +11,9 @@ export const statusTranslations: { [key: string]: string } = {
     in_progress: "In Progress",
     closed: "Closed",
 };
+
+export const statusStyles: { [key: string]: string } = {
+    open: "text-green-600",
+    in_progress: "text-yellow-600",
+    closed: "text-red-600",
+};

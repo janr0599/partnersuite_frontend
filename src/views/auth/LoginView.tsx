@@ -105,13 +105,13 @@ function LoginView() {
                 <nav className="mt-10 flex flex-col space-y-4">
                     <Link
                         to={"/auth/registration"}
-                        className="text-center font-normal"
+                        className="text-center font-normal hover:underline"
                     >
                         Don't have an account? Create one
                     </Link>
                     <Link
                         to={"/auth/forgot-password"}
-                        className="text-center font-normal"
+                        className="text-center font-normal hover:underline"
                     >
                         Trouble logging in? Reset your password.
                     </Link>

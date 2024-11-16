@@ -9,6 +9,10 @@ export const getTickets = async (): Promise<Tickets> => {
         console.log(data.tickets);
         const validation = ticketsSchema.safeParse(data.tickets);
         if (!validation.success) {
+            console.error(
+                "getTickets data validation failed:",
+                validation.error.errors
+            );
             throw new Error("Invalid data");
         }
         console.log(validation.data);
@@ -42,6 +46,10 @@ export const getTicketById = async (id: Ticket["_id"]) => {
         console.log(data.ticket);
         const validation = ticketSchema.safeParse(data.ticket);
         if (!validation.success) {
+            console.error(
+                "get ticket byId data validation failed:",
+                validation.error.errors
+            );
             throw new Error("Invalid data");
         }
         console.log(validation.data);
