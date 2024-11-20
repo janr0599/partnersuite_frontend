@@ -77,7 +77,13 @@ function TicketsView() {
                         </div>
                     )}
                 </div>
-                <TicketsTable tickets={data} isLoading={isLoading} />
+                {data.length === 0 ? (
+                    <div className="text-lg mt-10 text-slate-500">
+                        Tickets will show up here
+                    </div>
+                ) : (
+                    <TicketsTable tickets={data} isLoading={isLoading} />
+                )}
                 <CreateTicketModal />
                 <TicketDetailsModal tickets={data} />
             </div>

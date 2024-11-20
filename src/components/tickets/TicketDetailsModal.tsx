@@ -158,7 +158,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
 
                                     <div className="flex flex-col gap-2">
                                         <label
-                                            htmlFor="title"
+                                            htmlFor="description"
                                             className="font-semibold text-md"
                                         >
                                             Description
@@ -170,7 +170,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
 
                                     <div className="flex flex-col gap-2">
                                         <label
-                                            htmlFor="title"
+                                            htmlFor="category"
                                             className="font-semibold text-md"
                                         >
                                             Category
@@ -209,7 +209,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
                                     ) : (
                                         <div className="flex flex-col gap-2">
                                             <label
-                                                htmlFor="title"
+                                                htmlFor="status"
                                                 className="font-semibold text-md"
                                             >
                                                 Status

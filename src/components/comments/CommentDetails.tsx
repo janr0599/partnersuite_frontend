@@ -1,5 +1,5 @@
 import { formatDate } from "@/utils/utils";
-// import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useauth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useMemo, useState } from "react";
@@ -15,9 +15,17 @@ type CommentDetailProps = {
 };
 
 function CommentDetails({ comment }: CommentDetailProps) {
-    // const { data, isLoading } = useAuth();
-    // const canDelete = useMemo(() => data?._id === comment.createdBy._id, [data]);\
-    const canDelete = true;
+    const { data, isLoading } = useAuth();
+    const canDelete = useMemo(
+        () => data?._id === comment.createdBy._id,
+        [data]
+    );
+
+    const updatedComment = useMemo(
+        () => comment.createdAt !== comment.updatedAt,
+        [comment]
+    );
+
     const [editingComment, setEditingComment] = useState<Comment | null>(null);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -65,43 +73,48 @@ function CommentDetails({ comment }: CommentDetailProps) {
         setEditingComment(comment);
     };
 
-    // if (isLoading) return "Loading...";
+    if (isLoading) return "Loading...";
 
-    // if (data)
-    return (
-        <div key={comment._id} className="">
-            {!editingComment ? (
-                <div className="py-3 flex justify-between items-center">
-                    <div>
-                        <p className="text-sm">
-                            {comment.content}{" "}
-                            <span className="text-slate-400 text-sm">
-                                ({comment.createdBy.name})
-                            </span>
-                        </p>
-                        <p className="text-xs text-slate-400">
-                            {formatDate(comment.createdAt)}
-                        </p>
-                    </div>
-                    {canDelete && (
-                        <div className="inline-flex gap-x-2">
-                            <button onClick={handleEditComment}>
-                                <FiEdit className="size-5 hover:text-indigo-500 transition-colors" />
-                            </button>
-                            <button onClick={handleDeleteComment}>
-                                <FiTrash2 className="size-5 hover:text-red-500 transition-colors" />
-                            </button>
+    if (data)
+        return (
+            <div key={comment._id} className="">
+                {!editingComment ? (
+                    <div className="py-3 flex justify-between items-center">
+                        <div>
+                            <p className="text-sm flex gap-2 items-center">
+                                {comment.content}{" "}
+                                <span className="text-slate-400 text-sm">
+                                    ({comment.createdBy.name})
+                                </span>
+                                {updatedComment && (
+                                    <span className="text-slate-400 text-xs">
+                                        - edited
+                                    </span>
+                                )}
+                            </p>
+                            <p className="text-xs text-slate-400">
+                                {formatDate(comment.createdAt)}
+                            </p>
                         </div>
-                    )}
-                </div>
-            ) : (
-                <AddCommentForm
-                    comment={editingComment}
-                    onCancel={() => setEditingComment(null)}
-                />
-            )}
-        </div>
-    );
+                        {canDelete && (
+                            <div className="inline-flex gap-x-2">
+                                <button onClick={handleEditComment}>
+                                    <FiEdit className="size-5 hover:text-indigo-500 transition-colors" />
+                                </button>
+                                <button onClick={handleDeleteComment}>
+                                    <FiTrash2 className="size-5 hover:text-red-500 transition-colors" />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <AddCommentForm
+                        comment={editingComment}
+                        onCancel={() => setEditingComment(null)}
+                    />
+                )}
+            </div>
+        );
 }
 
 export default CommentDetails;

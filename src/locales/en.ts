@@ -12,6 +12,11 @@ export const statusTranslations: { [key: string]: string } = {
     closed: "Closed",
 };
 
+export const AffiliateStatusTranslations: { [key: string]: string } = {
+    active: "Active",
+    inactive: "Inactive",
+};
+
 export const statusStyles: { [key: string]: string } = {
     open: "text-green-600",
     in_progress: "text-yellow-600",

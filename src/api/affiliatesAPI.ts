@@ -28,6 +28,7 @@ export const getAffiliates = async (): Promise<Affiliates> => {
         const { data } = await api.get<{ affiliates: Affiliates }>(
             "/affiliates"
         );
+        console.log(data);
         const validation = affiliatesSchema.safeParse(data.affiliates);
         if (!validation.success) {
             console.error(
@@ -36,6 +37,7 @@ export const getAffiliates = async (): Promise<Affiliates> => {
             );
             throw new Error("Invalid data");
         }
+        console.log(validation.data);
         return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -72,9 +74,27 @@ export const updateAffiliate = async ({
     formData,
 }: Pick<AffiliateAPIType, "affiliateId" | "formData">) => {
     try {
-        const { data } = await api.patch<{ message: string }>(
+        const { data } = await api.put<{ message: string }>(
             `/affiliates/${affiliateId}`,
             formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const updateAffiliateStatus = async ({
+    affiliateId,
+    status,
+}: Pick<AffiliateAPIType, "affiliateId" | "status">) => {
+    try {
+        const { data } = await api.patch<{ message: string }>(
+            `/affiliates/${affiliateId}/status`,
+            { status }
         );
         return data.message;
     } catch (error) {

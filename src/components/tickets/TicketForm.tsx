@@ -4,13 +4,13 @@ import { TicketFormData } from "@/types/ticketsTypes";
 import ErrorMessage from "../ErrorMessage";
 import { categoryTranslations } from "@/locales/en";
 
-type TaskFormProps = {
+type TicketFormProps = {
     register: UseFormRegister<TicketFormData>;
     errors: FieldErrors<TicketFormData>;
     setFocus: UseFormSetFocus<TicketFormData>;
 };
 
-function TicketForm({ register, errors, setFocus }: TaskFormProps) {
+function TicketForm({ register, errors, setFocus }: TicketFormProps) {
     useEffect(() => {
         setFocus("title");
     }, [setFocus]);
