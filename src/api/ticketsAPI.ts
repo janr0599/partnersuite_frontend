@@ -1,6 +1,11 @@
 import api from "@/lib/axios";
 import { ticketSchema, ticketsSchema } from "@/schemas/ticketsShemas";
-import { Ticket, TicketFormData, Tickets } from "@/types/ticketsTypes";
+import {
+    Ticket,
+    TicketAPIType,
+    TicketFormData,
+    Tickets,
+} from "@/types/ticketsTypes";
 import { isAxiosError } from "axios";
 
 export const getTickets = async (): Promise<Tickets> => {
@@ -73,6 +78,40 @@ export const updateTicketStatus = async ({
         const { data } = await api.patch<{ message: string }>(
             `/tickets/${ticketId}`,
             { status }
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const updateTicket = async ({
+    ticketId,
+    formData,
+}: Pick<TicketAPIType, "ticketId" | "formData">) => {
+    try {
+        const { data } = await api.put<{ message: string }>(
+            `/tickets/${ticketId}`,
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const deleteTicket = async ({
+    ticketId,
+}: Pick<TicketAPIType, "ticketId">) => {
+    try {
+        const { data } = await api.delete<{ message: string }>(
+            `/tickets/${ticketId}`
         );
         return data.message;
     } catch (error) {

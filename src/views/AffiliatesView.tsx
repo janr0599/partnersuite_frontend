@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAffiliates } from "@/api/affiliatesAPI";
 import { Affiliates } from "@/types/affiliateTypes";
 import { useAuth } from "@/hooks/useauth";
-import { AffiliateStatusTranslations, statusTranslations } from "@/locales/en";
+import { AffiliateStatusTranslations } from "@/locales/en";
 import EditAffiliateData from "@/components/affiliates/EditAffiliateData";
 
 function AffiliatesView() {

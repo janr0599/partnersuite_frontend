@@ -10,6 +10,7 @@ import { Tickets } from "@/types/ticketsTypes";
 import { useAuth } from "@/hooks/useauth";
 import { isManager } from "@/utils/policies";
 import { statusTranslations } from "@/locales/en";
+import EditTicketData from "@/components/tickets/EditTicketData";
 
 function TicketsView() {
     const { data: user, isLoading: userLoading } = useAuth();
@@ -86,6 +87,7 @@ function TicketsView() {
                 )}
                 <CreateTicketModal />
                 <TicketDetailsModal tickets={data} />
+                <EditTicketData />
             </div>
         );
 }

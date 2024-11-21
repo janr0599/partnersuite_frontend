@@ -4,12 +4,22 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { TableTicket, Tickets } from "@/types/ticketsTypes";
+import { TableTicket, Ticket, Tickets } from "@/types/ticketsTypes";
 
 import { formatDate } from "@/utils/utils";
 import { useNavigate } from "react-router-dom";
 import { categoryTranslations, statusTranslations } from "@/locales/en";
-import { FiAlertCircle, FiCheckCircle, FiClock } from "react-icons/fi";
+import {
+    FiAlertCircle,
+    FiCheckCircle,
+    FiClock,
+    FiEdit,
+    FiTrash2,
+} from "react-icons/fi";
+import Swal from "sweetalert2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { deleteTicket } from "@/api/ticketsAPI";
 
 type TicketsTableProps = {
     tickets: Tickets;
@@ -19,6 +29,44 @@ type TicketsTableProps = {
 function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
     const navigate = useNavigate();
     console.log(tickets);
+
+    const queryclient = useQueryClient();
+    const { mutate: mutateDeleteTicket } = useMutation({
+        mutationFn: deleteTicket,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            toast.success(message);
+            queryclient.invalidateQueries({
+                queryKey: ["tickets"],
+            });
+        },
+    });
+
+    const handleDeleteTicket = (ticketId: Ticket["_id"]) => {
+        Swal.fire({
+            title: "Delete ticket?",
+            text: "This cannot be undone",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            confirmButtonText: "Delete",
+            reverseButtons: true,
+            customClass: {
+                cancelButton:
+                    "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
+                confirmButton: "hover:bg-red-600 transition-colors",
+                popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
+                title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                mutateDeleteTicket({
+                    ticketId,
+                });
+            }
+        });
+    };
 
     const columns: ColumnDef<TableTicket>[] = [
         {
@@ -65,17 +113,37 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
             header: "Actions",
             id: "actions",
             cell: ({ row }) => (
-                <button
-                    className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
-                    onClick={() =>
-                        navigate(
-                            location.pathname +
-                                `?viewTicket=${row.original._id}`
-                        )
-                    }
-                >
-                    View Details
-                </button>
+                <>
+                    <button
+                        className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                        onClick={() =>
+                            navigate(
+                                location.pathname +
+                                    `?viewTicket=${row.original._id}`
+                            )
+                        }
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                        onClick={() =>
+                            navigate(
+                                location.pathname +
+                                    `?editTicket=${row.original._id}`
+                            )
+                        }
+                    >
+                        <FiEdit className="size-5 group-hover:text-indigo-500 cursor-pointer transition-colors" />
+                    </button>
+                    <button
+                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                        onClick={() => handleDeleteTicket(row.original._id)}
+                    >
+                        <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />
+                    </button>
+                </>
             ),
         },
     ];
