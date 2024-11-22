@@ -31,6 +31,7 @@ export default function AddAffiliateModal() {
         confirmPassword: "",
         platform: "",
         contractType: "",
+        BonusAmount: 0,
         CPA: 0,
         RevShare: 0,
         Baseline: 0,
@@ -67,6 +68,7 @@ export default function AddAffiliateModal() {
     const handleAddAffiliate = (formData: AffiliateFormData) => {
         const transformedData = {
             ...formData,
+            BonusAmount: Number(formData.BonusAmount),
             CPA: Number(formData.CPA),
             RevShare: Number(formData.RevShare),
             Baseline: Number(formData.Baseline),

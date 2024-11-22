@@ -58,7 +58,7 @@ function SidebarMenu({ user }: SideBarMenuProps) {
                 width: open ? "225px" : "fit-content",
             }}
         >
-            <TitleSection open={open} />
+            <TitleSection open={open} user={user} />
 
             <div className="space-y-1">
                 {isManager(user) && (
@@ -186,7 +186,13 @@ const Option = ({
     );
 };
 
-const TitleSection = ({ open }: { open: boolean }) => {
+const TitleSection = ({
+    open,
+    user,
+}: {
+    open: boolean;
+    user: AuthenticatedUser;
+}) => {
     return (
         <div className="mb-3 border-b border-slate-300 pb-3">
             <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors hover:bg-slate-100">
@@ -199,11 +205,11 @@ const TitleSection = ({ open }: { open: boolean }) => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.125 }}
                         >
-                            <span className="block text-xs font-semibold">
-                                Thomas
+                            <span className="block text-sm font-semibold">
+                                {user.name}
                             </span>
-                            <span className="block text-xs text-slate-500">
-                                Manager
+                            <span className="block text-xs font text-slate-500">
+                                {user.role}
                             </span>
                         </motion.div>
                     )}

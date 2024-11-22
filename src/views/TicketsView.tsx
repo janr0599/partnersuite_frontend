@@ -59,23 +59,15 @@ function TicketsView() {
                             </select>
                         </div>
                     ) : (
-                        <div className="flex gap-6 font-bold">
-                            <button
-                                className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity"
-                                onClick={() =>
-                                    navigate(
-                                        location.pathname + "?newTicket=true"
-                                    )
-                                }
-                            >
-                                <FiPlus className="text-xl" />
-                                Create Ticket
-                            </button>
-                            <button className="bg-white hover:bg-slate-100 text-black px-4 py-2 border border-slate-500 rounded-md inline-flex items-center gap-2 transition-colors">
-                                <FiDollarSign className="text-xl" />
-                                Request Bonus Top-up
-                            </button>
-                        </div>
+                        <button
+                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity font-bold"
+                            onClick={() =>
+                                navigate(location.pathname + "?newTicket=true")
+                            }
+                        >
+                            <FiPlus className="text-xl" />
+                            Create Ticket
+                        </button>
                     )}
                 </div>
                 {data.length === 0 ? (

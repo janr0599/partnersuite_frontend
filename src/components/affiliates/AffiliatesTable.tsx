@@ -101,6 +101,13 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
         {
             header: "Baseline",
             accessorKey: "Baseline",
+            cell: ({ cell }) => {
+                return (
+                    <div className="flex flex-col gap-2">
+                        <p>{cell.getValue<number>()} €</p>
+                    </div>
+                );
+            },
         },
         {
             header: "Status",

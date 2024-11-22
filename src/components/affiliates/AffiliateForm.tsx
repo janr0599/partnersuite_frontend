@@ -191,6 +191,23 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="CPA" className="font-semibold text-md">
+                            Bonus Amount
+                        </label>
+                        <input
+                            id="BonusAmount"
+                            type="number"
+                            placeholder="Bonus amount"
+                            className="w-full p-2 border border-gray-200 rounded-md"
+                            {...register("BonusAmount")}
+                        />
+                        {errors.BonusAmount && (
+                            <ErrorMessage>
+                                {errors.BonusAmount.message}
+                            </ErrorMessage>
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="CPA" className="font-semibold text-md">
                             CPA
                         </label>
                         <input
