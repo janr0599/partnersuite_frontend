@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { IconType } from "react-icons";
 import {
     FiBookOpen,
@@ -15,6 +15,8 @@ import { isManager } from "@/utils/policies";
 import { useQuery } from "@tanstack/react-query";
 import { getTickets } from "@/api/ticketsAPI";
 import { Tickets } from "@/types/ticketsTypes";
+import { getTopUpRequests } from "@/api/topUpRequestsAPI";
+import { TopUpRequests } from "@/types/topUpRequestsTypes";
 
 type SideBarMenuProps = {
     user: AuthenticatedUser;
@@ -45,7 +47,24 @@ function SidebarMenu({ user }: SideBarMenuProps) {
         retry: false,
     });
 
-    const openTickets = data?.filter((ticket) => ticket.status === "open");
+    const { data: topupRequests } = useQuery<TopUpRequests>({
+        queryKey: ["topUpRequests"],
+        queryFn: () => getTopUpRequests(),
+        retry: false,
+    });
+
+    const pendingTopupRequests = useMemo(
+        () =>
+            topupRequests?.filter(
+                (topUpRequest) => topUpRequest.status === "Pending"
+            ),
+        [topupRequests]
+    );
+
+    const openTickets = useMemo(
+        () => data?.filter((ticket) => ticket.status === "open"),
+        [data]
+    );
 
     const [open, setOpen] = useState(true);
     const [selected, setSelected] = useState(defaultSelected);
@@ -89,6 +108,7 @@ function SidebarMenu({ user }: SideBarMenuProps) {
                     selected={selected}
                     setSelected={setSelected}
                     open={open}
+                    notifs={pendingTopupRequests?.length}
                 />
 
                 {isManager(user) && (

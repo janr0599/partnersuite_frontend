@@ -29,6 +29,7 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
         platform: affiliate.platform,
         status: affiliate.status,
         contractType: affiliate.contractType,
+        BonusAmount: affiliate.BonusAmount,
         CPA: affiliate.CPA,
         RevShare: affiliate.RevShare,
         Baseline: affiliate.Baseline,
@@ -68,6 +69,7 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
     const handleEditAffiliate = (formData: AffiliateUpdateFormData) => {
         const transformedData = {
             ...formData,
+            BonusAmount: Number(formData.BonusAmount),
             CPA: Number(formData.CPA),
             RevShare: Number(formData.RevShare),
             Baseline: Number(formData.Baseline),
@@ -228,6 +230,26 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
                                         {errors.contractType && (
                                             <ErrorMessage>
                                                 {errors.contractType.message}
+                                            </ErrorMessage>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label
+                                            htmlFor="CPA"
+                                            className="font-semibold text-md"
+                                        >
+                                            Bonus Amount
+                                        </label>
+                                        <input
+                                            id="BonusAmount"
+                                            type="number"
+                                            placeholder="Bonus amount"
+                                            className="w-full p-2 border border-gray-200 rounded-md"
+                                            {...register("BonusAmount")}
+                                        />
+                                        {errors.BonusAmount && (
+                                            <ErrorMessage>
+                                                {errors.BonusAmount.message}
                                             </ErrorMessage>
                                         )}
                                     </div>

@@ -6,21 +6,25 @@ import {
 } from "@tanstack/react-table";
 
 import { formatDate } from "@/utils/utils";
-import { useNavigate } from "react-router-dom";
 import {
     FiAlertCircle,
     FiCheckCircle,
     FiClock,
     FiTrash2,
+    FiXCircle,
 } from "react-icons/fi";
-// import Swal from "sweetalert2";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { toast } from "react-toastify";
-// import { deleteTopUpRequest } from "@/api/topUpRequestsAPI";
+import Swal from "sweetalert2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import {
+    deleteTopUpRequest,
+    updateTopUpRequestStatus,
+} from "@/api/topUpRequestsAPI";
 import { TopUpRequest, TopUpRequests } from "@/types/topUpRequestsTypes";
 import { TopUpRequestsstatusTranslations } from "@/locales/en";
 import { AuthenticatedUser } from "@/types/authTypes";
 import { useMemo } from "react";
+import { isManager } from "@/utils/policies";
 
 type TopUpRequestsTableProps = {
     topUpRequests: TopUpRequests;
@@ -33,50 +37,72 @@ function TopUpRequestsTable({
     isLoading,
     user,
 }: TopUpRequestsTableProps) {
-    const navigate = useNavigate();
     console.log(topUpRequests);
     const canDelete = useMemo(
         () => user._id === topUpRequests[0].createdBy._id,
         [user]
     );
 
-    // const queryclient = useQueryClient();
-    // const { mutate: mutateDeleteTicket } = useMutation({
-    //     mutationFn: deleteTopUpRequest,
-    //     onError: (error) => {
-    //         toast.error(error.message);
-    //     },
-    //     onSuccess: (message) => {
-    //         toast.success(message);
-    //         queryclient.invalidateQueries({
-    //             queryKey: ["tickets"],
-    //         });
-    //     },
-    // });
+    const queryclient = useQueryClient();
+    const { mutate: mutateDeleteTicket } = useMutation({
+        mutationFn: deleteTopUpRequest,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            toast.success(message);
+            queryclient.invalidateQueries({
+                queryKey: ["topUpRequests"],
+            });
+        },
+    });
 
-    // const handleDeleteTopUpRequest = (topUpRequestId: TopUpRequest["_id"]) => {
-    //     Swal.fire({
-    //         title: "Delete top-up request?",
-    //         text: "This cannot be undone",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#ef4444",
-    //         confirmButtonText: "Delete",
-    //         reverseButtons: true,
-    //         customClass: {
-    //             cancelButton:
-    //                 "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
-    //             confirmButton: "hover:bg-red-600 transition-colors",
-    //             popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
-    //             title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
-    //         },
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             mutateDeleteTicket({
-    //                 topUpRequestId,
-    //             });
-    //         }
-    //     });
-    // };
+    const { mutate: mutateUpdateTopUpRequestStatus } = useMutation({
+        mutationFn: updateTopUpRequestStatus,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (message) => {
+            toast.success(message);
+            queryclient.invalidateQueries({
+                queryKey: ["topUpRequests"],
+            });
+        },
+    });
+
+    const handleUpdateTopUpRequestStatus = (
+        topUpRequestId: TopUpRequest["_id"],
+        status: TopUpRequest["status"]
+    ) => {
+        mutateUpdateTopUpRequestStatus({
+            topUpRequestId,
+            status,
+        });
+    };
+
+    const handleDeleteTopUpRequest = (topUpRequestId: TopUpRequest["_id"]) => {
+        Swal.fire({
+            title: "Delete top-up request?",
+            text: "This cannot be undone",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            confirmButtonText: "Delete",
+            reverseButtons: true,
+            customClass: {
+                cancelButton:
+                    "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
+                confirmButton: "hover:bg-red-600 transition-colors",
+                popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
+                title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                mutateDeleteTicket({
+                    topUpRequestId,
+                });
+            }
+        });
+    };
 
     const columns: ColumnDef<TopUpRequest>[] = [
         {
@@ -124,22 +150,44 @@ function TopUpRequestsTable({
             id: "actions",
             cell: ({ row }) => (
                 <>
-                    <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
-                        onClick={() =>
-                            navigate(
-                                location.pathname +
-                                    `?viewTopUpRequest=${row.original._id}`
-                            )
-                        }
-                    >
-                        View Details
-                    </button>
+                    {isManager(user) && (
+                        <>
+                            <button
+                                className="bg-green-400 border border-slate-300 hover:bg-green-500 rounded-md px-4 py-2 text-sm font-medium transition-colors text-white"
+                                onClick={() => {
+                                    handleUpdateTopUpRequestStatus(
+                                        row.original._id,
+                                        "Approved"
+                                    );
+                                }}
+                            >
+                                <span className="inline-flex items-center gap-2">
+                                    <FiCheckCircle className="text-white font-medium" />
+                                    Approve
+                                </span>
+                            </button>
+                            <button
+                                className="bg-red-400 border border-slate-300 hover:bg-red-500 rounded-md px-4 py-2 text-sm font-medium transition-colors text-white"
+                                onClick={() => {
+                                    handleUpdateTopUpRequestStatus(
+                                        row.original._id,
+                                        "Rejected"
+                                    );
+                                }}
+                            >
+                                <span className="inline-flex items-center gap-2">
+                                    <FiXCircle className="text-white font-medium" />
+                                    Reject
+                                </span>
+                            </button>
+                        </>
+                    )}
+
                     {canDelete && (
                         <button
                             className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
                             onClick={() => {
-                                // handleDeleteTopUpRequest(row.original._id);
+                                handleDeleteTopUpRequest(row.original._id);
                             }}
                         >
                             <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />

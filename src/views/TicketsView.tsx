@@ -1,7 +1,7 @@
 import CreateTicketModal from "@/components/tickets/CreateTicketModal";
 import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
 import TicketsTable from "@/components/tickets/TicketsTable";
-import { FiDollarSign, FiPlus, FiSearch } from "react-icons/fi";
+import { FiPlus, FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -75,7 +75,11 @@ function TicketsView() {
                         Tickets will show up here
                     </div>
                 ) : (
-                    <TicketsTable tickets={data} isLoading={isLoading} />
+                    <TicketsTable
+                        tickets={data}
+                        isLoading={isLoading}
+                        user={user}
+                    />
                 )}
                 <CreateTicketModal />
                 <TicketDetailsModal tickets={data} />

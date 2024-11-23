@@ -1,5 +1,4 @@
 import z from "zod";
-import { authenticatedUserSchema } from "@/schemas/authSchemas";
 import {
     topUpRequestSchema,
     topUpRequestsSchema,
@@ -21,4 +20,5 @@ export type TopUpRequestFormData = {
 export type TopUpRequestAPI = {
     topUpRequestId: TopUpRequest["_id"];
     formData: TopUpRequestFormData;
+    status: TopUpRequest["status"];
 };

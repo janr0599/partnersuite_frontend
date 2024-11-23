@@ -20,15 +20,23 @@ import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { deleteTicket } from "@/api/ticketsAPI";
+import { AuthenticatedUser } from "@/types/authTypes";
+import { useMemo } from "react";
 
 type TicketsTableProps = {
     tickets: Tickets;
     isLoading: boolean;
+    user: AuthenticatedUser;
 };
 
-function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
+function TicketsTable({ tickets, isLoading, user }: TicketsTableProps) {
     const navigate = useNavigate();
     console.log(tickets);
+
+    const canDelete = useMemo(
+        () => user._id === tickets[0].createdBy._id,
+        [user]
+    );
 
     const queryclient = useQueryClient();
     const { mutate: mutateDeleteTicket } = useMutation({
@@ -126,23 +134,29 @@ function TicketsTable({ tickets, isLoading }: TicketsTableProps) {
                         View Details
                     </button>
 
-                    <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
-                        onClick={() =>
-                            navigate(
-                                location.pathname +
-                                    `?editTicket=${row.original._id}`
-                            )
-                        }
-                    >
-                        <FiEdit className="size-5 group-hover:text-indigo-500 cursor-pointer transition-colors" />
-                    </button>
-                    <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
-                        onClick={() => handleDeleteTicket(row.original._id)}
-                    >
-                        <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />
-                    </button>
+                    {canDelete && (
+                        <>
+                            <button
+                                className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                                onClick={() =>
+                                    navigate(
+                                        location.pathname +
+                                            `?editTicket=${row.original._id}`
+                                    )
+                                }
+                            >
+                                <FiEdit className="size-5 group-hover:text-indigo-500 cursor-pointer transition-colors" />
+                            </button>
+                            <button
+                                className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                                onClick={() =>
+                                    handleDeleteTicket(row.original._id)
+                                }
+                            >
+                                <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />
+                            </button>
+                        </>
+                    )}
                 </>
             ),
         },

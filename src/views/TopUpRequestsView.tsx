@@ -91,7 +91,6 @@ function TopUpRequestsView() {
                         Top Up Requests will show up here
                     </div>
                 ) : (
-                    // <TicketsTable topUpRequests={data} isLoading={isLoading} />
                     <TopUpRequestsTable
                         topUpRequests={data}
                         isLoading={isLoading}

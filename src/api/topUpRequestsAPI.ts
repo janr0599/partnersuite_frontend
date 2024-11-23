@@ -1,13 +1,6 @@
 import api from "@/lib/axios";
-import {
-    topUpRequestSchema,
-    topUpRequestsSchema,
-} from "@/schemas/topUpRequestsSchemas";
-import {
-    TopUpRequest,
-    TopUpRequestAPI,
-    TopUpRequests,
-} from "@/types/topUpRequestsTypes";
+import { topUpRequestsSchema } from "@/schemas/topUpRequestsSchemas";
+import { TopUpRequestAPI, TopUpRequests } from "@/types/topUpRequestsTypes";
 import { isAxiosError } from "axios";
 
 export const getTopUpRequests = async (): Promise<TopUpRequests> => {
@@ -37,6 +30,24 @@ export const getTopUpRequests = async (): Promise<TopUpRequests> => {
 export const createTopUpRequest = async () => {
     try {
         const { data } = await api.post<{ message: string }>("/topUpRequests");
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const updateTopUpRequestStatus = async ({
+    topUpRequestId,
+    status,
+}: Pick<TopUpRequestAPI, "topUpRequestId" | "status">) => {
+    try {
+        const { data } = await api.patch<{ message: string }>(
+            `/topUpRequests/${topUpRequestId}`,
+            { status }
+        );
         return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
