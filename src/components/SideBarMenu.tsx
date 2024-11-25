@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { IconType } from "react-icons";
 import {
     FiBookOpen,
@@ -20,10 +27,42 @@ import { TopUpRequests } from "@/types/topUpRequestsTypes";
 
 type SideBarMenuProps = {
     user: AuthenticatedUser;
+    sidebarOpen: boolean;
+    setSidebarOpen: (arg: boolean) => void;
 };
 
-function SidebarMenu({ user }: SideBarMenuProps) {
+function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
     const location = useLocation();
+
+    const trigger = useRef<any>(null);
+    const sidebar = useRef<any>(null);
+
+    // close on click outside
+    useEffect(() => {
+        const clickHandler = ({ target }: MouseEvent) => {
+            if (!sidebar.current || !trigger.current) return;
+            if (
+                !sidebarOpen ||
+                sidebar.current.contains(target) ||
+                trigger.current.contains(target)
+            )
+                return;
+            setSidebarOpen(false);
+        };
+        document.addEventListener("click", clickHandler);
+        return () => document.removeEventListener("click", clickHandler);
+    });
+
+    // close if the esc key is pressed
+    useEffect(() => {
+        const keyHandler = ({ keyCode }: KeyboardEvent) => {
+            if (!sidebarOpen || keyCode !== 27) return;
+            setSidebarOpen(false);
+        };
+        document.addEventListener("keydown", keyHandler);
+        return () => document.removeEventListener("keydown", keyHandler);
+    });
+
     const dynamicSelected = location.pathname.split("/")[1];
 
     const defaultSelected = (): string => {
@@ -70,70 +109,82 @@ function SidebarMenu({ user }: SideBarMenuProps) {
     const [selected, setSelected] = useState(defaultSelected);
 
     return (
-        <motion.nav
-            layout
-            className="sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white p-2 shadow-xl"
-            style={{
-                width: open ? "225px" : "fit-content",
-            }}
+        <aside
+            className={`absolute left-0 top-0 z-[999] flex h-screen flex-col overflow-y-hidden bg-white duration-300 ease-linear lg:static lg:translate-x-0 ${
+                sidebarOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
-            <TitleSection open={open} user={user} />
+            <motion.nav
+                layout
+                className="sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white p-2 shadow-xl"
+                style={{
+                    width: open ? "225px" : "fit-content",
+                }}
+            >
+                <TitleSection
+                    open={open}
+                    user={user}
+                    sidebarOpen={sidebarOpen}
+                    setSidebarOpen={setSidebarOpen}
+                    trigger={trigger}
+                />
 
-            <div className="space-y-1">
-                {isManager(user) && (
+                <div className="space-y-1">
+                    {isManager(user) && (
+                        <Option
+                            Icon={FiHome}
+                            title="Dashboard"
+                            route="/"
+                            selected={selected}
+                            setSelected={setSelected}
+                            open={open}
+                        />
+                    )}
+
                     <Option
-                        Icon={FiHome}
-                        title="Dashboard"
-                        route="/"
+                        Icon={FiTag}
+                        title="Tickets"
+                        route="/tickets"
+                        selected={selected}
+                        setSelected={setSelected}
+                        open={open}
+                        notifs={openTickets?.length}
+                    />
+
+                    <Option
+                        Icon={FiDollarSign}
+                        title="Top-up Requests"
+                        route="/top-up-requests"
+                        selected={selected}
+                        setSelected={setSelected}
+                        open={open}
+                        notifs={pendingTopupRequests?.length}
+                    />
+
+                    {isManager(user) && (
+                        <Option
+                            Icon={FiUsers}
+                            title="Affiliates"
+                            route="/affiliates"
+                            selected={selected}
+                            setSelected={setSelected}
+                            open={open}
+                        />
+                    )}
+
+                    <Option
+                        Icon={FiBookOpen}
+                        title="FAQs"
+                        route="/faqs"
                         selected={selected}
                         setSelected={setSelected}
                         open={open}
                     />
-                )}
+                </div>
 
-                <Option
-                    Icon={FiTag}
-                    title="Tickets"
-                    route="/tickets"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                    notifs={openTickets?.length}
-                />
-
-                <Option
-                    Icon={FiDollarSign}
-                    title="Top-up Requests"
-                    route="/top-up-requests"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                    notifs={pendingTopupRequests?.length}
-                />
-
-                {isManager(user) && (
-                    <Option
-                        Icon={FiUsers}
-                        title="Affiliates"
-                        route="/affiliates"
-                        selected={selected}
-                        setSelected={setSelected}
-                        open={open}
-                    />
-                )}
-
-                <Option
-                    Icon={FiBookOpen}
-                    title="FAQs"
-                    route="/faqs"
-                    selected={selected}
-                    setSelected={setSelected}
-                    open={open}
-                />
-            </div>
-
-            <ToggleClose open={open} setOpen={setOpen} />
-        </motion.nav>
+                <ToggleClose open={open} setOpen={setOpen} />
+            </motion.nav>
+        </aside>
     );
 }
 
@@ -209,15 +260,29 @@ const Option = ({
 const TitleSection = ({
     open,
     user,
+    sidebarOpen,
+    setSidebarOpen,
+    trigger,
 }: {
     open: boolean;
     user: AuthenticatedUser;
+    sidebarOpen: boolean;
+    setSidebarOpen: (arg: boolean) => void;
+    trigger: React.MutableRefObject<any>;
 }) => {
     return (
         <div className="mb-3 border-b border-slate-300 pb-3">
-            <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors hover:bg-slate-100">
-                <div className="flex items-center gap-2">
-                    <Logo />
+            <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-3">
+                    <button
+                        ref={trigger}
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        aria-controls="sidebar"
+                        aria-expanded={sidebarOpen}
+                        className="block cursor-auto"
+                    >
+                        <Logo />
+                    </button>
                     {open && (
                         <motion.div
                             layout
@@ -244,25 +309,13 @@ const Logo = () => {
     return (
         <motion.div
             layout
-            className="grid size-10 shrink-0 place-content-center rounded-md bg-black"
+            className="grid size-10 shrink-0 place-content-center rounded-md"
         >
-            <svg
-                width="24"
-                height="auto"
-                viewBox="0 0 50 39"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-slate-50"
-            >
-                <path
-                    d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-                    stopColor="#000000"
-                ></path>
-                <path
-                    d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-                    stopColor="#000000"
-                ></path>
-            </svg>
+            <img
+                src="/Partner_Suite_Logo_Text.svg"
+                alt="PartnerSuite Logo"
+                className="w-full"
+            />
         </motion.div>
     );
 };
@@ -278,7 +331,7 @@ const ToggleClose = ({
         <motion.button
             layout
             onClick={() => setOpen((pv) => !pv)}
-            className="absolute bottom-0 left-0 right-0 border-t border-slate-300 transition-colors hover:bg-slate-100"
+            className="absolute bottom-0 left-0 right-0 border-t border-slate-300 transition-colors hover:bg-slate-100 hidden lg:block"
         >
             <div className="flex items-center p-2">
                 <motion.div

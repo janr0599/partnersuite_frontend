@@ -28,7 +28,9 @@ function AffiliatesView() {
         return (
             <div className="shadow-xl rounded-lg bg-white p-10 space-y-5">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold">Affiliate Management</h1>
+                    <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
+                        Affiliate Management
+                    </h1>
                     <div className="flex gap-6 font-bold">
                         <button
                             className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity"

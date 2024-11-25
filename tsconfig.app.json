@@ -17,7 +17,8 @@
             "@/schemas/*": ["schemas/*"],
             "@/utils/*": ["utils/*"],
             "@/locales/*": ["locales/*"],
-            "@/hooks/*": ["hooks/*"]
+            "@/hooks/*": ["hooks/*"],
+            "@/data/*": ["data/*"]
         },
 
         /* Bundler mode */

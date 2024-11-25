@@ -22,7 +22,9 @@ type TicketDetailsModalProps = {
     tickets: Tickets;
 };
 
-export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
+export default function TickeDetailsModal({
+    tickets,
+}: TicketDetailsModalProps) {
     const { data: user, isLoading: userLoading } = useAuth();
     const navigate = useNavigate();
 
@@ -85,7 +87,7 @@ export default function TaskModalDetails({ tickets }: TicketDetailsModalProps) {
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-10"
+                    className="relative z-[1000]"
                     onClose={() =>
                         navigate(location.pathname, { replace: true })
                     }

@@ -180,7 +180,7 @@ function TicketsTable({ tickets, isLoading, user }: TicketsTableProps) {
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-left text-md font-medium"
+                                    className="px-4 py-2 border-b border-slate-300 text-left text-sm md:text-md font-medium"
                                 >
                                     {header.isPlaceholder
                                         ? null
@@ -195,15 +195,11 @@ function TicketsTable({ tickets, isLoading, user }: TicketsTableProps) {
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr
-                            key={row.id}
-                            className="hover:bg-slate-100 transition-colors"
-                        >
+                        <tr key={row.id} className="hover:bg-slate-100">
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium
-                                    "
+                                    className="px-4 py-3 border-b border-slate-300 text-sm md:text-md font-semibold"
                                 >
                                     <div className="inline-flex items-center gap-2">
                                         {cell.getValue<string>() === "open" && (

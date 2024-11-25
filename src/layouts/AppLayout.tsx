@@ -1,12 +1,14 @@
 import SidebarMenu from "@/components/SideBarMenu";
 import { Navigate, Outlet } from "react-router-dom";
-import { FiUser } from "react-icons/fi";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/useauth";
+import Header from "@/components/Header";
+import { useState } from "react";
 
 function AppLayout() {
     const { data: user, isError, isLoading } = useAuth();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     if (isLoading) return "Loading...";
 
@@ -15,24 +17,30 @@ function AppLayout() {
     }
 
     if (user) console.log(user);
+
     return (
         <>
-            <div className="flex">
-                <aside>
-                    <SidebarMenu user={user!} />
-                </aside>
-                <div className="grid grid-rows-[auto_1fr] w-full bg-slate-100">
-                    <header className="p-2 border-b border-slate-300 h-[60px] mx-2">
-                        <div className="flex items-center justify-between">
-                            <h1 className="">PartnerSuite</h1>
-                            <FiUser className="h-12 text-xl mr-4" />
-                        </div>
-                    </header>
-                    <main className="p-4">
-                        <Outlet />
-                    </main>
+            <div className="bg-slate-100">
+                <div className="flex h-screen overflow-hidden">
+                    <SidebarMenu
+                        user={user!}
+                        sidebarOpen={sidebarOpen}
+                        setSidebarOpen={setSidebarOpen}
+                    />
+                    <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+                        <Header
+                            sidebarOpen={sidebarOpen}
+                            setSidebarOpen={setSidebarOpen}
+                        />
+                        <main>
+                            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                                <Outlet />
+                            </div>
+                        </main>
+                    </div>
                 </div>
             </div>
+
             <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
         </>
     );

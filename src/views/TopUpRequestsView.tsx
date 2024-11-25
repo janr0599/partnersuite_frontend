@@ -6,15 +6,10 @@ import { TopUpRequests } from "@/types/topUpRequestsTypes";
 import { isManager } from "@/utils/policies";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FiDollarSign, FiSearch } from "react-icons/fi";
-import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function TopUpRequestsView() {
     const { data: user, isLoading: userLoading } = useAuth();
-
-    const location = useLocation();
-    const navigate = useNavigate();
-
     const { data, isLoading } = useQuery<TopUpRequests>({
         queryKey: ["topUpRequests"],
         queryFn: () => getTopUpRequests(),
@@ -45,7 +40,7 @@ function TopUpRequestsView() {
         return (
             <div className="shadow-xl rounded-lg bg-white p-10">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
                         {isManager(user)
                             ? "Top-Up Requests Management"
                             : "Top-Up Requests"}
