@@ -189,6 +189,28 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             </ErrorMessage>
                         )}
                     </div>
+                    <div className="flex flex-col gap-2 mt-2">
+                        <label
+                            htmlFor="country"
+                            className="font-semibold text-md"
+                        >
+                            Country
+                        </label>
+                        <input
+                            id="platform"
+                            type="text"
+                            placeholder="platform"
+                            className="w-full p-2 border border-gray-200 rounded-md"
+                            {...register("country", {
+                                required: "country is required",
+                            })}
+                        />
+                        {errors.country && (
+                            <ErrorMessage>
+                                {errors.country.message}
+                            </ErrorMessage>
+                        )}
+                    </div>
                     <div className="flex flex-col gap-2">
                         <label htmlFor="CPA" className="font-semibold text-md">
                             Bonus Amount

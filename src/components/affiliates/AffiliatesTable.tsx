@@ -69,6 +69,10 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
             accessorKey: "email",
         },
         {
+            header: "Country",
+            accessorKey: "country",
+        },
+        {
             header: "Platform",
             accessorKey: "platform",
         },
@@ -127,7 +131,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                             )
                         }
                     >
-                        View Details
+                        Details
                     </button>
 
                     <button

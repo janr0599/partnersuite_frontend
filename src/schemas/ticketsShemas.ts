@@ -14,6 +14,7 @@ export const ticketSchema = z.object({
     status: ticketStatusSchema,
     createdAt: z.string(),
     updatedAt: z.string(),
+    closedAt: z.string().nullable(),
 });
 
 export const ticketsSchema = z.array(
@@ -25,6 +26,21 @@ export const ticketsSchema = z.array(
         status: true,
         createdBy: true,
         createdAt: true,
+        updatedAt: true,
+        closedAt: true,
+    })
+);
+
+export const DashboardTicketsSchema = z.array(
+    ticketSchema.pick({
+        _id: true,
+        title: true,
+        description: true,
+        category: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+        closedAt: true,
     })
 );
 

@@ -70,7 +70,7 @@ export default function AffiliateModalDetails() {
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-10"
+                    className="relative z-[10000]"
                     onClose={() =>
                         navigate(location.pathname, { replace: true })
                     }
@@ -139,6 +139,18 @@ export default function AffiliateModalDetails() {
                                             </label>
                                             <p className="text-md">
                                                 {data.contractType}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <label
+                                                htmlFor="platform"
+                                                className="font-semibold text-md"
+                                            >
+                                                Country:
+                                            </label>
+                                            <p className="text-md">
+                                                {data.country}
                                             </p>
                                         </div>
 

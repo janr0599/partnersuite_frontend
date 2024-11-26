@@ -1,6 +1,11 @@
 import api from "@/lib/axios";
-import { ticketSchema, ticketsSchema } from "@/schemas/ticketsShemas";
 import {
+    DashboardTicketsSchema,
+    ticketSchema,
+    ticketsSchema,
+} from "@/schemas/ticketsShemas";
+import {
+    DashboardTickets,
     Ticket,
     TicketAPIType,
     TicketFormData,
@@ -16,6 +21,30 @@ export const getTickets = async (): Promise<Tickets> => {
         if (!validation.success) {
             console.error(
                 "getTickets data validation failed:",
+                validation.error.errors
+            );
+            throw new Error("Invalid data");
+        }
+        console.log(validation.data);
+        return validation.data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const getPreviousDayTickets = async (): Promise<DashboardTickets> => {
+    try {
+        const { data } = await api.get<{ tickets: DashboardTickets }>(
+            "/tickets/previousDayTickets"
+        );
+        console.log(data.tickets);
+        const validation = DashboardTicketsSchema.safeParse(data.tickets);
+        if (!validation.success) {
+            console.error(
+                "getPreviousDayTickets data validation failed:",
                 validation.error.errors
             );
             throw new Error("Invalid data");

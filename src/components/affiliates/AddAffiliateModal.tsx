@@ -31,6 +31,7 @@ export default function AddAffiliateModal() {
         confirmPassword: "",
         platform: "",
         contractType: "",
+        country: "",
         BonusAmount: 0,
         CPA: 0,
         RevShare: 0,
@@ -82,7 +83,7 @@ export default function AddAffiliateModal() {
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-10"
+                    className="relative z-[10000]"
                     onClose={() => {
                         navigate(location.pathname, { replace: true });
                     }}

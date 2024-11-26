@@ -6,6 +6,7 @@ export const affiliateSchema = z.object({
     email: z.string(),
     platform: z.string(),
     contractType: z.string(),
+    country: z.string(),
     BonusAmount: z.union([z.number(), z.string()]).optional(),
     CPA: z.union([z.number(), z.string()]).optional(),
     RevShare: z.union([z.number(), z.string()]).optional(),
@@ -21,6 +22,7 @@ export const affiliateUpdateFormSchema = affiliateSchema
         platform: true,
         status: true,
         contractType: true,
+        country: true,
         BonusAmount: true,
         CPA: true,
         RevShare: true,
@@ -31,6 +33,7 @@ export const affiliateUpdateFormSchema = affiliateSchema
         email: z.string().email("email is invalid"),
         platform: z.string().min(1, "platform is required"),
         contractType: z.string().min(1, "contractType is required"),
+        country: z.string().min(1, "country is required"),
     })
     .refine(
         (data) => {
@@ -119,6 +122,7 @@ export const affiliateFormSchema = affiliateSchema
         email: true,
         platform: true,
         contractType: true,
+        country: true,
         BonusAmount: true,
         CPA: true,
         RevShare: true,
@@ -129,6 +133,7 @@ export const affiliateFormSchema = affiliateSchema
         email: z.string().email("email is invalid"),
         platform: z.string().min(1, "platform is required"),
         contractType: z.string().min(1, "contractType is required"),
+        country: z.string().min(1, "country is required"),
         password: z
             .string()
             .min(8, "Password must be at least 8 characters long"),

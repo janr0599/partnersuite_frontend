@@ -131,7 +131,7 @@ function TicketsTable({ tickets, isLoading, user }: TicketsTableProps) {
                             )
                         }
                     >
-                        View Details
+                        Details
                     </button>
 
                     {canDelete && (

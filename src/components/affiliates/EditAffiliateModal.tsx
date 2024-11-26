@@ -29,6 +29,7 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
         platform: affiliate.platform,
         status: affiliate.status,
         contractType: affiliate.contractType,
+        country: affiliate.country,
         BonusAmount: affiliate.BonusAmount,
         CPA: affiliate.CPA,
         RevShare: affiliate.RevShare,
@@ -81,7 +82,7 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
         <Transition appear show={true} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-[10000]"
                 onClose={() => {
                     navigate(location.pathname, { replace: true });
                 }}
@@ -230,6 +231,28 @@ function EditAffiliateModal({ affiliate }: EditAffiliateModalProps) {
                                         {errors.contractType && (
                                             <ErrorMessage>
                                                 {errors.contractType.message}
+                                            </ErrorMessage>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col gap-2 mt-2">
+                                        <label
+                                            htmlFor="country"
+                                            className="font-semibold text-md"
+                                        >
+                                            Country
+                                        </label>
+                                        <input
+                                            id="platform"
+                                            type="text"
+                                            placeholder="platform"
+                                            className="w-full p-2 border border-gray-200 rounded-md"
+                                            {...register("country", {
+                                                required: "country is required",
+                                            })}
+                                        />
+                                        {errors.country && (
+                                            <ErrorMessage>
+                                                {errors.country.message}
                                             </ErrorMessage>
                                         )}
                                     </div>
