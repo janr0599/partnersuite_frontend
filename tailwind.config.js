@@ -67,7 +67,7 @@ export default {
                         DEFAULT: colors.white,
                     },
                     ring: {
-                        DEFAULT: colors.slate[300],
+                        DEFAULT: colors.white,
                     },
                     content: {
                         subtle: colors.gray[600],

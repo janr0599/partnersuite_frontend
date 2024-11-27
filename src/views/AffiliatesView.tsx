@@ -33,7 +33,7 @@ function AffiliatesView() {
                     </h1>
                     <div className="flex gap-6 font-bold">
                         <button
-                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity"
+                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm"
                             onClick={() =>
                                 navigate(
                                     location.pathname + "?newAffiliate=true"
@@ -45,34 +45,34 @@ function AffiliatesView() {
                         </button>
                     </div>
                 </div>
-                <div className="w-full flex justify-between items-center font-semibold ml-auto pl-4">
+                <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4">
                     <p className="text-slate-500 inline-flex gap-2 items-center">
                         <FiUsers /> {data?.length}
                     </p>
-                    <div className="flex gap-6">
-                        <div className="inline-flex gap-2 items-center">
-                            <FiSearch className="text-gray-500" />
-
+                    <div className="flex flex-col md:flex-row gap-6 font-normal items-start md:items-center flex-1 w-full lg:max-w-md">
+                        <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
+                            <FiSearch className="absolute left-3 text-gray-500" />
                             <input
                                 type="text"
                                 placeholder="Search Affiliates..."
-                                className="bg-ehite p-2 rounded-md border border-slate-300 outline-none text-gray-500 text-sm"
+                                className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
                             />
                         </div>
-
-                        <select
-                            className="w-1/2 p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
-                            onChange={() => {}}
-                        >
-                            <option value="all">All Statuses</option>
-                            {Object.entries(AffiliateStatusTranslations).map(
-                                ([key, value]) => (
+                        <div className="md:w-1/2 min-w-36 ">
+                            <select
+                                className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
+                                onChange={() => {}}
+                            >
+                                <option value="all">All Statuses</option>
+                                {Object.entries(
+                                    AffiliateStatusTranslations
+                                ).map(([key, value]) => (
                                     <option key={key} value={key}>
                                         {value}
                                     </option>
-                                )
-                            )}
-                        </select>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </div>
                 {data.length === 0 ? (

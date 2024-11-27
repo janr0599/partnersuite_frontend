@@ -93,7 +93,7 @@ export const TicketsStatCard = () => {
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
             {ticketStats.map((item) => (
                 <Card key={item.name}>
-                    <dt className="text-tremor-default font-medium text-tremor-content">
+                    <dt className="text-tremor-default font-medium text-tremor-content-strong">
                         {item.name}
                     </dt>
                     <dd className="mt-2 flex items-baseline space-x-2.5">

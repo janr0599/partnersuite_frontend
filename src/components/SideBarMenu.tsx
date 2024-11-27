@@ -8,6 +8,7 @@ import {
 } from "react";
 import { IconType } from "react-icons";
 import {
+    FiArrowLeft,
     FiBookOpen,
     FiChevronsRight,
     FiDollarSign,
@@ -138,6 +139,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
                             selected={selected}
                             setSelected={setSelected}
                             open={open}
+                            sidebarOpen={sidebarOpen}
+                            setSidebarOpen={setSidebarOpen}
                         />
                     )}
 
@@ -149,6 +152,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
                         setSelected={setSelected}
                         open={open}
                         notifs={openTickets?.length}
+                        sidebarOpen={sidebarOpen}
+                        setSidebarOpen={setSidebarOpen}
                     />
 
                     <Option
@@ -159,6 +164,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
                         setSelected={setSelected}
                         open={open}
                         notifs={pendingTopupRequests?.length}
+                        sidebarOpen={sidebarOpen}
+                        setSidebarOpen={setSidebarOpen}
                     />
 
                     {isManager(user) && (
@@ -169,6 +176,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
                             selected={selected}
                             setSelected={setSelected}
                             open={open}
+                            sidebarOpen={sidebarOpen}
+                            setSidebarOpen={setSidebarOpen}
                         />
                     )}
 
@@ -179,6 +188,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
                         selected={selected}
                         setSelected={setSelected}
                         open={open}
+                        sidebarOpen={sidebarOpen}
+                        setSidebarOpen={setSidebarOpen}
                     />
                 </div>
 
@@ -198,6 +209,8 @@ const Option = ({
     setSelected,
     open,
     notifs,
+    sidebarOpen,
+    setSidebarOpen,
 }: {
     Icon: IconType;
     title: string;
@@ -206,6 +219,8 @@ const Option = ({
     setSelected: Dispatch<SetStateAction<string>>;
     open: boolean;
     notifs?: number;
+    sidebarOpen: boolean;
+    setSidebarOpen: (arg: boolean) => void;
 }) => {
     const navigate = useNavigate();
     return (
@@ -214,6 +229,7 @@ const Option = ({
             onClick={() => {
                 setSelected(title);
                 navigate(route);
+                setSidebarOpen(!sidebarOpen);
             }}
             className={`relative flex h-10 w-full items-center rounded-md transition-colors ${
                 selected === title
@@ -271,18 +287,10 @@ const TitleSection = ({
     trigger: React.MutableRefObject<any>;
 }) => {
     return (
-        <div className="mb-3 border-b border-slate-300 pb-3">
+        <div className="mb-3 border-b border-slate-300 pb-4">
             <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-3">
-                    <button
-                        ref={trigger}
-                        onClick={() => setSidebarOpen(!sidebarOpen)}
-                        aria-controls="sidebar"
-                        aria-expanded={sidebarOpen}
-                        className="block cursor-auto"
-                    >
-                        <Logo />
-                    </button>
+                <div className="inline-flex items-center gap-3 w-full">
+                    <Logo />
                     {open && (
                         <motion.div
                             layout
@@ -298,6 +306,15 @@ const TitleSection = ({
                             </span>
                         </motion.div>
                     )}
+                    <button
+                        ref={trigger}
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        aria-controls="sidebar"
+                        aria-expanded={sidebarOpen}
+                        className="block cursor-auto lg:hidden ml-auto text-2xl text-slate-500"
+                    >
+                        <FiArrowLeft />
+                    </button>
                 </div>
             </div>
         </div>

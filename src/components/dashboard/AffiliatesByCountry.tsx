@@ -1,50 +1,72 @@
 import { Card, DonutChart, List, ListItem } from "@tremor/react";
+import { useQuery } from "@tanstack/react-query";
+import { getAffiliates } from "@/api/affiliatesAPI";
+import { Affiliates } from "@/types/affiliateTypes";
 
 function classNames(...classes: (string | undefined | false | null)[]): string {
     return classes.filter(Boolean).join(" ");
 }
 
-const data = [
-    {
-        name: "USA",
-        affiliates: 150,
-        share: "30.0%",
-        color: "bg-blue-500",
-    },
-    {
-        name: "Canada",
-        affiliates: 100,
-        share: "20.0%",
-        color: "bg-cyan-500",
-    },
-    {
-        name: "UK",
-        affiliates: 80,
-        share: "16.0%",
-        color: "bg-indigo-500",
-    },
-    {
-        name: "Germany",
-        affiliates: 70,
-        share: "14.0%",
-        color: "bg-fuchsia-500",
-    },
-    {
-        name: "Australia",
-        affiliates: 100,
-        share: "20.0%",
-        color: "bg-purple-500",
-    },
-];
+// Process affiliate data to group by country and calculate statistics
+const processAffiliateData = (affiliates: Affiliates) => {
+    const countryData = affiliates.reduce<
+        Record<string, { count: number; color: string }>
+    >((acc, affiliate) => {
+        const country = affiliate.country;
+        if (!acc[country]) {
+            acc[country] = { count: 0, color: "" };
+        }
+        acc[country].count += 1;
+        return acc;
+    }, {});
+
+    const totalAffiliates = affiliates.length;
+    const colors = [
+        "bg-blue-500",
+        "bg-cyan-500",
+        "bg-indigo-500",
+        "bg-fuchsia-500",
+        "bg-purple-500",
+    ];
+    let colorIndex = 0;
+
+    return Object.keys(countryData).map((country) => {
+        const count = countryData[country].count;
+        const share = ((count / totalAffiliates) * 100).toFixed(1) + "%";
+        const color = colors[colorIndex % colors.length];
+        colorIndex += 1;
+
+        return {
+            name: country,
+            affiliates: count,
+            share,
+            color,
+        };
+    });
+};
 
 const affiliatesFormatter = (number: number) => {
     return Intl.NumberFormat("us").format(number).toString();
 };
 
 export default function AffiliatesByCountryCard() {
+    const {
+        data: affiliates,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["affiliates"],
+        queryFn: getAffiliates,
+    });
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error loading affiliates</div>;
+
+    const data = processAffiliateData(affiliates!);
+
     return (
         <>
-            <Card className="sm:mx-auto sm:max-w-lg min-w-full col-span-1 md:col-span-2 lg:col-span-4 bg-white p-4 rounded shadow">
+            <Card className="sm:mx-auto sm:max-w-lg col-span-1 md:col-span-2 lg:col-span-4 bg-white p-4 rounded shadow">
                 <h3 className="text-tremor-default font-medium text-tremor-content-strong">
                     Affiliates by Country
                 </h3>

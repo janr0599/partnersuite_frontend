@@ -39,37 +39,37 @@ function TopUpRequestsView() {
     if (data && user)
         return (
             <div className="shadow-xl rounded-lg bg-white p-10">
-                <div className="flex items-center justify-between">
-                    <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
+                <div className="flex flex-col items-start lg:flex-row md:items-center justify-between gap-6">
+                    <h1 className="text-lg md:text-2xl lg:text-3xl font-bold mb-4 md:mb-0 mr-auto">
                         {isManager(user)
                             ? "Top-Up Requests Management"
                             : "Top-Up Requests"}
                     </h1>
                     {isManager(user) ? (
-                        <div className="flex gap-6 font-semibold">
-                            <div className="inline-flex gap-2 items-center">
-                                <FiSearch className="text-gray-500" />
-
+                        <div className="flex flex-col sm:flex-row gap-6 font-normal items-start md:items-center flex-1 w-full lg:max-w-md">
+                            <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
+                                <FiSearch className="absolute left-3 text-gray-500" />
                                 <input
                                     type="text"
-                                    placeholder="Search top-up requests..."
-                                    className="bg-ehite p-2 rounded-md border border-slate-300 outline-none text-gray-500 text-sm"
+                                    placeholder="Search Top Up Request..."
+                                    className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
                                 />
                             </div>
-
-                            <select
-                                className="w-1/2 p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
-                                onChange={() => {}}
-                            >
-                                <option value="all">All Statuses</option>
-                                {Object.entries(
-                                    TopUpRequestsstatusTranslations
-                                ).map(([key, value]) => (
-                                    <option key={key} value={key}>
-                                        {value}
-                                    </option>
-                                ))}
-                            </select>
+                            <div className="md:w-1/2 min-w-36 ">
+                                <select
+                                    className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
+                                    onChange={() => {}}
+                                >
+                                    <option value="all">All Statuses</option>
+                                    {Object.entries(
+                                        TopUpRequestsstatusTranslations
+                                    ).map(([key, value]) => (
+                                        <option key={key} value={key}>
+                                            {value}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                     ) : (
                         <button

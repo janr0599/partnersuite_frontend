@@ -59,6 +59,52 @@ export const getPreviousDayTickets = async (): Promise<DashboardTickets> => {
     }
 };
 
+export const getLatestTickets = async () => {
+    try {
+        const { data } = await api.get<{ tickets: Tickets }>(
+            "/tickets/latestTickets"
+        );
+        const validation = ticketsSchema.safeParse(data.tickets);
+        if (!validation.success) {
+            console.error(
+                "getallTickets data validation failed:",
+                validation.error.errors
+            );
+            throw new Error("Invalid data");
+        }
+        console.log(validation.data);
+        return validation.data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const getTicketsByStatus = async (status: Ticket["status"]) => {
+    try {
+        const { data } = await api.get<{ tickets: Tickets }>(
+            `/tickets/${status}`
+        );
+        const validation = ticketsSchema.safeParse(data.tickets);
+        if (!validation.success) {
+            console.error(
+                "getTicketsByStatus data validation failed:",
+                validation.error.errors
+            );
+            throw new Error("Invalid data");
+        }
+        console.log(validation.data);
+        return validation.data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
 export const createTicket = async (formData: TicketFormData) => {
     try {
         const { data } = await api.post<{ message: string }>(

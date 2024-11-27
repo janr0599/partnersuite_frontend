@@ -77,7 +77,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
             accessorKey: "platform",
         },
         {
-            header: "Contract Type",
+            header: "Contract",
             accessorKey: "contractType",
         },
         {

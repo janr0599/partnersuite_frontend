@@ -14,7 +14,7 @@ const FAQDetails = ({ faq }: FAQDetailsProps) => {
     return (
         <Disclosure as="div" className="p-6">
             <DisclosureButton className="group flex w-full items-center justify-between">
-                <span className="text-sm lg:text-lg font-medium text-slate-900 group-data-[hover]:opacity-80 text-left">
+                <span className="text-sm lg:text-base font-medium text-slate-900 group-data-[hover]:opacity-80 text-left">
                     {faq.question}
                 </span>
                 <FiChevronDown className="size-5 fill-slate-100 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
