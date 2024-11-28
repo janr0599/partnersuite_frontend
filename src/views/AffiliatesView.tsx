@@ -32,7 +32,7 @@ function AffiliatesView() {
                     </h1>
                     <div className="flex gap-6 font-bold">
                         <button
-                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm"
+                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm truncate"
                             onClick={() =>
                                 navigate(
                                     location.pathname + "?newAffiliate=true"

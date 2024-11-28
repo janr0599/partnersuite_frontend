@@ -115,7 +115,7 @@ const LatestTicketsTable = ({ data, isLoading }: LatestTicketsTableProps) => {
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-3 border-b border-slate-300 text-sm md:text-md font-semibold"
+                                    className="px-4 py-3 border-b border-slate-300 text-sm md:text-md font-semibold truncate"
                                 >
                                     <div className="inline-flex items-center gap-2">
                                         {cell.getValue<string>() === "open" && (

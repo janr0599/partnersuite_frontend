@@ -77,6 +77,8 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
             return "Affiliates";
         } else if (dynamicSelected === "faqs") {
             return "FAQs";
+        } else if (dynamicSelected === "profile") {
+            return "";
         }
         return "Dashboard";
     };
@@ -108,6 +110,12 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
 
     const [open, setOpen] = useState(true);
     const [selected, setSelected] = useState(defaultSelected);
+
+    useMemo(() => {
+        if (dynamicSelected === "profile") {
+            setSelected("");
+        }
+    }, [dynamicSelected]);
 
     return (
         <aside

@@ -315,8 +315,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium
-                                    "
+                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium truncate"
                                 >
                                     <div className="inline-flex items-center gap-2">
                                         {flexRender(

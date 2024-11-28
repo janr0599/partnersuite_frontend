@@ -9,6 +9,9 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginView from "./views/auth/LoginView";
 import RegistrationView from "./views/auth/RegistrationView";
 import ManagerLayout from "./layouts/ManagerLayout";
+import ProfileLayout from "./layouts/ProfileLayout";
+import ProfileView from "./views/profile/ProfileView";
+import ChangePasswordView from "./views/profile/ChangePasswordView";
 
 function Router() {
     return (
@@ -33,6 +36,13 @@ function Router() {
                         element={<TopUpRequestsView />}
                     />
                     <Route path="/faqs" element={<FAQsView />} />
+                    <Route element={<ProfileLayout />}>
+                        <Route path="/profile" element={<ProfileView />} />
+                        <Route
+                            path="/profile/change-password"
+                            element={<ChangePasswordView />}
+                        />
+                    </Route>
                 </Route>
 
                 <Route element={<AuthLayout />}>
