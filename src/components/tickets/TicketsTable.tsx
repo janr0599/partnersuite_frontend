@@ -303,7 +303,11 @@ function TicketsTable({
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-left text-sm md:text-md font-medium cursor-pointer"
+                                    className={`${
+                                        header.id === "actions"
+                                            ? "cursor-default"
+                                            : "cursor-pointer"
+                                    } px-4 py-2 border-b border-slate-300 text-left text-sm md:text-md font-medium select-none`}
                                     onClick={header.column.getToggleSortingHandler()}
                                 >
                                     {header.isPlaceholder ? null : (

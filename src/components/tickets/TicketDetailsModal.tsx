@@ -51,6 +51,9 @@ export default function TickeDetailsModal({
             queryClient.invalidateQueries({
                 queryKey: ["tickets"],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["ticket", ticketId],
+            });
             toast.success(message);
             navigate(location.pathname, { replace: true });
         },
@@ -115,7 +118,7 @@ export default function TickeDetailsModal({
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6">
-                                    <div className="md:flex justify-between items-center mb-5">
+                                    <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
                                                 Created on:{" "}
@@ -130,7 +133,7 @@ export default function TickeDetailsModal({
                                         <div className="">
                                             <DialogTitle
                                                 as="h3"
-                                                className="font-black text-xl mb-2"
+                                                className="font-black text-lg md:text-xl mb-2"
                                             >
                                                 Ticket Details - {formattedId}
                                             </DialogTitle>
@@ -149,7 +152,7 @@ export default function TickeDetailsModal({
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="title"
-                                            className="font-semibold text-md"
+                                            className="font-semibold text-sm md:text-base"
                                         >
                                             Title
                                         </label>
@@ -161,7 +164,7 @@ export default function TickeDetailsModal({
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="description"
-                                            className="font-semibold text-md"
+                                            className="font-semibold text-sm md:text-base"
                                         >
                                             Description
                                         </label>
@@ -173,7 +176,7 @@ export default function TickeDetailsModal({
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="category"
-                                            className="font-semibold text-md"
+                                            className="font-semibold text-sm md:text-base"
                                         >
                                             Category
                                         </label>
@@ -188,11 +191,11 @@ export default function TickeDetailsModal({
 
                                     {isManager(user) ? (
                                         <div className="mb-10 space-y-3">
-                                            <label className="font-semibold block">
+                                            <label className="font-semibold block text-sm md:text-base">
                                                 Status:
                                             </label>
                                             <select
-                                                className="w-1/4 p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700"
+                                                className="p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700 min-w-[120px]"
                                                 defaultValue={data.status}
                                                 onChange={handleChange}
                                             >
@@ -212,7 +215,7 @@ export default function TickeDetailsModal({
                                         <div className="flex flex-col gap-2">
                                             <label
                                                 htmlFor="status"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 Status
                                             </label>

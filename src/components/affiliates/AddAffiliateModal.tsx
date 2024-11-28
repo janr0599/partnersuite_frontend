@@ -149,10 +149,11 @@ export default function AddAffiliateModal() {
                                             type="submit"
                                             value="Add Affiliate"
                                             disabled={!isValid}
-                                            className={`bg-black hover:opacity-80 w-full p-3 text-white capitalize font-bold cursor-pointer transition-opacity rounded-md ${
-                                                !isValid &&
-                                                "opacity-50 cursor-not-allowed"
-                                            }`}
+                                            className={` ${
+                                                !isValid
+                                                    ? "opacity-50 hover:cursor-not-allowed"
+                                                    : "hover:opacity-80 transition-opacity"
+                                            } bg-black w-full p-3 text-white capitalize font-bold cursor-pointer rounded-md text-sm md:text-base`}
                                         />
                                     </form>
                                 </DialogPanel>

@@ -31,7 +31,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                 selectedIndex={activeTab}
                 onSelect={(index) => setActiveTab(index)}
             >
-                <TabList className="flex justify-around bg-gray-100 p-1 border border-slate-300 rounded-md">
+                <TabList className="flex justify-around bg-gray-100 p-1 border border-slate-300 rounded-md text-sm md:text-base">
                     <Tab
                         className={`py-2 px-4 cursor-pointer rounded-md flex-1 transition-colors hover:bg-gray-200 ${
                             activeTab === 0
@@ -54,14 +54,17 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
 
                 <TabPanel className="space-y-3">
                     <div className="flex flex-col gap-2 mt-2">
-                        <label htmlFor="name" className="font-semibold text-md">
+                        <label
+                            htmlFor="name"
+                            className="font-semibold text-sm md:text-base"
+                        >
                             Name
                         </label>
                         <input
                             id="name"
                             type="text"
                             placeholder="affiliate's name"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("name", {
                                 required: "name is required",
                             })}
@@ -73,7 +76,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2">
                         <label
                             htmlFor="email"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Email
                         </label>
@@ -81,7 +84,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="email"
                             type="email"
                             placeholder="affiliate's email"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("email", {
                                 required: "email is required",
                             })}
@@ -93,7 +96,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2">
                         <label
                             htmlFor="password"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Password
                         </label>
@@ -101,7 +104,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="password"
                             type="password"
                             placeholder="secret password"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
@@ -120,7 +123,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2">
                         <label
                             htmlFor="confirmPassword"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Confirm Password
                         </label>
@@ -128,7 +131,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="confirmPassword"
                             type="password"
                             placeholder="confirm password"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("confirmPassword", {
                                 required: "Password must be confirmed",
                             })}
@@ -143,17 +146,14 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
 
                 <TabPanel className="space-y-3">
                     <div className="flex flex-col gap-2 mt-2">
-                        <label
-                            htmlFor="platform"
-                            className="font-semibold text-md"
-                        >
+                        <label htmlFor="platform" className="font-semibold">
                             Platform
                         </label>
                         <input
                             id="platform"
                             type="text"
                             placeholder="platform"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("platform", {
                                 required: "platform is required",
                             })}
@@ -167,13 +167,13 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2">
                         <label
                             htmlFor="contractType"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Contract Type
                         </label>
                         <select
                             id="contractType"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("contractType", {
                                 required: "contractType is required",
                             })}
@@ -192,7 +192,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2 mt-2">
                         <label
                             htmlFor="country"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Country
                         </label>
@@ -200,7 +200,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="country"
                             type="text"
                             placeholder="country"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("country", {
                                 required: "country is required",
                             })}
@@ -212,14 +212,17 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                         )}
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="CPA" className="font-semibold text-md">
+                        <label
+                            htmlFor="CPA"
+                            className="font-semibold text-sm md:text-base"
+                        >
                             Bonus Amount
                         </label>
                         <input
                             id="BonusAmount"
                             type="number"
                             placeholder="Bonus amount"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("BonusAmount")}
                         />
                         {errors.BonusAmount && (
@@ -229,14 +232,17 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                         )}
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="CPA" className="font-semibold text-md">
+                        <label
+                            htmlFor="CPA"
+                            className="font-semibold text-sm md:text-base"
+                        >
                             CPA
                         </label>
                         <input
                             id="CPA"
                             type="number"
                             placeholder="CPA amount"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("CPA")}
                         />
                         {errors.CPA && (
@@ -246,7 +252,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex flex-col gap-2">
                         <label
                             htmlFor="RevShare"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             RevShare
                         </label>
@@ -254,7 +260,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="RevShare"
                             type="number"
                             placeholder="Revenue Share %"
-                            className="w-full p-2 border border-gray-200 rounded-md"
+                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                             {...register("RevShare")}
                         />
                         {errors.RevShare && (
@@ -266,7 +272,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                     <div className="flex items-center gap-2 mt-4">
                         <label
                             htmlFor="baselineCheckbox"
-                            className="font-semibold text-md"
+                            className="font-semibold text-sm md:text-base"
                         >
                             Add Baseline
                         </label>
@@ -282,7 +288,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                         <div className="flex flex-col gap-2 mt-4">
                             <label
                                 htmlFor="baseline"
-                                className="font-semibold text-md"
+                                className="font-semibold text-sm md:text-base"
                             >
                                 Baseline Number
                             </label>
@@ -290,7 +296,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                                 id="baseline"
                                 type="number"
                                 placeholder="Baseline number"
-                                className="w-full p-2 border border-gray-200 rounded-md"
+                                className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
                                 {...register("Baseline", {
                                     required: isBaselineChecked
                                         ? "Baseline number is required"

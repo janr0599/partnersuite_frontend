@@ -13,10 +13,12 @@ import { FilterFn } from "@tanstack/react-table";
 import { Affiliate, Affiliates } from "@/types/affiliateTypes";
 import { useNavigate } from "react-router-dom";
 import {
+    FiChevronDown,
     FiChevronLeft,
     FiChevronRight,
     FiChevronsLeft,
     FiChevronsRight,
+    FiChevronUp,
     FiEdit,
     FiSearch,
     FiTrash2,
@@ -65,7 +67,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                     "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
                 confirmButton: "hover:bg-red-600 transition-colors",
                 popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
-                title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
+                title: "text-black font-bold text-left text-md w-full p-3 rounded-md text-2xl",
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -263,14 +265,42 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-left text-md font-medium"
+                                    className={`${
+                                        header.id === "actions"
+                                            ? "cursor-default"
+                                            : "cursor-pointer"
+                                    } px-2 py-2 border-b border-slate-300 text-left text-sm md:text-md font-medium select-none`}
+                                    onClick={header.column.getToggleSortingHandler()}
                                 >
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
+                                    {header.isPlaceholder ? null : (
+                                        <div className="flex items-center gap-2">
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                            {!header.column.getIsSorted() &&
+                                                header.id !== "actions" && (
+                                                    <span className="">
+                                                        <FiChevronUp className="text-sm -mb-2" />
+                                                        <FiChevronDown className="text-sm" />
+                                                    </span>
+                                                )}
+
+                                            {
+                                                {
+                                                    asc: (
+                                                        <FiChevronUp className="text-sm" />
+                                                    ),
+                                                    desc: (
+                                                        <FiChevronDown className="text-sm" />
+                                                    ),
+                                                }[
+                                                    (header.column.getIsSorted() as string) ||
+                                                        "null"
+                                                ]
+                                            }
+                                        </div>
+                                    )}
                                 </th>
                             ))}
                         </tr>

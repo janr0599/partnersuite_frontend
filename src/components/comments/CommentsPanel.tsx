@@ -12,7 +12,7 @@ function CommentsPanel({ comments }: CommentsPanelProps) {
             <div className="divide-y divide-gray-300 my-10">
                 {comments.length ? (
                     <>
-                        <p className="font-bold text-2xl mb-5 text-center">
+                        <p className="font-bold text-xl md:text-2xl mb-5 text-center">
                             Comments
                         </p>
                         {comments.map((comment) => (

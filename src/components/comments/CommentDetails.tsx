@@ -48,6 +48,7 @@ function CommentDetails({ comment }: CommentDetailProps) {
     const handleDeleteComment = () => {
         Swal.fire({
             title: "Delete comment?",
+            text: "This cannot be undone",
             showCancelButton: true,
             confirmButtonColor: "#ef4444",
             confirmButtonText: "Delete",

@@ -1,6 +1,4 @@
 import { Card } from "@tremor/react";
-import { useQuery } from "@tanstack/react-query";
-import { getPreviousDayTickets, getTickets } from "@/api/ticketsAPI";
 import { isToday, isYesterday } from "date-fns";
 import { DashboardTickets, Tickets } from "@/types/ticketsTypes";
 
@@ -63,27 +61,15 @@ const calculateTicketStats = (
     ];
 };
 
-export const TicketsStatCard = () => {
-    const {
-        data: currentTickets,
-        isLoading,
-        error,
-    } = useQuery({
-        queryKey: ["currentTickets"],
-        queryFn: getTickets,
-    });
-    const {
-        data: previousDayTickets,
-        isLoading: isLoadingPrevious,
-        error: errorPrevious,
-    } = useQuery({
-        queryKey: ["previousDayTickets"],
-        queryFn: getPreviousDayTickets,
-    });
+type TicketsStatCardProps = {
+    currentTickets: Tickets;
+    previousDayTickets: DashboardTickets;
+};
 
-    if (isLoading || isLoadingPrevious) return <div>Loading...</div>;
-    if (error || errorPrevious) return <div>Error loading tickets...</div>;
-
+export const TicketsStatCard = ({
+    currentTickets,
+    previousDayTickets,
+}: TicketsStatCardProps) => {
     const ticketStats = calculateTicketStats(
         currentTickets!,
         previousDayTickets!

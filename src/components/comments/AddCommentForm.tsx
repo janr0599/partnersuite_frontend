@@ -82,7 +82,7 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
             className="space-y-3 pb-3"
             noValidate
         >
-            <label htmlFor="content" className="font-bold">
+            <label htmlFor="content" className="font-bold text-sm md:text-base">
                 {comment ? "" : "Make a comment:"}
             </label>
             <div>
@@ -96,7 +96,7 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
                         placeholder="Enter your comment"
                         className={`${
                             comment ? "text-sm" : "text-base"
-                        } w-full p-2 bg-white border border-gray-300 rounded-lg `}
+                        } w-full p-2 bg-white border border-gray-300 rounded-lg text-sm md:text-base `}
                         {...register("content")}
                     />
                     <input
@@ -104,12 +104,12 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
                         value={comment ? "Update" : "Add comment"}
                         className={` ${
                             comment ? "text-sm" : "text-base"
-                        } w-full px-4 py-2 font-bold bg-black hover:opacity-80 text-white rounded-lg cursor-pointer transition-opacity md:w-1/4`}
+                        } w-full px-4 py-2 font-bold bg-black hover:opacity-80 text-white rounded-lg cursor-pointer transition-opacity md:w-1/4 text-sm md:text-base`}
                     />
                     {comment && (
                         <button
                             onClick={onCancel}
-                            className="text-black w-full p-2 rounded-lg font-bold bg-slate-200 hover:bg-slate-300 transition-colors md:w-1/4"
+                            className="text-black w-full p-2 rounded-lg font-bold bg-slate-200 hover:bg-slate-300 transition-colors md:w-1/4 text-sm md:text-base"
                         >
                             Cancel
                         </button>
