@@ -1,11 +1,10 @@
 import { createTopUpRequest, getTopUpRequests } from "@/api/topUpRequestsAPI";
 import TopUpRequestsTable from "@/components/TopUpRequests/TopUpRequestsTable";
 import { useAuth } from "@/hooks/useauth";
-import { TopUpRequestsstatusTranslations } from "@/locales/en";
 import { TopUpRequests } from "@/types/topUpRequestsTypes";
 import { isManager } from "@/utils/policies";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FiDollarSign, FiSearch } from "react-icons/fi";
+import { FiDollarSign } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 function TopUpRequestsView() {
@@ -38,42 +37,16 @@ function TopUpRequestsView() {
 
     if (data && user)
         return (
-            <div className="shadow-xl rounded-lg bg-white p-10">
-                <div className="flex flex-col items-start lg:flex-row md:items-center justify-between gap-6">
+            <div className="shadow-xl rounded-lg bg-white p-6 md:px-10">
+                <div className="flex flex-col items-start sm:flex-row md:items-center justify-between">
                     <h1 className="text-lg md:text-2xl lg:text-3xl font-bold mb-4 md:mb-0 mr-auto">
                         {isManager(user)
                             ? "Top-Up Requests Management"
                             : "Top-Up Requests"}
                     </h1>
-                    {isManager(user) ? (
-                        <div className="flex flex-col sm:flex-row gap-6 font-normal items-start md:items-center flex-1 w-full lg:max-w-md">
-                            <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
-                                <FiSearch className="absolute left-3 text-gray-500" />
-                                <input
-                                    type="text"
-                                    placeholder="Search Top Up Request..."
-                                    className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
-                                />
-                            </div>
-                            <div className="md:w-1/2 min-w-36 ">
-                                <select
-                                    className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
-                                    onChange={() => {}}
-                                >
-                                    <option value="all">All Statuses</option>
-                                    {Object.entries(
-                                        TopUpRequestsstatusTranslations
-                                    ).map(([key, value]) => (
-                                        <option key={key} value={key}>
-                                            {value}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                    ) : (
+                    {!isManager(user) && (
                         <button
-                            className="bg-white hover:bg-slate-100 text-black px-4 py-2 border border-slate-500 rounded-md inline-flex items-center gap-2 transition-colors font-bold"
+                            className="bg-white hover:bg-slate-100 text-black text-xs md:text-base px-4 py-2 border border-slate-500 rounded-md inline-flex items-center gap-2 transition-colors font-bold"
                             onClick={handleCreateTopUpRequest}
                         >
                             <FiDollarSign className="text-xl" />

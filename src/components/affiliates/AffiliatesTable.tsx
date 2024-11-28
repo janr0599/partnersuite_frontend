@@ -2,15 +2,32 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    getFilteredRowModel,
+    SortingState,
     useReactTable,
 } from "@tanstack/react-table";
+import { FilterFn } from "@tanstack/react-table";
+
 import { Affiliate, Affiliates } from "@/types/affiliateTypes";
 import { useNavigate } from "react-router-dom";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import {
+    FiChevronLeft,
+    FiChevronRight,
+    FiChevronsLeft,
+    FiChevronsRight,
+    FiEdit,
+    FiSearch,
+    FiTrash2,
+    FiUsers,
+} from "react-icons/fi";
 import { deleteAffiliate } from "@/api/affiliatesAPI";
 import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { AffiliateStatusTranslations } from "@/locales/en";
 
 type AffiliatesTableProps = {
     affiliates: Affiliates;
@@ -57,6 +74,19 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                 });
             }
         });
+    };
+
+    const statusFilter: FilterFn<Affiliate> = (row, columnId, filterValue) => {
+        if (!filterValue) return true; // Show all rows if no filter is applied
+        return row.getValue<string>(columnId) === filterValue; // Match row's status
+    };
+
+    const filterFns = {
+        statusFilter,
+    };
+
+    const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        table.getColumn("status")?.setFilterValue(e.target.value);
     };
 
     const columns: ColumnDef<Affiliate>[] = [
@@ -116,6 +146,9 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
         {
             header: "Status",
             accessorKey: "status",
+            cell: (info) =>
+                AffiliateStatusTranslations[info.getValue<string>()],
+            filterFn: statusFilter, // Use the custom filter
         },
         {
             header: "Actions",
@@ -156,18 +189,74 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
         },
     ];
 
+    const [filtering, setFiltering] = useState("");
+
+    const [sorting, setSorting] = useState<SortingState>([]);
+
     const table = useReactTable({
         data: affiliates || [],
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: 8,
+            },
+        },
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        state: {
+            sorting,
+            globalFilter: filtering,
+        },
+        onGlobalFilterChange: setFiltering,
+        onSortingChange: setSorting,
+        filterFns,
     });
 
     if (isLoading) {
         return <p>Loading...</p>;
     }
     return (
-        <div className="mt-8 overflow-x-auto">
-            <table className="min-w-full">
+        <div className="mt-4 overflow-x-auto">
+            <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4">
+                <p className="text-slate-500 inline-flex gap-2 items-center">
+                    <FiUsers /> Total: {affiliates?.length}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start md:items-center flex-1 w-full lg:max-w-md mt-1">
+                    <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
+                        <FiSearch className="absolute left-3 text-gray-500" />
+                        <input
+                            type="text"
+                            placeholder="Search All columns..."
+                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
+                            value={filtering}
+                            onChange={(e) => setFiltering(e.target.value)}
+                        />
+                    </div>
+                    <div className="md:w-1/2 min-w-36 ">
+                        <select
+                            className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
+                            onChange={handleStatusChange}
+                            value={
+                                (table
+                                    .getColumn("status")
+                                    ?.getFilterValue() as string) || ""
+                            }
+                        >
+                            <option value="">All</option>
+                            {Object.entries(AffiliateStatusTranslations).map(
+                                ([key, value]) => (
+                                    <option key={key} value={key}>
+                                        {value}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table className="my-4 min-w-full">
                 <thead className="text-slate-500">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
@@ -211,6 +300,40 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                     ))}
                 </tbody>
             </table>
+            <div className="flex justify-center items-center gap-5">
+                <button
+                    className={table.getCanPreviousPage() ? "" : "opacity-20"}
+                    onClick={() => table.setPageIndex(0)}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    <FiChevronsLeft />
+                </button>
+                <button
+                    className={table.getCanPreviousPage() ? "" : "opacity-20"}
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    <FiChevronLeft />
+                </button>
+                <span className="text-sm">
+                    {table.getState().pagination.pageIndex + 1} of{" "}
+                    {table.getPageCount()}
+                </span>
+                <button
+                    className={table.getCanNextPage() ? "" : "opacity-20"}
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                >
+                    <FiChevronRight />
+                </button>
+                <button
+                    className={table.getCanNextPage() ? "" : "opacity-20"}
+                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                    disabled={!table.getCanNextPage()}
+                >
+                    <FiChevronsRight />
+                </button>
+            </div>
         </div>
     );
 }

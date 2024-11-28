@@ -151,7 +151,7 @@ export default function AddAffiliateModal() {
                                             disabled={!isValid}
                                             className={`bg-black hover:opacity-80 w-full p-3 text-white capitalize font-bold cursor-pointer transition-opacity rounded-md ${
                                                 !isValid &&
-                                                "opacity-50 cursor-not-allowed hover:opacity-50"
+                                                "opacity-50 cursor-not-allowed"
                                             }`}
                                         />
                                     </form>

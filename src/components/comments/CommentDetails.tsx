@@ -79,19 +79,20 @@ function CommentDetails({ comment }: CommentDetailProps) {
         return (
             <div key={comment._id} className="">
                 {!editingComment ? (
-                    <div className="py-3 flex justify-between items-center">
-                        <div>
-                            <p className="text-sm flex gap-2 items-center">
+                    <div className="py-3 flex justify-between items-center w-full">
+                        <div className="w-full space-y-1">
+                            <p className="text-sm max-w-[80%]">
                                 {comment.content}{" "}
-                                <span className="text-slate-400 text-sm">
-                                    ({comment.createdBy.name})
-                                </span>
+                            </p>
+                            <p className="text-slate-400 text-xs">
+                                ({comment.createdBy.name})
                                 {updatedComment && (
                                     <span className="text-slate-400 text-xs">
-                                        - edited
+                                        {""} - edited
                                     </span>
                                 )}
                             </p>
+
                             <p className="text-xs text-slate-400">
                                 {formatDate(comment.createdAt)}
                             </p>
@@ -99,10 +100,10 @@ function CommentDetails({ comment }: CommentDetailProps) {
                         {canDelete && (
                             <div className="inline-flex gap-x-2">
                                 <button onClick={handleEditComment}>
-                                    <FiEdit className="size-5 hover:text-indigo-500 transition-colors" />
+                                    <FiEdit className="size-4 md:size-5 hover:text-indigo-500 transition-colors" />
                                 </button>
                                 <button onClick={handleDeleteComment}>
-                                    <FiTrash2 className="size-5 hover:text-red-500 transition-colors" />
+                                    <FiTrash2 className="size-4 md:size-5 hover:text-red-500 transition-colors" />
                                 </button>
                             </div>
                         )}

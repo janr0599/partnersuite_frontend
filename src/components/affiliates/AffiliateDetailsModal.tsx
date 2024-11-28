@@ -97,31 +97,31 @@ export default function AffiliateModalDetails() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-8 space-y-5">
+                                <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 md:p-8 space-y-4 md:space-y-5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2">
-                                            <div className="rounded-full size-20 bg-slate-200 inline-flex items-center justify-center">
+                                            <div className="rounded-full  size-14 md:size-20 bg-slate-200 inline-flex items-center justify-center">
                                                 {/* <img src={""} alt="avatar" /> */}
-                                                <FiUser className="text-3xl" />
+                                                <FiUser className="text-xl md:text-3xl" />
                                             </div>
                                             <div className="">
                                                 <DialogTitle
                                                     as="h3"
-                                                    className="font-black text-xl"
+                                                    className="font-black text-base md:text-xl"
                                                 >
                                                     {data.name}
                                                 </DialogTitle>
-                                                <p className="text-sm text-slate-500">
+                                                <p className="text-xs md:text-sm text-slate-500">
                                                     {data.email}
                                                 </p>
                                             </div>
                                         </div>
-                                        <p className="text-sm bg-black text-white p-2 rounded-full w-fit font-bold">
+                                        <p className="text-xs md:text-sm bg-black text-white p-2 rounded-full w-fit font-bold">
                                             {data.platform}
                                         </p>
                                     </div>
                                     <FiX
-                                        className="absolute -top-2 right-6 text-xl cursor-pointer"
+                                        className="absolute -top-2 right-3 md:right-6 text-xl cursor-pointer"
                                         onClick={() =>
                                             navigate(location.pathname, {
                                                 replace: true,
@@ -129,15 +129,15 @@ export default function AffiliateModalDetails() {
                                         }
                                     />
 
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex  gap-2 items-center justify-between flex-wrap">
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-lg"
                                             >
                                                 Contract:
                                             </label>
-                                            <p className="text-md">
+                                            <p className="text-sm md:text-lg">
                                                 {data.contractType}
                                             </p>
                                         </div>
@@ -145,21 +145,21 @@ export default function AffiliateModalDetails() {
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-lg"
                                             >
                                                 Country:
                                             </label>
-                                            <p className="text-md">
+                                            <p className="text-sm md:text-lg">
                                                 {data.country}
                                             </p>
                                         </div>
 
-                                        <div className="flex items-center gap-2">
-                                            <label className="font-semibold block p-2">
+                                        <div className="flex items-center gap-2 -ml-2">
+                                            <label className="font-semibold p-2 text-sm md:text-lg">
                                                 Status:
                                             </label>
                                             <select
-                                                className="p-1 bg-white border border-gray-300 rounded-lg text-sm text-slate-700"
+                                                className="p-1 bg-white border border-gray-300 rounded-lg text-sm text-slate-700 min-w-[100px]"
                                                 defaultValue={data.status}
                                                 onChange={handleChange}
                                             >
@@ -177,37 +177,37 @@ export default function AffiliateModalDetails() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2 justify-between flex-wrap">
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-lg"
                                             >
                                                 CPA:
                                             </label>
-                                            <p className="text-md">
+                                            <p className="text-sm md:text-lg">
                                                 {data.CPA} €
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-lg"
                                             >
                                                 RevShare:
                                             </label>
-                                            <p className="text-md">
+                                            <p className="text-sm md:text-lg">
                                                 {data.RevShare} %
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-md"
+                                                className="font-semibold text-sm md:text-lg"
                                             >
                                                 Baseline:
                                             </label>
-                                            <p className="text-md">
+                                            <p className="text-sm md:text-lg">
                                                 {data.Baseline} €
                                             </p>
                                         </div>

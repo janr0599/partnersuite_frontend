@@ -66,7 +66,7 @@ export default function AffiliatesByCountryCard() {
 
     return (
         <>
-            <Card className="sm:mx-auto sm:max-w-lg col-span-1 md:col-span-2 lg:col-span-4 bg-white p-4 rounded shadow">
+            <Card className="sm:mx-auto w-full col-span-1 md:col-span-2 lg:col-span-4 bg-white p-4 rounded shadow">
                 <h3 className="text-tremor-default font-medium text-tremor-content-strong">
                     Affiliates by Country
                 </h3>

@@ -1,11 +1,10 @@
 import TicketsTable from "@/components/tickets/TicketsTable";
-import { FiPlus, FiSearch } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTickets } from "@/api/ticketsAPI";
 import { useAuth } from "@/hooks/useauth";
 import { isManager } from "@/utils/policies";
-import { statusTranslations } from "@/locales/en";
 import CreateTicketModal from "@/components/tickets/CreateTicketModal";
 import EditTicketData from "@/components/tickets/EditTicketData";
 import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
@@ -29,7 +28,7 @@ function TicketsView() {
     if (data && user)
         return (
             <div className="bg-white p-6 md:px-10 shadow-xl rounded-lg">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex flex-row items-start md:items-center justify-between gap-4 mb-2">
                     <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
                         {isManager(user!)
                             ? "Ticket Management"

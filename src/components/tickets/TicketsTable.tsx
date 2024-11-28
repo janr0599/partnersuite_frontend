@@ -25,7 +25,6 @@ import {
     FiChevronUp,
     FiClock,
     FiEdit,
-    FiPlus,
     FiSearch,
     FiTrash2,
 } from "react-icons/fi";
@@ -105,13 +104,27 @@ function TicketsTable({
         return row.getValue<string>(columnId) === filterValue; // Match row's status
     };
 
+    const categoryFilter: FilterFn<TableTicket> = (
+        row,
+        columnId,
+        filterValue
+    ) => {
+        if (!filterValue) return true; // Show all rows if no filter is applied
+        return row.getValue<string>(columnId) === filterValue; // Match row's status
+    };
+
     // Custom filter functions
     const filterFns = {
         statusFilter,
+        categoryFilter,
     };
 
     const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         table.getColumn("status")?.setFilterValue(e.target.value);
+    };
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        table.getColumn("category")?.setFilterValue(e.target.value);
     };
 
     const columns: ColumnDef<TableTicket>[] = [
@@ -142,6 +155,7 @@ function TicketsTable({
             header: "Category",
             accessorKey: "category",
             cell: (info) => categoryTranslations[info.getValue<string>()],
+            filterFn: categoryFilter, // Use the custom filter
         },
         {
             header: "Created",
@@ -154,6 +168,7 @@ function TicketsTable({
         {
             header: "Actions",
             id: "actions",
+            enableSorting: false,
             cell: ({ row }) => (
                 <>
                     <button
@@ -225,36 +240,59 @@ function TicketsTable({
 
     return (
         <div className="overflow-x-auto mt-4 lg:mt-0">
-            <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full lg:max-w-md lg:ml-auto">
-                <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
-                    <FiSearch className="absolute left-3 text-gray-500" />
-                    <input
-                        type="text"
-                        placeholder="Search Tickets..."
-                        className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
-                        value={filtering}
-                        onChange={(e) => setFiltering(e.target.value)}
-                    />
-                </div>
-                <div className="md:w-1/2 min-w-36 ">
-                    <select
-                        className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
-                        onChange={handleStatusChange}
-                        value={
-                            (table
-                                .getColumn("status")
-                                ?.getFilterValue() as string) || ""
-                        } // Cast value
-                    >
-                        <option value="">All</option>
-                        {Object.entries(statusTranslations).map(
-                            ([key, value]) => (
-                                <option key={key} value={key}>
-                                    {value}
-                                </option>
-                            )
-                        )}
-                    </select>
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full mt-1 justify-between">
+                <div className="hidden md:block -mb-2"></div>
+                <div className="flex flex-col md:flex-row gap-2">
+                    <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto w-2/4">
+                        <FiSearch className="absolute left-3 text-gray-500" />
+                        <input
+                            type="text"
+                            placeholder="Search All columns..."
+                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500"
+                            value={filtering}
+                            onChange={(e) => setFiltering(e.target.value)}
+                        />
+                    </div>
+                    <div className="md:w-1/4 min-w-36 ">
+                        <select
+                            className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
+                            onChange={handleStatusChange}
+                            value={
+                                (table
+                                    .getColumn("status")
+                                    ?.getFilterValue() as string) || ""
+                            } // Cast value
+                        >
+                            <option value="">Status</option>
+                            {Object.entries(statusTranslations).map(
+                                ([key, value]) => (
+                                    <option key={key} value={key}>
+                                        {value}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+                    <div className="md:w-1/4 min-w-36 ">
+                        <select
+                            className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
+                            onChange={handleCategoryChange}
+                            value={
+                                (table
+                                    .getColumn("category")
+                                    ?.getFilterValue() as string) || ""
+                            } // Cast value
+                        >
+                            <option value="">Category</option>
+                            {Object.entries(categoryTranslations).map(
+                                ([key, value]) => (
+                                    <option key={key} value={key}>
+                                        {value}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -274,13 +312,21 @@ function TicketsTable({
                                                 header.column.columnDef.header,
                                                 header.getContext()
                                             )}
+                                            {!header.column.getIsSorted() &&
+                                                header.id !== "actions" && (
+                                                    <span className="">
+                                                        <FiChevronUp className="text-sm -mb-2" />
+                                                        <FiChevronDown className="text-sm" />
+                                                    </span>
+                                                )}
+
                                             {
                                                 {
                                                     asc: (
-                                                        <FiChevronUp className="text-lg" />
+                                                        <FiChevronUp className="text-sm" />
                                                     ),
                                                     desc: (
-                                                        <FiChevronDown className="text-lg" />
+                                                        <FiChevronDown className="text-sm" />
                                                     ),
                                                 }[
                                                     (header.column.getIsSorted() as string) ||
@@ -296,11 +342,14 @@ function TicketsTable({
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="hover:bg-slate-100">
+                        <tr
+                            key={row.id}
+                            className="hover:bg-slate-100 transition-colors"
+                        >
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-3 border-b border-slate-300 text-sm md:text-md font-semibold"
+                                    className="px-4 py-3 border-b border-slate-300 text-sm font-semibold"
                                 >
                                     <div className="inline-flex items-center gap-2">
                                         {cell.getValue<string>() === "open" && (
@@ -327,6 +376,7 @@ function TicketsTable({
             </table>
             <div className="flex justify-center items-center gap-5">
                 <button
+                    className={table.getCanPreviousPage() ? "" : "opacity-20"}
                     onClick={() => table.setPageIndex(0)}
                     disabled={!table.getCanPreviousPage()}
                 >
@@ -340,7 +390,7 @@ function TicketsTable({
                     <FiChevronLeft />
                 </button>
                 <span className="text-sm">
-                    Page {table.getState().pagination.pageIndex + 1} of{" "}
+                    {table.getState().pagination.pageIndex + 1} of{" "}
                     {table.getPageCount()}
                 </span>
                 <button
@@ -351,6 +401,7 @@ function TicketsTable({
                     <FiChevronRight />
                 </button>
                 <button
+                    className={table.getCanNextPage() ? "" : "opacity-20"}
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                     disabled={!table.getCanNextPage()}
                 >

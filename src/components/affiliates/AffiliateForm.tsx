@@ -197,9 +197,9 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             Country
                         </label>
                         <input
-                            id="platform"
+                            id="country"
                             type="text"
-                            placeholder="platform"
+                            placeholder="country"
                             className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("country", {
                                 required: "country is required",
