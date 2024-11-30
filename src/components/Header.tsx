@@ -36,13 +36,9 @@ const Header = (props: {
                     >
                         <FiAlignJustify className="relative block h-5.5 w-5.5 cursor-pointer" />
                     </button>
-                    <Link to="/" className="">
-                        PartnerSuite
-                    </Link>
+                    <p>PartnerSuite</p>
                 </div>
-                <Link to="/" className="hidden lg:block">
-                    Partnersuite
-                </Link>
+                <p className="hidden lg:block">Partnersuite</p>
                 <div className="flex items-center gap-8 2xsm:gap-7">
                     <ul className="flex items-center gap-2 sm:gap-4">
                         <FiBell className="h-12 text-xl cursor-pointer hover:opacity-50 transition-opacity" />

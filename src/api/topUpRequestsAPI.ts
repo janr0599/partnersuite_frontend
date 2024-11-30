@@ -33,7 +33,11 @@ export const createTopUpRequest = async () => {
         return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error);
+            throw new Error(
+                error.response.data.message ||
+                    error.response.data.error ||
+                    "An unexpected error occurred"
+            );
         }
         throw new Error("An unexpected error occurred");
     }

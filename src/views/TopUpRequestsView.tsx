@@ -15,17 +15,18 @@ function TopUpRequestsView() {
         retry: false,
     });
 
-    const queryclient = useQueryClient();
+    const queryClient = useQueryClient();
     const { mutate: mutateCreateTopUpRequest } = useMutation({
         mutationFn: createTopUpRequest,
-        onError: (error) => {
-            toast.error(error.message);
+        onError: (error: any) => {
+            const errorMessage =
+                error.message || "An unexpected error occurred";
+            toast.error(errorMessage);
+            console.log(errorMessage);
         },
         onSuccess: (message) => {
             toast.success(message);
-            queryclient.invalidateQueries({
-                queryKey: ["topUpRequests"],
-            });
+            queryClient.invalidateQueries({ queryKey: ["topUpRequests"] });
         },
     });
 
@@ -38,20 +39,26 @@ function TopUpRequestsView() {
     if (data && user)
         return (
             <div className="shadow-xl rounded-lg bg-white p-6 md:px-10">
-                <div className="flex flex-col items-start sm:flex-row md:items-center justify-between">
+                <div className="flex flex-col items-start sm:flex-row justify-between">
                     <h1 className="text-lg md:text-2xl lg:text-3xl font-bold mb-4 md:mb-0 mr-auto">
                         {isManager(user)
                             ? "Top-Up Requests Management"
                             : "Top-Up Requests"}
                     </h1>
                     {!isManager(user) && (
-                        <button
-                            className="bg-white hover:bg-slate-100 text-black text-xs md:text-base px-4 py-2 border border-slate-500 rounded-md inline-flex items-center gap-2 transition-colors font-bold"
-                            onClick={handleCreateTopUpRequest}
-                        >
-                            <FiDollarSign className="text-xl" />
-                            Request Bonus Top-up
-                        </button>
+                        <div className="flex flex-col gap-2">
+                            <button
+                                className="bg-white hover:bg-slate-100 text-black text-xs md:text-base px-4 py-2 border border-slate-500 rounded-md inline-flex items-center gap-2 transition-colors font-bold w-fit sm:ml-auto"
+                                onClick={handleCreateTopUpRequest}
+                            >
+                                <FiDollarSign className="text-xl" />
+                                Request Bonus Top-up
+                            </button>
+                            <p className="text-xs text-slate-500 mt-2">
+                                Requests made after 3 PM Fench Time (UTC +1)
+                                will be proceessed the next day
+                            </p>
+                        </div>
                     )}
                 </div>
                 {data.length === 0 ? (

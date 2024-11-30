@@ -31,7 +31,7 @@ const LatestTicketsTable = ({ data, isLoading }: LatestTicketsTableProps) => {
 
     const columns: ColumnDef<TableTicket>[] = [
         {
-            header: "Ticket ID",
+            header: "ID",
             accessorKey: "_id",
             cell: (info) => {
                 // Generate the custom ID format
