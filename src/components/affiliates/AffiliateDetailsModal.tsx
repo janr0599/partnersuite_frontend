@@ -133,11 +133,11 @@ export default function AffiliateModalDetails() {
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-sm md:text-lg"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 Contract:
                                             </label>
-                                            <p className="text-sm md:text-lg">
+                                            <p className="text-sm md:text-base">
                                                 {data.contractType}
                                             </p>
                                         </div>
@@ -145,17 +145,17 @@ export default function AffiliateModalDetails() {
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-sm md:text-lg"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 Country:
                                             </label>
-                                            <p className="text-sm md:text-lg">
+                                            <p className="text-sm md:text-base">
                                                 {data.country}
                                             </p>
                                         </div>
 
                                         <div className="flex items-center gap-2 -ml-2">
-                                            <label className="font-semibold p-2 text-sm md:text-lg">
+                                            <label className="font-semibold p-2 text-sm md:text-base">
                                                 Status:
                                             </label>
                                             <select
@@ -181,33 +181,33 @@ export default function AffiliateModalDetails() {
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-sm md:text-lg"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 CPA:
                                             </label>
-                                            <p className="text-sm md:text-lg">
+                                            <p className="text-sm md:text-base">
                                                 {data.CPA} €
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-sm md:text-lg"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 RevShare:
                                             </label>
-                                            <p className="text-sm md:text-lg">
+                                            <p className="text-sm md:text-base">
                                                 {data.RevShare} %
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <label
                                                 htmlFor="platform"
-                                                className="font-semibold text-sm md:text-lg"
+                                                className="font-semibold text-sm md:text-base"
                                             >
                                                 Baseline:
                                             </label>
-                                            <p className="text-sm md:text-lg">
+                                            <p className="text-sm md:text-base">
                                                 {data.Baseline} €
                                             </p>
                                         </div>

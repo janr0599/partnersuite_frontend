@@ -61,16 +61,23 @@ function TopUpRequestsView() {
                         </div>
                     )}
                 </div>
-                {data.length === 0 ? (
-                    <div className="text-lg mt-10 text-slate-500">
-                        Top Up Requests will show up here
-                    </div>
-                ) : (
+                {data.length > 0 ? (
                     <TopUpRequestsTable
                         topUpRequests={data}
                         isLoading={isLoading}
                         user={user}
                     />
+                ) : (
+                    <div className="flex flex-col space-y-5 text-center mt-10">
+                        <img
+                            src="/no-requests.svg"
+                            className="size-28 md:size-44 mx-auto"
+                            alt="No tickets"
+                        />
+                        <h2 className="text-base md:text-xl font-bold text-slate-400">
+                            Top-up requests will show up here.
+                        </h2>
+                    </div>
                 )}
             </div>
         );

@@ -67,7 +67,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                     "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
                 confirmButton: "hover:bg-red-600 transition-colors",
                 popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
-                title: "text-black font-bold text-left text-md w-full p-3 rounded-md text-2xl",
+                title: "text-black font-bold text-left w-full p-3 rounded-md text-2xl",
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -221,7 +221,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
     }
     return (
         <div className="mt-4 overflow-x-auto">
-            <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4 p-1 md:p-0">
+            <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4 p-1">
                 <p className="text-slate-500 inline-flex gap-2 items-center">
                     <FiUsers /> Total: {affiliates?.length}
                 </p>
@@ -315,9 +315,18 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-2 border-b border-slate-300 text-sm font-medium truncate"
+                                    className="p-2 border-b border-slate-300 text-sm font-medium truncate"
                                 >
-                                    <div className="inline-flex items-center gap-2">
+                                    <div
+                                        className={` ${
+                                            cell.column.id === "status"
+                                                ? cell.getValue<string>() ===
+                                                  "active"
+                                                    ? "bg-green-400 text-white py-1 px-2 rounded-full"
+                                                    : "bg-gray-400 text-white py-1 px-2 rounded-full"
+                                                : ""
+                                        } inline-flex items-center gap-2`}
+                                    >
                                         {flexRender(
                                             cell.column.columnDef.cell,
                                             cell.getContext()

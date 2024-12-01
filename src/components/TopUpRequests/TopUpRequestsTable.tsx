@@ -105,7 +105,7 @@ function TopUpRequestsTable({
                     "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
                 confirmButton: "hover:bg-red-600 transition-colors",
                 popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
-                title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
+                title: "text-black font-bold text-left w-full p-3 rounded-md text-2xl",
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -182,13 +182,18 @@ function TopUpRequestsTable({
                     {isManager(user) && (
                         <>
                             <button
-                                className="bg-green-400 border border-slate-300 hover:bg-green-500 rounded-md px-4 py-2 text-sm font-medium transition-colors text-white"
+                                className={`${
+                                    row.original.status === "Approved"
+                                        ? "opacity-50"
+                                        : "opacity-100 hover:bg-green-500"
+                                } bg-green-400 border border-slate-300  rounded-md px-4 py-2 text-sm font-medium transition-colors text-white`}
                                 onClick={() => {
                                     handleUpdateTopUpRequestStatus(
                                         row.original._id,
                                         "Approved"
                                     );
                                 }}
+                                disabled={row.original.status === "Approved"}
                             >
                                 <span className="inline-flex items-center gap-2">
                                     <FiCheckCircle className="text-white font-medium" />
@@ -196,7 +201,11 @@ function TopUpRequestsTable({
                                 </span>
                             </button>
                             <button
-                                className="bg-red-400 border border-slate-300 hover:bg-red-500 rounded-md px-4 py-2 text-sm font-medium transition-colors text-white"
+                                className={`${
+                                    row.original.status === "Rejected"
+                                        ? "opacity-50"
+                                        : "opacity-100 hover:bg-red-500"
+                                } bg-red-400 border border-slate-300  rounded-md px-4 py-2 text-sm font-medium transition-colors text-white`}
                                 onClick={() => {
                                     handleUpdateTopUpRequestStatus(
                                         row.original._id,
@@ -260,7 +269,7 @@ function TopUpRequestsTable({
             {isManager(user) && (
                 <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full mt-1 justify-between">
                     <div className="hidden md:block -mb-2"></div>
-                    <div className="flex flex-col md:flex-row gap-2 p-1 md:p-0">
+                    <div className="flex flex-col md:flex-row gap-2 p-1">
                         <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto w-3/4">
                             <FiSearch className="absolute left-3 text-gray-500" />
                             <input

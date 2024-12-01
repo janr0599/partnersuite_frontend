@@ -45,12 +45,19 @@ function AffiliatesView() {
                     </div>
                 </div>
 
-                {data.length === 0 ? (
-                    <div className="text-lg mt-10 text-slate-500">
-                        Your affiliates will show up here
-                    </div>
-                ) : (
+                {data.length > 0 ? (
                     <AffiliatesTable affiliates={data} isLoading={isLoading} />
+                ) : (
+                    <div className="flex flex-col space-y-5 text-center mt-10">
+                        <img
+                            src="/affiliates.svg"
+                            className="size-12 md:size-44 mx-auto"
+                            alt="no affiliates yet image"
+                        />
+                        <h2 className="text-base md:text-xl font-bold text-slate-400">
+                            Your affiliates will show up here.
+                        </h2>
+                    </div>
                 )}
                 <AddAffiliateModal />
                 <AffiliateDetailsModal />

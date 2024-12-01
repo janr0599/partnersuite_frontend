@@ -12,6 +12,7 @@ import ManagerLayout from "./layouts/ManagerLayout";
 import ProfileLayout from "./layouts/ProfileLayout";
 import ProfileView from "./views/profile/ProfileView";
 import ChangePasswordView from "./views/profile/ChangePasswordView";
+import AffiliateLoginView from "./views/auth/AffiliateLoginView";
 
 function Router() {
     return (
@@ -47,6 +48,10 @@ function Router() {
 
                 <Route element={<AuthLayout />}>
                     <Route path="/auth/login" element={<LoginView />} />
+                    <Route
+                        path="/auth/login-affiliate"
+                        element={<AffiliateLoginView />}
+                    />
                     <Route
                         path="/auth/registration"
                         element={<RegistrationView />}

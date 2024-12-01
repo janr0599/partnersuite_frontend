@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function LoginView() {
+function AffiliateLoginView() {
     const navigate = useNavigate();
     const { refetch } = useAuth();
 
@@ -54,7 +54,7 @@ function LoginView() {
                 noValidate
             >
                 <div className="text-center">
-                    <h1 className="text-5xl font-black">Manager Login</h1>
+                    <h1 className="text-5xl font-black">Affiliate Login</h1>
                     <p className="text-xl font-light mt-5">
                         Enter your email and password to access your account
                     </p>
@@ -102,16 +102,10 @@ function LoginView() {
                     className="bg-black hover:opacity-80 w-full p-3 text-white font-black text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
-                <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
-                    <Link
-                        to={"/auth/registration"}
-                        className="text-center font-normal hover:underline"
-                    >
-                        Don't have an account? Create one
-                    </Link>
+                <nav className="mt-10 text-center text-sm md:text-base">
                     <Link
                         to={"/auth/forgot-password"}
-                        className="text-center font-normal hover:underline"
+                        className="font-normal hover:underline"
                     >
                         Trouble logging in? Reset your password.
                     </Link>
@@ -121,4 +115,4 @@ function LoginView() {
     );
 }
 
-export default LoginView;
+export default AffiliateLoginView;

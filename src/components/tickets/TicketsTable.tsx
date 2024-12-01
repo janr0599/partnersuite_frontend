@@ -84,7 +84,7 @@ function TicketsTable({
                     "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
                 confirmButton: "hover:bg-red-600 transition-colors",
                 popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
-                title: "text-black font-bold text-left text-md w-full p-3 rounded-md",
+                title: "text-black font-bold text-left w-full p-3 rounded-md text-2xl",
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -244,7 +244,7 @@ function TicketsTable({
         <div className="overflow-x-auto mt-4 lg:mt-0">
             <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full mt-1 justify-between">
                 <div className="hidden md:block -mb-2"></div>
-                <div className="flex flex-col md:flex-row gap-2 p-1 md:p-0">
+                <div className="flex flex-col md:flex-row gap-2 p-1">
                     <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto w-2/4">
                         <FiSearch className="absolute left-3 text-gray-500" />
                         <input
@@ -374,7 +374,17 @@ function TicketsTable({
                                                 cell.column.id === "actions"
                                                     ? "space-x-2"
                                                     : ""
+                                            } ${
+                                                cell.column.id === "title" &&
+                                                "hover:underline cursor-pointer"
                                             }`}
+                                            {...(cell.column.id === "title" && {
+                                                onClick: () =>
+                                                    navigate(
+                                                        location.pathname +
+                                                            `?viewTicket=${row.original._id}`
+                                                    ),
+                                            })}
                                         >
                                             {flexRender(
                                                 cell.column.columnDef.cell,

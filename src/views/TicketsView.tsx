@@ -55,8 +55,15 @@ function TicketsView() {
                         setFiltering={setFiltering}
                     />
                 ) : (
-                    <div className="text-lg mt-10 text-slate-500">
-                        Tickets will show up here
+                    <div className="flex flex-col space-y-5 text-center mt-10">
+                        <img
+                            src="/no-tickets.svg"
+                            className="size-20 md:size-44 mx-auto"
+                            alt="No tickets"
+                        />
+                        <h2 className="text-lg md:text-2xl font-bold text-slate-400">
+                            Tickets will show up here.
+                        </h2>
                     </div>
                 )}
                 <CreateTicketModal />

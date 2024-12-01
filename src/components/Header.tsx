@@ -1,3 +1,4 @@
+import { AuthenticatedUser } from "@/types/authTypes";
 import {
     Popover,
     PopoverButton,
@@ -8,10 +9,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { FiUser, FiBell, FiAlignJustify, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
-const Header = (props: {
+type HeaderProps = {
+    user: AuthenticatedUser;
     sidebarOpen: string | boolean | undefined;
     setSidebarOpen: (arg0: boolean) => void;
-}) => {
+};
+
+const Header = ({ user, sidebarOpen, setSidebarOpen }: HeaderProps) => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
@@ -19,7 +23,11 @@ const Header = (props: {
         localStorage.removeItem("AUTH_TOKEN_PARTNERSUITE");
         queryClient.removeQueries({ queryKey: ["user"] });
         queryClient.removeQueries({ queryKey: ["tickets"] });
-        navigate("/auth/login");
+        if (user.role === "affiliate") {
+            navigate("/auth/login-affiliate");
+        } else if (user.role === "manager") {
+            navigate("/auth/login");
+        }
     };
 
     return (
@@ -30,7 +38,7 @@ const Header = (props: {
                         aria-controls="sidebar"
                         onClick={(e) => {
                             e.stopPropagation();
-                            props.setSidebarOpen(!props.sidebarOpen);
+                            setSidebarOpen(!sidebarOpen);
                         }}
                         className="z-[99999] block rounded-sm border e bg-white p-1.5 shadow-sm"
                     >
