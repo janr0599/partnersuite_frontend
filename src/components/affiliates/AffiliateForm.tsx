@@ -53,7 +53,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                 </TabList>
 
                 <TabPanel className="space-y-3">
-                    <div className="flex flex-col gap-2 mt-2">
+                    <div className="flex flex-col gap-2 mt-4">
                         <label
                             htmlFor="name"
                             className="font-semibold text-sm md:text-base"

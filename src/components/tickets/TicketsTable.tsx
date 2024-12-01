@@ -172,7 +172,9 @@ function TicketsTable({
             cell: ({ row }) => (
                 <>
                     <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                        className={`border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                            canDelete && "-translate-y-1"
+                        }`}
                         onClick={() =>
                             navigate(
                                 location.pathname +
@@ -242,7 +244,7 @@ function TicketsTable({
         <div className="overflow-x-auto mt-4 lg:mt-0">
             <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full mt-1 justify-between">
                 <div className="hidden md:block -mb-2"></div>
-                <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col md:flex-row gap-2 p-1 md:p-0">
                     <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto w-2/4">
                         <FiSearch className="absolute left-3 text-gray-500" />
                         <input
@@ -353,7 +355,7 @@ function TicketsTable({
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}
-                                    className="px-4 py-3 border-b border-slate-300 text-sm font-semibold truncate"
+                                    className="px-4 py-3 border-b border-slate-300 text-sm font-semibold"
                                 >
                                     <div className="inline-flex items-center gap-2">
                                         {cell.getValue<string>() === "open" && (
@@ -367,10 +369,18 @@ function TicketsTable({
                                             "closed" && (
                                             <FiCheckCircle className="text-sm text-green-600" />
                                         )}
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
+                                        <div
+                                            className={`truncate max-w-[200px] ${
+                                                cell.column.id === "actions"
+                                                    ? "space-x-2"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </div>
                                     </div>
                                 </td>
                             ))}

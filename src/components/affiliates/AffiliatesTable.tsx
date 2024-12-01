@@ -221,7 +221,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
     }
     return (
         <div className="mt-4 overflow-x-auto">
-            <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4">
+            <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center font-semibold ml-auto gap-4 p-1 md:p-0">
                 <p className="text-slate-500 inline-flex gap-2 items-center">
                     <FiUsers /> Total: {affiliates?.length}
                 </p>

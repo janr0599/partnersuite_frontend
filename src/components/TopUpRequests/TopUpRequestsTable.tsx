@@ -260,7 +260,7 @@ function TopUpRequestsTable({
             {isManager(user) && (
                 <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start flex-1 w-full mt-1 justify-between">
                     <div className="hidden md:block -mb-2"></div>
-                    <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex flex-col md:flex-row gap-2 p-1 md:p-0">
                         <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto w-3/4">
                             <FiSearch className="absolute left-3 text-gray-500" />
                             <input

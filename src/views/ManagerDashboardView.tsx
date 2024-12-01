@@ -1,4 +1,8 @@
-import { getLatestTickets, getPreviousDayTickets } from "@/api/ticketsAPI";
+import {
+    getLatestTickets,
+    getPreviousDayTickets,
+    getTickets,
+} from "@/api/ticketsAPI";
 import AffiliatesByCountryCard from "@/components/dashboard/AffiliatesByCountry";
 import AreaChartCard from "@/components/dashboard/AreaChart";
 import LatestTicketsTable from "@/components/dashboard/LatestTicketsTable";
@@ -7,9 +11,9 @@ import { useQuery } from "@tanstack/react-query";
 
 function DashboardView() {
     const {
-        data: tickets,
+        data: latestTickets,
         isLoading,
-        error,
+        error: errorLatest,
     } = useQuery({
         queryKey: ["latestTickets"],
         queryFn: getLatestTickets,
@@ -24,10 +28,22 @@ function DashboardView() {
         queryFn: getPreviousDayTickets,
     });
 
-    if (isLoading || isLoadingPrevious) return <div>Loading...</div>;
-    if (error || errorPrevious) return <div>Error loading tickets...</div>;
+    const {
+        data: tickets,
+        isLoading: isLoadingTickets,
+        error: errorTickets,
+    } = useQuery({
+        queryKey: ["tickets"],
+        queryFn: getTickets,
+        retry: false,
+    });
 
-    if (tickets && previousDayTickets)
+    if (isLoading || isLoadingPrevious || isLoadingTickets)
+        return <div>Loading...</div>;
+    if (errorLatest || errorPrevious || errorTickets)
+        return <div>Error loading tickets...</div>;
+
+    if (latestTickets && previousDayTickets && tickets)
         return (
             <div className="">
                 {/* <!-- First Row: Three Cards --> */}
@@ -45,7 +61,10 @@ function DashboardView() {
 
                 {/* <!-- Third Row: Full Width Table --> */}
                 <div className="grid grid-cols-1">
-                    <LatestTicketsTable data={tickets} isLoading={isLoading} />
+                    <LatestTicketsTable
+                        latestTickets={latestTickets}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         );

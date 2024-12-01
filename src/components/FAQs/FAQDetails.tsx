@@ -22,7 +22,7 @@ const FAQDetails = ({ faq }: FAQDetailsProps) => {
             <div className="overflow-hidden">
                 <DisclosurePanel
                     transition
-                    className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 pt-6 text-xs lg:text-base"
+                    className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 pt-6 text-xs lg:text-base pl-4"
                 >
                     {faq.answer}
                 </DisclosurePanel>

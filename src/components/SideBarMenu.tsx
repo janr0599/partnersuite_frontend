@@ -272,7 +272,7 @@ const Option = ({
                     }}
                     style={{ y: "-50%" }}
                     transition={{ delay: 0.5 }}
-                    className="absolute right-2 top-1/2 size-4 rounded bg-indigo-500 text-xs text-white"
+                    className="absolute right-2 top-1/2 size-4 rounded bg-indigo-500 text-xs text-white w-fit px-1"
                 >
                     {notifs}
                 </motion.span>

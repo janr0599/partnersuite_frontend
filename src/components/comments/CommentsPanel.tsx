@@ -9,7 +9,7 @@ type CommentsPanelProps = {
 function CommentsPanel({ comments }: CommentsPanelProps) {
     return (
         <>
-            <div className="divide-y divide-gray-300 my-10">
+            <div className="my-10">
                 {comments.length ? (
                     <>
                         <p className="font-bold text-xl md:text-2xl mb-5 text-center">

@@ -156,7 +156,7 @@ export default function TickeDetailsModal({
                                         >
                                             Title
                                         </label>
-                                        <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
+                                        <p className="text-sm text-slate-500 mb-2 break-words">
                                             {data.title}
                                         </p>
                                     </div>
@@ -168,7 +168,7 @@ export default function TickeDetailsModal({
                                         >
                                             Description
                                         </label>
-                                        <p className="text-sm text-slate-500 mb-2">
+                                        <p className="text-sm text-slate-500 mb-2 break-words">
                                             {data.description}
                                         </p>
                                     </div>

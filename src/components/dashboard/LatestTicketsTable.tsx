@@ -8,26 +8,17 @@ import { TableTicket, Tickets } from "@/types/ticketsTypes";
 import { categoryTranslations, statusTranslations } from "@/locales/en";
 import { formatDate } from "@/utils/utils";
 import { FiAlertCircle } from "react-icons/fi";
-import { useLocation, useNavigate } from "react-router-dom";
 
 type LatestTicketsTableProps = {
-    data: Tickets;
+    latestTickets: Tickets;
     isLoading: boolean;
 };
 
-const LatestTicketsTable = ({ data, isLoading }: LatestTicketsTableProps) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-
+const LatestTicketsTable = ({
+    latestTickets,
+    isLoading,
+}: LatestTicketsTableProps) => {
     if (isLoading) return <div>Loading...</div>;
-
-    const latestTickets = data!
-        .sort(
-            (a, b) =>
-                new Date(b.createdAt).getTime() -
-                new Date(a.createdAt).getTime()
-        )
-        .slice(0, 10);
 
     const columns: ColumnDef<TableTicket>[] = [
         {
@@ -121,10 +112,12 @@ const LatestTicketsTable = ({ data, isLoading }: LatestTicketsTableProps) => {
                                         {cell.getValue<string>() === "open" && (
                                             <FiAlertCircle className="text-sm text-yellow-600" />
                                         )}
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
+                                        <div className="truncate max-w-[200px]">
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </div>
                                     </div>
                                 </td>
                             ))}

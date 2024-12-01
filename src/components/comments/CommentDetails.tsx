@@ -18,7 +18,7 @@ function CommentDetails({ comment }: CommentDetailProps) {
     const { data, isLoading } = useAuth();
     const canDelete = useMemo(
         () => data?._id === comment.createdBy._id,
-        [data]
+        [data, comment]
     );
 
     const updatedComment = useMemo(
@@ -78,36 +78,45 @@ function CommentDetails({ comment }: CommentDetailProps) {
 
     if (data)
         return (
-            <div key={comment._id} className="">
+            <div key={comment._id} className="my-4">
                 {!editingComment ? (
-                    <div className="py-3 flex justify-between items-center w-full">
-                        <div className="w-full space-y-1">
-                            <p className="text-sm max-w-[80%]">
-                                {comment.content}{" "}
-                            </p>
-                            <p className="text-slate-400 text-xs">
-                                ({comment.createdBy.name})
-                                {updatedComment && (
-                                    <span className="text-slate-400 text-xs">
-                                        {""} - edited
-                                    </span>
+                    <div
+                        className={`flex w-full ${
+                            canDelete ? "justify-end" : "justify-start"
+                        }`}
+                    >
+                        <div
+                            className={`max-w-[80%] p-4 rounded-lg mt-4 ${
+                                canDelete ? "bg-indigo-100" : "bg-gray-100"
+                            }`}
+                        >
+                            <div className="space-y-1">
+                                <p className="text-sm break-words">
+                                    {comment.content}
+                                </p>
+                                <p className="text-slate-400 text-xs">
+                                    {!canDelete && comment.createdBy.name}
+                                    {updatedComment && canDelete && (
+                                        <span className="text-slate-400 text-xs">
+                                            {""} - edited
+                                        </span>
+                                    )}
+                                </p>
+                                <p className="text-xs text-slate-400">
+                                    {formatDate(comment.createdAt)}
+                                </p>
+                                {canDelete && (
+                                    <div className="flex gap-x-2 mt-2 justify-end">
+                                        <button onClick={handleEditComment}>
+                                            <FiEdit className="size-4 hover:text-indigo-500 transition-colors" />
+                                        </button>
+                                        <button onClick={handleDeleteComment}>
+                                            <FiTrash2 className="size-4 hover:text-red-500 transition-colors" />
+                                        </button>
+                                    </div>
                                 )}
-                            </p>
-
-                            <p className="text-xs text-slate-400">
-                                {formatDate(comment.createdAt)}
-                            </p>
-                        </div>
-                        {canDelete && (
-                            <div className="inline-flex gap-x-2">
-                                <button onClick={handleEditComment}>
-                                    <FiEdit className="size-4 md:size-5 hover:text-indigo-500 transition-colors" />
-                                </button>
-                                <button onClick={handleDeleteComment}>
-                                    <FiTrash2 className="size-4 md:size-5 hover:text-red-500 transition-colors" />
-                                </button>
                             </div>
-                        )}
+                        </div>
                     </div>
                 ) : (
                     <AddCommentForm

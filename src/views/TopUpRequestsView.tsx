@@ -55,7 +55,7 @@ function TopUpRequestsView() {
                                 Request Bonus Top-up
                             </button>
                             <p className="text-xs text-slate-500 mt-2">
-                                Requests made after 3 PM Fench Time (UTC +1)
+                                Requests made after 3 PM French Time (UTC +1)
                                 will be proceessed the next day
                             </p>
                         </div>

@@ -102,7 +102,7 @@ function LoginView() {
                     className="bg-black hover:opacity-80 w-full p-3 text-white font-black text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
-                <nav className="mt-10 flex flex-col space-y-4">
+                <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
                     <Link
                         to={"/auth/registration"}
                         className="text-center font-normal hover:underline"

@@ -114,12 +114,12 @@ export default function AddAffiliateModal() {
                                 <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 relative">
                                     <DialogTitle
                                         as="h3"
-                                        className="font-bold text-2xl"
+                                        className=" text-xl font-bold md:text-2xl"
                                     >
                                         Add New Affiliate
                                     </DialogTitle>
 
-                                    <p className="text-base text-slate-500">
+                                    <p className="text-sm md:text-base text-slate-500">
                                         Fill out the form below to create and
                                         add a new affiliate.
                                     </p>
