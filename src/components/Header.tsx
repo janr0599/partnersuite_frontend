@@ -17,7 +17,6 @@ import {
     markAllNotificationsAsRead,
     markNotificationAsRead,
 } from "@/api/notificationsAPI";
-import { toast } from "react-toastify";
 
 type HeaderProps = {
     user: AuthenticatedUser;
@@ -160,6 +159,12 @@ const Header = ({
                                                 {isLoadingNotifications && (
                                                     <p className="text-sm font-semibold">
                                                         Loading...
+                                                    </p>
+                                                )}
+                                                {isErrorNotifications && (
+                                                    <p className="text-sm font-semibold">
+                                                        Error loading
+                                                        notifications
                                                     </p>
                                                 )}
                                                 <p
