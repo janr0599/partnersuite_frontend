@@ -5,10 +5,21 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/useauth";
 import Header from "@/components/Header";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getNotifications } from "@/api/notificationsAPI";
 
 function AppLayout() {
     const { data: user, isError, isLoading } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const {
+        data: notifications,
+        isLoading: isLoadingNotifications,
+        isError: isErrorNotifications,
+    } = useQuery({
+        queryKey: ["notifications"],
+        queryFn: getNotifications,
+    });
 
     if (isLoading) return "Loading...";
 
@@ -16,7 +27,7 @@ function AppLayout() {
         return <Navigate to={"/auth/login"} />;
     }
 
-    if (user)
+    if (user && notifications)
         return (
             <>
                 <div className="bg-slate-100">
@@ -29,6 +40,9 @@ function AppLayout() {
                         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                             <Header
                                 user={user}
+                                notifications={notifications}
+                                isLoadingNotifications={isLoadingNotifications}
+                                isErrorNotifications={isErrorNotifications}
                                 sidebarOpen={sidebarOpen}
                                 setSidebarOpen={setSidebarOpen}
                             />

@@ -19,7 +19,7 @@ import { isManager } from "@/utils/policies";
 import { useAuth } from "@/hooks/useauth";
 
 type TicketDetailsModalProps = {
-    tickets: Tickets;
+    tickets?: Tickets;
 };
 
 export default function TickeDetailsModal({
