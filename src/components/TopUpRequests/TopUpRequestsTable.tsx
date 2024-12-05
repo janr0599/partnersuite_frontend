@@ -49,7 +49,6 @@ function TopUpRequestsTable({
     isLoading,
     user,
 }: TopUpRequestsTableProps) {
-    console.log(topUpRequests);
     const canDelete = useMemo(
         () => user._id === topUpRequests[0].createdBy._id,
         [user]

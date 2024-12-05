@@ -31,7 +31,6 @@ export default function ChangePasswordView() {
         mutationFn: changePassword,
         onError: (error) => {
             toast.error(error.message);
-            console.log(error);
         },
         onSuccess: (message) => {
             toast.success(message);

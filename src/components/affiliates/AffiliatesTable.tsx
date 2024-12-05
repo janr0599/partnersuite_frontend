@@ -38,7 +38,6 @@ type AffiliatesTableProps = {
 
 function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
     const navigate = useNavigate();
-    console.log(affiliates);
 
     const queryclient = useQueryClient();
     const { mutate: mutateDeleteAffiliate } = useMutation({

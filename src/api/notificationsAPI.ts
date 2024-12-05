@@ -8,7 +8,6 @@ export const getNotifications = async () => {
         const { data } = await api.get<{ notifications: Notifications }>(
             "/notifications"
         );
-        console.log(data.notifications);
         const validation = notificationsSchema.safeParse(data.notifications);
         if (!validation.success) {
             console.error(
@@ -17,7 +16,6 @@ export const getNotifications = async () => {
             );
             throw new Error("Invalid data");
         }
-        console.log(validation.data);
         return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

@@ -8,7 +8,6 @@ export const getTopUpRequests = async (): Promise<TopUpRequests> => {
         const { data } = await api.get<{ topUpRequests: TopUpRequests }>(
             "/topUpRequests"
         );
-        console.log(data.topUpRequests);
         const validation = topUpRequestsSchema.safeParse(data.topUpRequests);
         if (!validation.success) {
             console.error(
@@ -17,7 +16,6 @@ export const getTopUpRequests = async (): Promise<TopUpRequests> => {
             );
             throw new Error("Invalid data");
         }
-        console.log(validation.data);
         return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -33,11 +31,7 @@ export const createTopUpRequest = async () => {
         return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(
-                error.response.data.message ||
-                    error.response.data.error ||
-                    "An unexpected error occurred"
-            );
+            throw new Error(error.response.data.message);
         }
         throw new Error("An unexpected error occurred");
     }

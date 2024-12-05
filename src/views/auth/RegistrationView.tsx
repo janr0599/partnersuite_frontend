@@ -38,7 +38,6 @@ function RegistrationView() {
     });
 
     const handleCreateAccount = (formData: UserRegistrationForm) => {
-        console.log(formData);
         mutate(formData);
     };
     return (

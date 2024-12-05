@@ -75,7 +75,6 @@ export default function AddAffiliateModal() {
             Baseline: Number(formData.Baseline),
         };
         mutate(transformedData);
-        console.log(formData);
     };
 
     return (

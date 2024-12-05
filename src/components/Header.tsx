@@ -99,9 +99,9 @@ const Header = ({
                     >
                         <FiAlignJustify className="relative block h-5.5 w-5.5 cursor-pointer" />
                     </button>
-                    <p>PartnerSuite</p>
+                    <p className="font-bold">PartnerSuite</p>
                 </div>
-                <p className="hidden lg:block">Partnersuite</p>
+                <p className="hidden lg:block font-bold">Partnersuite</p>
                 <div className="flex items-center gap-8 2xsm:gap-7">
                     <Popover>
                         <PopoverButton className="block text-sm/6 font-semibold text-black focus:outline-none data-[active]:text-black data-[hover]:opacity-70 data-[focus]:outline-1 data-[focus]:outline-white transition-opacity">

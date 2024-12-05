@@ -28,7 +28,6 @@ export const getAffiliates = async (): Promise<Affiliates> => {
         const { data } = await api.get<{ affiliates: Affiliates }>(
             "/affiliates"
         );
-        console.log(data);
         const validation = affiliatesSchema.safeParse(data.affiliates);
         if (!validation.success) {
             console.error(
@@ -37,7 +36,6 @@ export const getAffiliates = async (): Promise<Affiliates> => {
             );
             throw new Error("Invalid data");
         }
-        console.log(validation.data);
         return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

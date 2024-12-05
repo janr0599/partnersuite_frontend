@@ -42,7 +42,6 @@ function LoginView() {
     });
 
     const handleLogin = (formData: UserLoginForm) => {
-        console.log(formData);
         mutate(formData);
     };
 

@@ -18,11 +18,8 @@ function TopUpRequestsView() {
     const queryClient = useQueryClient();
     const { mutate: mutateCreateTopUpRequest } = useMutation({
         mutationFn: createTopUpRequest,
-        onError: (error: any) => {
-            const errorMessage =
-                error.message || "An unexpected error occurred";
-            toast.error(errorMessage);
-            console.log(errorMessage);
+        onError: (error) => {
+            toast.error(error.message);
         },
         onSuccess: (message) => {
             toast.success(message);
