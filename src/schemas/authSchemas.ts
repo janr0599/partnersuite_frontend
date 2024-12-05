@@ -15,7 +15,7 @@ export const baseAuthSchema = z.object({
     confirmPassword: z.string().trim().min(1, "Please confirm your password"),
     currentPassword: z.string().trim().min(1, "Current Password is required"),
     role: z.enum(["manager", "affiliate"]),
-    // token: z.string(),
+    token: z.string(),
 });
 
 export const userLoginSchema = baseAuthSchema
@@ -47,4 +47,26 @@ export const authenticatedUserSchema = baseAuthSchema
     })
     .extend({
         _id: z.string(),
+    });
+
+export const tokenSchema = baseAuthSchema.pick({
+    token: true,
+});
+
+export const requestConfirmationCodeSchema = baseAuthSchema.pick({
+    email: true,
+});
+
+export const forgotPasswordSchema = baseAuthSchema.pick({
+    email: true,
+});
+
+export const newPasswordSchema = baseAuthSchema
+    .pick({
+        password: true,
+        confirmPassword: true,
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
     });

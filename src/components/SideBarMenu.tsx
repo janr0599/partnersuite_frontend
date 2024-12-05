@@ -36,18 +36,10 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
     const location = useLocation();
 
     const trigger = useRef<any>(null);
-    const sidebar = useRef<any>(null);
 
     // close on click outside
     useEffect(() => {
-        const clickHandler = ({ target }: MouseEvent) => {
-            if (!sidebar.current || !trigger.current) return;
-            if (
-                !sidebarOpen ||
-                sidebar.current.contains(target) ||
-                trigger.current.contains(target)
-            )
-                return;
+        const clickHandler = () => {
             setSidebarOpen(false);
         };
         document.addEventListener("click", clickHandler);
@@ -66,7 +58,7 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
 
     const dynamicSelected = location.pathname.split("/")[1];
 
-    const defaultSelected = (): string => {
+    const defaultSelected = (dynamicSelected: string): string => {
         if (dynamicSelected === "tickets") {
             return "Tickets";
         } else if (dynamicSelected === "") {
@@ -82,6 +74,10 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
         }
         return "Dashboard";
     };
+
+    useEffect(() => {
+        setSelected(defaultSelected(dynamicSelected));
+    }, [dynamicSelected]);
 
     const { data } = useQuery<Tickets>({
         queryKey: ["tickets"],
@@ -109,7 +105,7 @@ function SidebarMenu({ user, sidebarOpen, setSidebarOpen }: SideBarMenuProps) {
     );
 
     const [open, setOpen] = useState(true);
-    const [selected, setSelected] = useState(defaultSelected);
+    const [selected, setSelected] = useState(defaultSelected(dynamicSelected));
 
     useMemo(() => {
         if (dynamicSelected === "profile") {

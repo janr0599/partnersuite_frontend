@@ -55,9 +55,14 @@ const Header = ({
 
     const handleNotificationClick = (
         notificationLink: Notification["link"],
-        id: Notification["_id"]
+        id: Notification["_id"],
+        type: Notification["type"]
     ) => {
-        navigate("tickets" + notificationLink);
+        if (type === "ticketComment") {
+            navigate("tickets" + notificationLink);
+        } else if (type === "topUpRequest") {
+            navigate(notificationLink);
+        }
         markNotificationAsReadMutation(id);
     };
 
@@ -77,11 +82,7 @@ const Header = ({
         localStorage.removeItem("AUTH_TOKEN_PARTNERSUITE");
         queryClient.removeQueries({ queryKey: ["user"] });
         queryClient.removeQueries({ queryKey: ["tickets"] });
-        if (user.role === "affiliate") {
-            navigate("/auth/login-affiliate");
-        } else if (user.role === "manager") {
-            navigate("/auth/login");
-        }
+        navigate("/auth/login");
     };
 
     return (
@@ -183,7 +184,7 @@ const Header = ({
                                                             notification.createdAt
                                                         )}
                                                     </p>
-                                                    <button
+                                                    <PopoverButton
                                                         className={`hover:underline rounded-md p-2 text-sm transition-colors ${
                                                             notification.status ===
                                                             "read"
@@ -193,12 +194,13 @@ const Header = ({
                                                         onClick={() =>
                                                             handleNotificationClick(
                                                                 notification.link,
-                                                                notification._id
+                                                                notification._id,
+                                                                notification.type
                                                             )
                                                         }
                                                     >
                                                         view
-                                                    </button>
+                                                    </PopoverButton>
                                                 </div>
                                             </div>
                                         ))}

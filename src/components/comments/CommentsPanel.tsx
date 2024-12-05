@@ -4,17 +4,15 @@ import CommentDetails from "./CommentDetails";
 
 type CommentsPanelProps = {
     comments: Ticket["comments"];
+    ticket: Ticket;
 };
 
-function CommentsPanel({ comments }: CommentsPanelProps) {
+function CommentsPanel({ comments, ticket }: CommentsPanelProps) {
     return (
         <>
-            <div className="my-10">
+            <div className="my-6 overflow-y-auto max-h-72">
                 {comments.length ? (
                     <>
-                        <p className="font-bold text-xl md:text-2xl mb-5 text-center">
-                            Comments
-                        </p>
                         {comments.map((comment) => (
                             <CommentDetails
                                 comment={comment}
@@ -28,7 +26,7 @@ function CommentsPanel({ comments }: CommentsPanelProps) {
                     </p>
                 )}
             </div>
-            <AddCommentForm />
+            <AddCommentForm ticket={ticket} />
         </>
     );
 }

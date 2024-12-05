@@ -117,7 +117,7 @@ export default function TickeDetailsModal({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6">
+                                <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
@@ -190,7 +190,7 @@ export default function TickeDetailsModal({
                                     </div>
 
                                     {isManager(user) ? (
-                                        <div className="mb-10 space-y-3">
+                                        <div className="mb-2 space-y-3">
                                             <label className="font-semibold block text-sm md:text-base">
                                                 Status:
                                             </label>
@@ -212,14 +212,14 @@ export default function TickeDetailsModal({
                                             </select>
                                         </div>
                                     ) : (
-                                        <div className="flex flex-col gap-2">
+                                        <div className="mb-2 flex flex-col gap-2">
                                             <label
                                                 htmlFor="status"
                                                 className="font-semibold text-sm md:text-base"
                                             >
                                                 Status
                                             </label>
-                                            <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
+                                            <p className="text-sm text-slate-500 max-w-[350px]">
                                                 {
                                                     statusTranslations[
                                                         data.status
@@ -229,7 +229,14 @@ export default function TickeDetailsModal({
                                         </div>
                                     )}
 
-                                    <CommentsPanel comments={data.comments} />
+                                    <p className="font-bold text-xl  text-center">
+                                        Comments
+                                    </p>
+
+                                    <CommentsPanel
+                                        comments={data.comments}
+                                        ticket={data}
+                                    />
                                 </DialogPanel>
                             </TransitionChild>
                         </div>

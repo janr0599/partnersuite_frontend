@@ -78,7 +78,7 @@ function CommentDetails({ comment }: CommentDetailProps) {
 
     if (data)
         return (
-            <div key={comment._id} className="my-4">
+            <div key={comment._id} className="">
                 {!editingComment ? (
                     <div
                         className={`flex w-full ${
@@ -86,35 +86,47 @@ function CommentDetails({ comment }: CommentDetailProps) {
                         }`}
                     >
                         <div
-                            className={`max-w-[80%] p-4 rounded-lg mt-4 ${
+                            className={`max-w-[80%] px-4 py-2 rounded-lg mt-8 relative ${
                                 canDelete ? "bg-indigo-100" : "bg-gray-100"
                             }`}
                         >
+                            {!canDelete && (
+                                <p className="absolute -top-5 left-1 text-xs text-slate-400">
+                                    {comment.createdBy.name}
+                                </p>
+                            )}
                             <div className="space-y-1">
                                 <p className="text-sm break-words">
                                     {comment.content}
                                 </p>
-                                <p className="text-slate-400 text-xs">
-                                    {!canDelete && comment.createdBy.name}
-                                    {updatedComment && canDelete && (
-                                        <span className="text-slate-400 text-xs">
-                                            {""} - edited
-                                        </span>
-                                    )}
-                                </p>
-                                <p className="text-xs text-slate-400">
-                                    {formatDate(comment.createdAt)}
-                                </p>
-                                {canDelete && (
-                                    <div className="flex gap-x-2 mt-2 justify-end">
-                                        <button onClick={handleEditComment}>
-                                            <FiEdit className="size-4 hover:text-indigo-500 transition-colors" />
-                                        </button>
-                                        <button onClick={handleDeleteComment}>
-                                            <FiTrash2 className="size-4 hover:text-red-500 transition-colors" />
-                                        </button>
+                                <div className="flex items-center justify-between gap-6">
+                                    <div className="flex">
+                                        <p className="text-xs text-slate-400">
+                                            {formatDate(comment.createdAt)}
+                                            {""}
+                                        </p>
+                                        <p className="text-slate-400 text-xs">
+                                            {updatedComment && (
+                                                <span className="text-slate-400 text-x ml-1">
+                                                    - edited
+                                                </span>
+                                            )}
+                                        </p>
                                     </div>
-                                )}
+
+                                    {canDelete && (
+                                        <div className="flex gap-x-2 justify-end">
+                                            <button onClick={handleEditComment}>
+                                                <FiEdit className="size-4 hover:text-indigo-500 transition-colors" />
+                                            </button>
+                                            <button
+                                                onClick={handleDeleteComment}
+                                            >
+                                                <FiTrash2 className="size-4 hover:text-red-500 transition-colors" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

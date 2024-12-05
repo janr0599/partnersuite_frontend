@@ -54,7 +54,7 @@ function LoginView() {
                 noValidate
             >
                 <div className="text-center">
-                    <h1 className="text-5xl font-black">Manager Login</h1>
+                    <h1 className="text-5xl font-black">Login</h1>
                     <p className="text-xl font-light mt-5">
                         Enter your email and password to access your account
                     </p>
@@ -99,16 +99,16 @@ function LoginView() {
                 <input
                     type="submit"
                     value="Log in"
-                    className="bg-black hover:opacity-80 w-full p-3 text-white font-black text-xl cursor-pointer transition-opacity rounded-lg"
+                    className="bg-black hover:opacity-80 w-full p-2 md:p-3 text-white font-black text-lg md:text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
                 <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
-                    <Link
+                    {/* <Link
                         to={"/auth/registration"}
                         className="text-center font-normal hover:underline"
                     >
                         Don't have an account? Create one
-                    </Link>
+                    </Link> */}
                     <Link
                         to={"/auth/forgot-password"}
                         className="text-center font-normal hover:underline"

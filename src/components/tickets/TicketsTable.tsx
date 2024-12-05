@@ -130,12 +130,7 @@ function TicketsTable({
     const columns: ColumnDef<TableTicket>[] = [
         {
             header: "ID",
-            accessorKey: "_id",
-            cell: (info) => {
-                const rowIndex = info.row.index + 1;
-                const formattedId = `T-${rowIndex.toString().padStart(4, "0")}`;
-                return formattedId;
-            },
+            accessorKey: "ticketId",
         },
         {
             header: "Affiliate",

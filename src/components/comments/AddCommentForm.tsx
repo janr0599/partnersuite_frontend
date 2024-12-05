@@ -7,13 +7,15 @@ import { Comment, CommentFormData } from "@/types/commentsTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { commentFormSchema } from "@/schemas/commentsSchema";
 import { createComment, updateComment } from "@/api/commentsAPI";
+import { Ticket } from "@/types/ticketsTypes";
 
 type AddCommentFormProps = {
     comment?: Comment; // Optional for editing
     onCancel?: () => void; // Optional cancel function
+    ticket?: Ticket;
 };
 
-function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
+function AddCommentform({ comment, onCancel, ticket }: AddCommentFormProps) {
     const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
@@ -89,7 +91,7 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
                 {errors.content && (
                     <ErrorMessage>{errors.content.message}</ErrorMessage>
                 )}
-                <div className="flex flex-col gap-3 md:flex-row justify-between">
+                <div className="flex flex-col gap-3 md:flex-row justify-between p-1">
                     <input
                         id="content"
                         type="text"
@@ -98,13 +100,17 @@ function AddCommentform({ comment, onCancel }: AddCommentFormProps) {
                             comment ? "text-sm" : "text-base"
                         } w-full p-2 bg-white border border-gray-300 rounded-lg text-sm md:text-base `}
                         {...register("content")}
+                        disabled={ticket?.status === "closed"}
                     />
                     <input
                         type="submit"
                         value={comment ? "Update" : "Add comment"}
-                        className={` ${
-                            comment ? "text-sm" : "text-base"
-                        } w-full px-4 py-2 font-bold bg-black hover:opacity-80 text-white rounded-lg cursor-pointer transition-opacity md:w-1/4 text-sm md:text-base`}
+                        className={` ${comment ? "text-sm" : "text-base"} ${
+                            ticket?.status === "closed"
+                                ? "opacity-50 hover:opacity-50 cursor-not-allowed"
+                                : "cursor-pointer hover:opacity-80"
+                        } w-full px-4 py-2 font-bold bg-black text-white rounded-lg transition-opacity md:w-1/4 text-sm md:text-base`}
+                        disabled={ticket?.status === "closed"}
                     />
                     {comment && (
                         <button

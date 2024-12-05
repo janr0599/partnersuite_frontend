@@ -2,6 +2,10 @@ import api from "@/lib/axios";
 import { authenticatedUserSchema } from "@/schemas/authSchemas";
 import {
     AuthenticatedUser,
+    ConfirmToken,
+    ForgotPasswordForm,
+    NewPasswordForm,
+    RequestConfirmationCodeForm,
     UserLoginForm,
     UserRegistrationForm,
 } from "@/types/authTypes";
@@ -55,6 +59,70 @@ export const authenticateUser = async (formData: UserLoginForm) => {
         localStorage.setItem("AUTH_TOKEN_PARTNERSUITE", data.token);
 
         return data.token;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const requestConfirmationCode = async (
+    formData: RequestConfirmationCodeForm
+) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/request-code",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const forgotPassword = async (formData: ForgotPasswordForm) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/forgot-password",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const validateToken = async (token: ConfirmToken) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/validate-token",
+            token
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
+export const updatePasswordWithToken = async ({
+    formData,
+    token,
+}: {
+    formData: NewPasswordForm;
+    token: ConfirmToken["token"];
+}) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            `/auth/update-password/${token}`,
+            formData
+        );
+        return data.message;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);

@@ -23,13 +23,7 @@ const LatestTicketsTable = ({
     const columns: ColumnDef<TableTicket>[] = [
         {
             header: "ID",
-            accessorKey: "_id",
-            cell: (info) => {
-                // Generate the custom ID format
-                const rowIndex = info.row.index + 1; // Starting index from 1 instead of 0
-                const formattedId = `T-${rowIndex.toString().padStart(4, "0")}`;
-                return formattedId;
-            },
+            accessorKey: "ticketId",
         },
         {
             header: "Affiliate",

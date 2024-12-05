@@ -5,6 +5,7 @@ import { authenticatedUserSchema } from "./authSchemas";
 export const ticketStatusSchema = z.enum(["open", "in_progress", "closed"]);
 
 export const ticketSchema = z.object({
+    ticketId: z.string(),
     _id: z.string(),
     createdBy: authenticatedUserSchema,
     title: z.string().trim().min(1, "title is required"),
@@ -19,6 +20,7 @@ export const ticketSchema = z.object({
 
 export const ticketsSchema = z.array(
     ticketSchema.pick({
+        ticketId: true,
         _id: true,
         title: true,
         description: true,
@@ -33,6 +35,7 @@ export const ticketsSchema = z.array(
 
 export const DashboardTicketsSchema = z.array(
     ticketSchema.pick({
+        ticketId: true,
         _id: true,
         title: true,
         description: true,
@@ -51,6 +54,7 @@ export const ticketFormSchema = ticketSchema.pick({
 });
 
 export const tableTicketSchema = ticketSchema.pick({
+    ticketId: true,
     _id: true,
     title: true,
     description: true,

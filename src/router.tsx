@@ -12,7 +12,9 @@ import ManagerLayout from "./layouts/ManagerLayout";
 import ProfileLayout from "./layouts/ProfileLayout";
 import ProfileView from "./views/profile/ProfileView";
 import ChangePasswordView from "./views/profile/ChangePasswordView";
-import AffiliateLoginView from "./views/auth/AffiliateLoginView";
+import NotFound from "./views/404/NotFound";
+import ForgotPasswordView from "./views/auth/ForgotPasswordView";
+import NewPasswordView from "./views/auth/NewPasswordView";
 
 function Router() {
     return (
@@ -48,15 +50,22 @@ function Router() {
 
                 <Route element={<AuthLayout />}>
                     <Route path="/auth/login" element={<LoginView />} />
-                    <Route
-                        path="/auth/login-affiliate"
-                        element={<AffiliateLoginView />}
-                    />
+
                     <Route
                         path="/auth/registration"
                         element={<RegistrationView />}
                     />
+                    <Route
+                        path="/auth/forgot-password"
+                        element={<ForgotPasswordView />}
+                    />
+                    <Route
+                        path="/auth/new-password"
+                        element={<NewPasswordView />}
+                    />
                 </Route>
+
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );
