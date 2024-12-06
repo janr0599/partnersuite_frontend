@@ -76,6 +76,13 @@ export default function TickeDetailsModal({
     }, [isError]);
 
     // Calculate formattedId
+    let ticketIdentifier = "";
+    if (tickets) {
+        const currentTicket = tickets.find((ticket) => ticket._id === ticketId);
+        if (currentTicket) {
+            ticketIdentifier = currentTicket.ticketId;
+        }
+    }
 
     if (userLoading) return "Loading...";
 
@@ -129,7 +136,8 @@ export default function TickeDetailsModal({
                                                 as="h3"
                                                 className="font-black text-lg md:text-xl mb-2"
                                             >
-                                                Ticket Details
+                                                Ticket Details -{" "}
+                                                {ticketIdentifier}
                                             </DialogTitle>
                                         </div>
                                     </div>
