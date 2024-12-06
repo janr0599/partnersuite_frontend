@@ -1,4 +1,3 @@
-import { AuthenticatedUser } from "@/types/authTypes";
 import { Notifications, Notification } from "@/types/notificationsTypes";
 import {
     Popover,
