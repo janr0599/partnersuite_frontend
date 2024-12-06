@@ -7,8 +7,8 @@ import { useAuth } from "@/hooks/useauth";
 import { isManager } from "@/utils/policies";
 import CreateTicketModal from "@/components/tickets/CreateTicketModal";
 import EditTicketData from "@/components/tickets/EditTicketData";
-// import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
-import TicketDetailsModalNew from "@/components/tickets/TicketDetailsModalNew";
+import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
+// import TicketDetailsModalNew from "@/components/tickets/TicketDetailsModalNew";
 import { useState } from "react";
 
 function TicketsView() {
@@ -68,8 +68,8 @@ function TicketsView() {
                     </div>
                 )}
                 <CreateTicketModal />
-                <TicketDetailsModalNew />
-                {/* <TicketDetailsModal tickets={data} /> */}
+                {/* <TicketDetailsModalNew /> */}
+                <TicketDetailsModal tickets={data} />
                 <EditTicketData />
             </div>
         );
