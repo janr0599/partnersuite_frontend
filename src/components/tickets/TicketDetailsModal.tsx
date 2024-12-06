@@ -6,25 +6,25 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-// import { FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-// import { Ticket, Tickets } from "@/types/ticketsTypes";
-import { Ticket } from "@/types/ticketsTypes";
+import { Ticket, Tickets } from "@/types/ticketsTypes";
 import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
-// import { categoryTranslations, statusTranslations } from "@/locales/en";
-import { statusTranslations } from "@/locales/en";
+import { categoryTranslations, statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
-// import { isManager } from "@/utils/policies";
+import { isManager } from "@/utils/policies";
 import { useAuth } from "@/hooks/useauth";
 
-// type TicketDetailsModalProps = {
-//     tickets?: Tickets;
-// };
+type TicketDetailsModalProps = {
+    tickets?: Tickets;
+};
 
-export default function TickeDetailsModal() {
+export default function TickeDetailsModal({
+    tickets,
+}: TicketDetailsModalProps) {
     const { data: user, isLoading: userLoading } = useAuth();
     const navigate = useNavigate();
 
@@ -88,13 +88,13 @@ export default function TickeDetailsModal() {
     }, [isError]);
 
     // Calculate formattedId
-    // let ticketIdentifier = "";
-    // if (tickets) {
-    //     const currentTicket = tickets.find((ticket) => ticket._id === ticketId);
-    //     if (currentTicket) {
-    //         ticketIdentifier = currentTicket.ticketId;
-    //     }
-    // }
+    let ticketIdentifier = "";
+    if (tickets) {
+        const currentTicket = tickets.find((ticket) => ticket._id === ticketId);
+        if (currentTicket) {
+            ticketIdentifier = currentTicket.ticketId;
+        }
+    }
 
     if (userLoading) return "Loading...";
 
@@ -130,14 +130,14 @@ export default function TickeDetailsModal() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all py-8 px-12">
-                                    <div className="md:flex justify-between items-center ">
-                                        <div className="order-last mb-auto">
-                                            <p className="text-sm text-slate-400">
+                                <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 md:p-8 space-y-4 md:space-y-5">
+                                    <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
+                                        <div className="order-last mb-auto mr-10">
+                                            <p className="text-xs text-slate-400">
                                                 Created on:{" "}
                                                 {formatDate(data.createdAt)}
                                             </p>
-                                            <p className="text-sm text-slate-400">
+                                            <p className="text-xs text-slate-400">
                                                 Last update:{" "}
                                                 {formatDate(data.updatedAt)}
                                             </p>
@@ -146,34 +146,102 @@ export default function TickeDetailsModal() {
                                         <div className="">
                                             <DialogTitle
                                                 as="h3"
-                                                className="font-black text-4xl text-slate-600 my-5"
+                                                className="font-black text-lg md:text-xl mb-2"
                                             >
-                                                {data.title}
+                                                Ticket Details -{" "}
+                                                {ticketIdentifier}
                                             </DialogTitle>
-                                            <p className="text-lg text-slate-500 mb-2 max-w-[550px]">
-                                                Description: {data.description}
-                                            </p>
                                         </div>
                                     </div>
 
-                                    <div className="mt-5 mb-10 space-y-3">
-                                        <label className="font-bold block">
-                                            Status:
-                                        </label>
-                                        <select
-                                            className="w-1/4 p-3 bg-white border border-gray-300 rounded-lg"
-                                            defaultValue={data.status}
-                                            onChange={handleChange}
+                                    <FiX
+                                        className="absolute top-4 right-6 text-xl cursor-pointer"
+                                        onClick={() =>
+                                            navigate(location.pathname, {
+                                                replace: true,
+                                            })
+                                        }
+                                    />
+
+                                    <div className="flex flex-col gap-2">
+                                        <label
+                                            htmlFor="title"
+                                            className="font-semibold text-sm md:text-base"
                                         >
-                                            {Object.entries(
-                                                statusTranslations
-                                            ).map(([key, value]) => (
-                                                <option key={key} value={key}>
-                                                    {value}
-                                                </option>
-                                            ))}
-                                        </select>
+                                            Title
+                                        </label>
+                                        <p className="text-sm text-slate-500 mb-2 break-words">
+                                            {data.title}
+                                        </p>
                                     </div>
+
+                                    <div className="flex flex-col gap-2">
+                                        <label
+                                            htmlFor="description"
+                                            className="font-semibold text-sm md:text-base"
+                                        >
+                                            Description
+                                        </label>
+                                        <p className="text-sm text-slate-500 mb-2 break-words">
+                                            {data.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2">
+                                        <label
+                                            htmlFor="category"
+                                            className="font-semibold text-sm md:text-base"
+                                        >
+                                            Category
+                                        </label>
+                                        <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
+                                            {
+                                                categoryTranslations[
+                                                    data.category
+                                                ]
+                                            }
+                                        </p>
+                                    </div>
+
+                                    {isManager(user) ? (
+                                        <div className="mb-2 space-y-3">
+                                            <label className="font-semibold block text-sm md:text-base">
+                                                Status:
+                                            </label>
+                                            <select
+                                                className="p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700 min-w-[120px]"
+                                                defaultValue={data.status}
+                                                onChange={handleChange}
+                                            >
+                                                {Object.entries(
+                                                    statusTranslations
+                                                ).map(([key, value]) => (
+                                                    <option
+                                                        key={key}
+                                                        value={key}
+                                                    >
+                                                        {value}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    ) : (
+                                        <div className="mb-2 flex flex-col gap-2">
+                                            <label
+                                                htmlFor="status"
+                                                className="font-semibold text-sm md:text-base"
+                                            >
+                                                Status
+                                            </label>
+                                            <p className="text-sm text-slate-500 max-w-[350px]">
+                                                {
+                                                    statusTranslations[
+                                                        data.status
+                                                    ]
+                                                }
+                                            </p>
+                                        </div>
+                                    )}
 
                                     <p className="font-bold text-xl  text-center">
                                         Comments
@@ -190,164 +258,4 @@ export default function TickeDetailsModal() {
                 </Dialog>
             </Transition>
         );
-}
-
-{
-    /* <Transition appear show={show} as={Fragment}>
-<Dialog
-    as="div"
-    className="relative z-[10000]"
-    onClose={() =>
-        navigate(location.pathname, { replace: true })
-    }
->
-    <TransitionChild
-        as={Fragment}
-        enter="ease-out duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="ease-in duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-    >
-        <div className="fixed inset-0 bg-black/60" />
-    </TransitionChild>
-    <div className="fixed inset-0 overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <TransitionChild
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-            >
-                <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 md:p-8 space-y-4 md:space-y-5">
-                    <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
-                        <div className="order-last mb-auto mr-10">
-                            <p className="text-xs text-slate-400">
-                                Created on:{" "}
-                                {formatDate(data.createdAt)}
-                            </p>
-                            <p className="text-xs text-slate-400">
-                                Last update:{" "}
-                                {formatDate(data.updatedAt)}
-                            </p>
-                        </div>
-
-                        <div className="">
-                            <DialogTitle
-                                as="h3"
-                                className="font-black text-lg md:text-xl mb-2"
-                            >
-                                Ticket Details -{" "}
-                                {ticketIdentifier}
-                            </DialogTitle>
-                        </div>
-                    </div>
-
-                    <FiX
-                        className="absolute top-4 right-6 text-xl cursor-pointer"
-                        onClick={() =>
-                            navigate(location.pathname, {
-                                replace: true,
-                            })
-                        }
-                    />
-
-                    <div className="flex flex-col gap-2">
-                        <label
-                            htmlFor="title"
-                            className="font-semibold text-sm md:text-base"
-                        >
-                            Title
-                        </label>
-                        <p className="text-sm text-slate-500 mb-2 break-words">
-                            {data.title}
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label
-                            htmlFor="description"
-                            className="font-semibold text-sm md:text-base"
-                        >
-                            Description
-                        </label>
-                        <p className="text-sm text-slate-500 mb-2 break-words">
-                            {data.description}
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label
-                            htmlFor="category"
-                            className="font-semibold text-sm md:text-base"
-                        >
-                            Category
-                        </label>
-                        <p className="text-sm text-slate-500 mb-2 max-w-[350px]">
-                            {
-                                categoryTranslations[
-                                    data.category
-                                ]
-                            }
-                        </p>
-                    </div>
-
-                    {isManager(user) ? (
-                        <div className="mb-2 space-y-3">
-                            <label className="font-semibold block text-sm md:text-base">
-                                Status:
-                            </label>
-                            <select
-                                className="p-2 bg-white border border-gray-300 rounded-lg text-sm text-slate-700 min-w-[120px]"
-                                defaultValue={data.status}
-                                onChange={handleChange}
-                            >
-                                {Object.entries(
-                                    statusTranslations
-                                ).map(([key, value]) => (
-                                    <option
-                                        key={key}
-                                        value={key}
-                                    >
-                                        {value}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    ) : (
-                        <div className="mb-2 flex flex-col gap-2">
-                            <label
-                                htmlFor="status"
-                                className="font-semibold text-sm md:text-base"
-                            >
-                                Status
-                            </label>
-                            <p className="text-sm text-slate-500 max-w-[350px]">
-                                {
-                                    statusTranslations[
-                                        data.status
-                                    ]
-                                }
-                            </p>
-                        </div>
-                    )}
-
-                    <p className="font-bold text-xl  text-center">
-                        Comments
-                    </p>
-
-                    <CommentsPanel
-                        comments={data.comments}
-                        ticket={data}
-                    />
-                </DialogPanel>
-            </TransitionChild>
-        </div>
-    </div>
-</Dialog>
-</Transition> */
 }
