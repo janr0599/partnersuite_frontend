@@ -68,7 +68,6 @@ function TicketsView() {
                     </div>
                 )}
                 <CreateTicketModal />
-                {/* <TicketDetailsModalNew /> */}
                 <TicketDetailsModal tickets={data} />
                 <EditTicketData />
             </div>

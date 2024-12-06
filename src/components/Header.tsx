@@ -8,7 +8,6 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiUser, FiBell, FiAlignJustify, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-// import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { timeAgo } from "@/utils/utils";
@@ -246,7 +245,6 @@ const Header = ({
                     </Popover>
                 </div>
             </div>
-            {/* <TicketDetailsModal /> */}
         </header>
     );
 };

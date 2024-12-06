@@ -87,7 +87,7 @@ export default function TickeDetailsModal({
         }
     }, [isError]);
 
-    // Calculate formattedId
+    // Ticket Identifier
     let ticketIdentifier = "";
     if (tickets) {
         const currentTicket = tickets.find((ticket) => ticket._id === ticketId);
@@ -103,7 +103,7 @@ export default function TickeDetailsModal({
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-[10000]"
+                    className="relative z-[1000]"
                     onClose={() =>
                         navigate(location.pathname, { replace: true })
                     }
@@ -134,26 +134,23 @@ export default function TickeDetailsModal({
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
-                                                Created on:{" "}
+                                                Created on:
                                                 {formatDate(data.createdAt)}
                                             </p>
                                             <p className="text-xs text-slate-400">
-                                                Last update:{" "}
+                                                Last update:
                                                 {formatDate(data.updatedAt)}
                                             </p>
                                         </div>
-
                                         <div className="">
                                             <DialogTitle
                                                 as="h3"
                                                 className="font-black text-lg md:text-xl mb-2"
                                             >
-                                                Ticket Details -{" "}
-                                                {ticketIdentifier}
+                                                Ticket - {ticketIdentifier}
                                             </DialogTitle>
                                         </div>
                                     </div>
-
                                     <FiX
                                         className="absolute top-4 right-6 text-xl cursor-pointer"
                                         onClick={() =>
@@ -162,7 +159,6 @@ export default function TickeDetailsModal({
                                             })
                                         }
                                     />
-
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="title"
@@ -174,7 +170,6 @@ export default function TickeDetailsModal({
                                             {data.title}
                                         </p>
                                     </div>
-
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="description"
@@ -186,7 +181,6 @@ export default function TickeDetailsModal({
                                             {data.description}
                                         </p>
                                     </div>
-
                                     <div className="flex flex-col gap-2">
                                         <label
                                             htmlFor="category"
@@ -202,7 +196,6 @@ export default function TickeDetailsModal({
                                             }
                                         </p>
                                     </div>
-
                                     {isManager(user) ? (
                                         <div className="mb-2 space-y-3">
                                             <label className="font-semibold block text-sm md:text-base">
@@ -242,11 +235,9 @@ export default function TickeDetailsModal({
                                             </p>
                                         </div>
                                     )}
-
-                                    <p className="font-bold text-xl  text-center">
+                                    <p className="font-bold text-xl text-center">
                                         Comments
                                     </p>
-
                                     <CommentsPanel
                                         comments={data.comments}
                                         ticket={data}

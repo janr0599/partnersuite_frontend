@@ -2,15 +2,12 @@ import { Ticket } from "@/types/ticketsTypes";
 import AddCommentForm from "./AddCommentForm";
 import CommentDetails from "./CommentDetails";
 
-type CommentsPanelProps = {
-    comments: Ticket["comments"];
-    ticket: Ticket;
-};
+type CommentsPanelProps = { comments: Ticket["comments"]; ticket: Ticket };
 
 function CommentsPanel({ comments, ticket }: CommentsPanelProps) {
     return (
         <>
-            <div className="my-6">
+            <div className="my-6 overflow-y-auto max-h-72">
                 {comments.length ? (
                     <>
                         {comments.map((comment) => (
@@ -30,5 +27,4 @@ function CommentsPanel({ comments, ticket }: CommentsPanelProps) {
         </>
     );
 }
-
 export default CommentsPanel;
