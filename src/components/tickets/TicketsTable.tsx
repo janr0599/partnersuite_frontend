@@ -372,8 +372,19 @@ function TicketsTable({
                                             } ${
                                                 cell.column.id === "title" &&
                                                 "hover:underline cursor-pointer"
+                                            } ${
+                                                cell.column.id === "ticketId" &&
+                                                "hover:underline cursor-pointer"
                                             }`}
                                             {...(cell.column.id === "title" && {
+                                                onClick: () =>
+                                                    navigate(
+                                                        location.pathname +
+                                                            `?viewTicket=${row.original._id}`
+                                                    ),
+                                            })}
+                                            {...(cell.column.id ===
+                                                "ticketId" && {
                                                 onClick: () =>
                                                     navigate(
                                                         location.pathname +
