@@ -6,25 +6,25 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { FiX } from "react-icons/fi";
+// import { FiX } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Ticket, Tickets } from "@/types/ticketsTypes";
+// import { Ticket, Tickets } from "@/types/ticketsTypes";
+import { Ticket } from "@/types/ticketsTypes";
 import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
-import { categoryTranslations, statusTranslations } from "@/locales/en";
+// import { categoryTranslations, statusTranslations } from "@/locales/en";
+import { statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
-import { isManager } from "@/utils/policies";
+// import { isManager } from "@/utils/policies";
 import { useAuth } from "@/hooks/useauth";
 
-type TicketDetailsModalProps = {
-    tickets?: Tickets;
-};
+// type TicketDetailsModalProps = {
+//     tickets?: Tickets;
+// };
 
-export default function TickeDetailsModal({
-    tickets,
-}: TicketDetailsModalProps) {
+export default function TickeDetailsModal() {
     const { data: user, isLoading: userLoading } = useAuth();
     const navigate = useNavigate();
 
@@ -103,7 +103,7 @@ export default function TickeDetailsModal({
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-10"
+                    className="relative z-[10000]"
                     onClose={() =>
                         navigate(location.pathname, { replace: true })
                     }
