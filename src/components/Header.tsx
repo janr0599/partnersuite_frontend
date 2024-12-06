@@ -19,7 +19,6 @@ import {
 } from "@/api/notificationsAPI";
 
 type HeaderProps = {
-    user: AuthenticatedUser;
     notifications: Notifications;
     isLoadingNotifications: boolean;
     isErrorNotifications: boolean;
@@ -28,7 +27,6 @@ type HeaderProps = {
 };
 
 const Header = ({
-    user,
     sidebarOpen,
     setSidebarOpen,
     notifications,

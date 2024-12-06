@@ -39,7 +39,6 @@ function AppLayout() {
                         />
                         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                             <Header
-                                user={user}
                                 notifications={notifications}
                                 isLoadingNotifications={isLoadingNotifications}
                                 isErrorNotifications={isErrorNotifications}
