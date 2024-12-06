@@ -86,7 +86,7 @@ function CommentDetails({ comment }: CommentDetailProps) {
                         }`}
                     >
                         <div
-                            className={`max-w-[80%] px-4 py-2 rounded-lg mt-8 relative ${
+                            className={`max-w-[80%] px-4 py-2 rounded-lg mb-8 relative ${
                                 canDelete ? "bg-indigo-100" : "bg-gray-100"
                             }`}
                         >
