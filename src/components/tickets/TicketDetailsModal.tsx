@@ -32,29 +32,26 @@ export default function TickeDetailsModal({
     const queryParams = new URLSearchParams(location.search);
     const ticketId = queryParams.get("viewTicket")!;
 
-    const show = !!ticketId;
-
-    // useEffect(() => {
-    //     const html = document.documentElement;
-
-    //     if (show) {
-    //         html.style.overflow = "visible"; // Allow scrolling
-    //         html.style.paddingRight = "20px"; // Remove scrollbar space
-    //     } else {
-    //         html.style.overflow = ""; // Reset back to default
-    //     }
-
-    //     return () => {
-    //         html.style.overflow = "visible"; // Cleanup on unmount
-    //     };
-    // }, [show]);
-
     const { data, isError, error } = useQuery<Ticket>({
         queryKey: ["ticket", ticketId],
         queryFn: () => getTicketById(ticketId),
         enabled: !!ticketId,
         retry: false,
     });
+
+    const show = !!ticketId;
+
+    useEffect(() => {
+        const html = document.documentElement;
+
+        if (show) {
+            html.style.overflow = "auto"; // Allow scrolling
+        }
+
+        return () => {
+            html.style.overflow = ""; // Reset on modal close
+        };
+    }, [show]);
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
@@ -133,7 +130,7 @@ export default function TickeDetailsModal({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-2xl h-[90vh] overflow-y-auto rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
+                                <DialogPanel className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
