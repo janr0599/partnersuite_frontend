@@ -76,12 +76,6 @@ export default function TickeDetailsModal({
     }, [isError]);
 
     // Calculate formattedId
-    let formattedId = "";
-    if (tickets) {
-        const ticketIndex =
-            tickets.findIndex((ticket) => ticket._id === ticketId) + 1;
-        formattedId = `T-${ticketIndex.toString().padStart(4, "0")}`;
-    }
 
     if (userLoading) return "Loading...";
 
@@ -117,7 +111,7 @@ export default function TickeDetailsModal({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4 max-h-[90vh] overflow-y-auto">
+                                <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
@@ -135,7 +129,7 @@ export default function TickeDetailsModal({
                                                 as="h3"
                                                 className="font-black text-lg md:text-xl mb-2"
                                             >
-                                                Ticket Details - {formattedId}
+                                                Ticket Details
                                             </DialogTitle>
                                         </div>
                                     </div>

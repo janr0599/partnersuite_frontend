@@ -10,7 +10,7 @@ type CommentsPanelProps = {
 function CommentsPanel({ comments, ticket }: CommentsPanelProps) {
     return (
         <>
-            <div className="my-6 overflow-y-auto max-h-72">
+            <div className="my-6">
                 {comments.length ? (
                     <>
                         {comments.map((comment) => (
