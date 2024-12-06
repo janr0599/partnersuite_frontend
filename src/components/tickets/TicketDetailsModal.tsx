@@ -103,7 +103,7 @@ export default function TickeDetailsModal({
             <Transition appear show={show} as={Fragment}>
                 <Dialog
                     as="div"
-                    className="relative z-[1000]"
+                    className="relative z-[10000]"
                     onClose={() =>
                         navigate(location.pathname, { replace: true })
                     }
