@@ -130,7 +130,7 @@ export default function TickeDetailsModal({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
+                                <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 md:p-8 space-y-4 md:space-y-5">
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
