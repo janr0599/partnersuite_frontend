@@ -61,7 +61,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                             id="name"
                             type="text"
                             placeholder="your name"
-                            className="w-full p-3 text-sm md:text-base border border-gray-200 rounded-lg"
+                            className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("name", {
                                 required: "username is required",
                             })}
@@ -82,7 +82,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                             id="text"
                             type="email"
                             placeholder="your email"
-                            className="w-full p-3 text-sm md:text-base border border-gray-200 rounded-lg"
+                            className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("email", {
                                 required: "email is required",
                                 pattern: {

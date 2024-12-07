@@ -84,7 +84,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="email"
                             type="email"
                             placeholder="affiliate's email"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("email", {
                                 required: "email is required",
                             })}
@@ -104,7 +104,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="password"
                             type="password"
                             placeholder="secret password"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
@@ -131,7 +131,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="confirmPassword"
                             type="password"
                             placeholder="confirm password"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("confirmPassword", {
                                 required: "Password must be confirmed",
                             })}
@@ -153,7 +153,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="platform"
                             type="text"
                             placeholder="platform"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("platform", {
                                 required: "platform is required",
                             })}
@@ -173,7 +173,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                         </label>
                         <select
                             id="contractType"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("contractType", {
                                 required: "contractType is required",
                             })}
@@ -200,7 +200,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="country"
                             type="text"
                             placeholder="country"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("country", {
                                 required: "country is required",
                             })}
@@ -222,7 +222,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="BonusAmount"
                             type="number"
                             placeholder="Bonus amount"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("BonusAmount")}
                         />
                         {errors.BonusAmount && (
@@ -242,7 +242,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="CPA"
                             type="number"
                             placeholder="CPA amount"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("CPA")}
                         />
                         {errors.CPA && (
@@ -260,7 +260,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="RevShare"
                             type="number"
                             placeholder="Revenue Share %"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("RevShare")}
                         />
                         {errors.RevShare && (
@@ -296,7 +296,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                                 id="baseline"
                                 type="number"
                                 placeholder="Baseline number"
-                                className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                                className="w-full p-2 border border-gray-200 rounded-md"
                                 {...register("Baseline", {
                                     required: isBaselineChecked
                                         ? "Baseline number is required"

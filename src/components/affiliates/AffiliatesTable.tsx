@@ -230,7 +230,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                         <input
                             type="text"
                             placeholder="Search All columns..."
-                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-sm text-gray-500 outline-none"
+                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-gray-500 outline-none"
                             value={filtering}
                             onChange={(e) => setFiltering(e.target.value)}
                         />

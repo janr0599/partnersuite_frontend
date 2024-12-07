@@ -98,7 +98,7 @@ function AddCommentform({ comment, onCancel, ticket }: AddCommentFormProps) {
                         placeholder="Enter your comment"
                         className={`${
                             comment ? "text-sm" : "text-base"
-                        } w-full p-2 bg-white border border-gray-300 rounded-lg text-sm md:text-base `}
+                        } w-full p-2 bg-white border border-gray-300 rounded-lg`}
                         {...register("content")}
                         disabled={ticket?.status === "closed"}
                     />

@@ -64,7 +64,7 @@ export default function ChangePasswordView() {
                             id="current_password"
                             type="password"
                             placeholder="current password"
-                            className="w-full p-3 text-sm md:text-base border border-gray-200 rounded-lg"
+                            className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("currentPassword", {
                                 required: "current password is required",
                             })}
@@ -87,7 +87,7 @@ export default function ChangePasswordView() {
                             id="password"
                             type="password"
                             placeholder="new Password"
-                            className="w-full p-3 text0sm md:text-base border border-gray-200 rounded-lg"
+                            className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("password", {
                                 required: "New Password is required",
                                 minLength: {
@@ -115,7 +115,7 @@ export default function ChangePasswordView() {
                             id="password_confirmation"
                             type="password"
                             placeholder="confirm password"
-                            className="w-full p-3 text-sm md:text-base border border-gray-200 rounded-lg"
+                            className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("confirmPassword", {
                                 required: "confirm password is required",
                                 validate: (value) =>
