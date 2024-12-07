@@ -99,9 +99,10 @@ export default function BulkImportModal() {
                                 />
                                 <p className="text-sm text-gray-500">
                                     Upload a CSV file with the following
-                                    columns: Name, Email, Password, Confirm
-                                    Password, Platform, Contract Type, Country,
-                                    Bonus Amount, CPA, Rev Share, Baseline.
+                                    columns: name, email, password,
+                                    confirmPassword, platform, contractType,
+                                    country, BonusAmount, CPA, RevShare,
+                                    Baseline
                                 </p>
                             </div>
                         </DialogPanel>

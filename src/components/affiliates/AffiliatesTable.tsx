@@ -9,7 +9,13 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { FilterFn } from "@tanstack/react-table";
-
+import {
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    Transition,
+} from "@headlessui/react";
 import { Affiliate, Affiliates } from "@/types/affiliateTypes";
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,6 +26,7 @@ import {
     FiChevronsRight,
     FiChevronUp,
     FiEdit,
+    FiMoreHorizontal,
     FiSearch,
     FiTrash2,
     FiUsers,
@@ -28,7 +35,7 @@ import { deleteAffiliate } from "@/api/affiliatesAPI";
 import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { AffiliateStatusTranslations } from "@/locales/en";
 
 type AffiliatesTableProps = {
@@ -235,7 +242,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                             onChange={(e) => setFiltering(e.target.value)}
                         />
                     </div>
-                    <div className="md:w-1/2 min-w-36 ">
+                    <div className="md:w-1/2 min-w-36 flex items-center gap-2">
                         <select
                             className="w-full p-2 bg-white border border-slate-300 rounded-lg text-sm text-gray-500 outline-none"
                             onChange={handleStatusChange}
@@ -254,6 +261,40 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                                 )
                             )}
                         </select>
+                        <Menu
+                            as="div"
+                            className="relative flex-none hidden md:block"
+                        >
+                            <MenuButton className="block p-2.5 text-gray-500 hover:text-gray-900">
+                                <span className="sr-only">options</span>
+                                <FiMoreHorizontal
+                                    className="size-5"
+                                    aria-hidden="true"
+                                />
+                            </MenuButton>
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <MenuItems className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none font-semibold">
+                                    <MenuItem>
+                                        <button
+                                            onClick={() =>
+                                                navigate("?bulkImport=true")
+                                            }
+                                            className="px-4 py-2 text-sm transition hover:underline"
+                                        >
+                                            Import from CSV
+                                        </button>
+                                    </MenuItem>
+                                </MenuItems>
+                            </Transition>
+                        </Menu>
                     </div>
                 </div>
             </div>
@@ -310,6 +351,12 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                         <tr
                             key={row.id}
                             className="hover:bg-slate-100 transition-colors"
+                            onClick={() =>
+                                navigate(
+                                    location.pathname +
+                                        `?viewAffiliate=${row.original._id}`
+                                )
+                            }
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td

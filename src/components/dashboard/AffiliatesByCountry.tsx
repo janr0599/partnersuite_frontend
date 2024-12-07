@@ -83,7 +83,7 @@ export default function AffiliatesByCountryCard() {
                     <span>Country</span>
                     <span>Affiliates / Share</span>
                 </p>
-                <List className="mt-2">
+                <List className="mt-2 max-h-48 overflow-y-auto">
                     {data.map((item) => (
                         <ListItem key={item.name} className="space-x-6">
                             <div className="flex items-center space-x-2.5 truncate">
