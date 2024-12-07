@@ -345,7 +345,13 @@ function TicketsTable({
                     {table.getRowModel().rows.map((row) => (
                         <tr
                             key={row.id}
-                            className="hover:bg-slate-100 transition-colors"
+                            className="hover:bg-slate-100 transition-colors cursor-pointer"
+                            onClick={() =>
+                                navigate(
+                                    location.pathname +
+                                        `?viewTicket=${row.original._id}`
+                                )
+                            }
                         >
                             {row.getVisibleCells().map((cell) => (
                                 <td
@@ -372,25 +378,7 @@ function TicketsTable({
                                             } ${
                                                 cell.column.id === "title" &&
                                                 "hover:underline cursor-pointer"
-                                            } ${
-                                                cell.column.id === "ticketId" &&
-                                                "hover:underline cursor-pointer"
                                             }`}
-                                            {...(cell.column.id === "title" && {
-                                                onClick: () =>
-                                                    navigate(
-                                                        location.pathname +
-                                                            `?viewTicket=${row.original._id}`
-                                                    ),
-                                            })}
-                                            {...(cell.column.id ===
-                                                "ticketId" && {
-                                                onClick: () =>
-                                                    navigate(
-                                                        location.pathname +
-                                                            `?viewTicket=${row.original._id}`
-                                                    ),
-                                            })}
                                         >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
