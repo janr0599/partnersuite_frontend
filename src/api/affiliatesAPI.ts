@@ -23,6 +23,22 @@ export const addAffiliate = async (formData: AffiliateFormData) => {
     }
 };
 
+export const bulkAddAffiliates = async (affiliates: AffiliateFormData[]) => {
+    try {
+        console.log(affiliates);
+        const { data } = await api.post<{ message: string }>(
+            "/affiliates/bulk-add",
+            { affiliates }
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
 export const getAffiliates = async (): Promise<Affiliates> => {
     try {
         const { data } = await api.get<{ affiliates: Affiliates }>(

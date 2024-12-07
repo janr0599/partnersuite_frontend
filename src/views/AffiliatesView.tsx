@@ -9,6 +9,7 @@ import { getAffiliates } from "@/api/affiliatesAPI";
 import { Affiliates } from "@/types/affiliateTypes";
 import { useAuth } from "@/hooks/useauth";
 import EditAffiliateData from "@/components/affiliates/EditAffiliateData";
+import BulkImportModal from "@/components/affiliates/BulkImportModal";
 
 function AffiliatesView() {
     const { data: user, isLoading: userLoading } = useAuth();
@@ -30,18 +31,28 @@ function AffiliatesView() {
                     <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
                         Affiliate Management
                     </h1>
-                    <div className="flex gap-6 font-bold">
-                        <button
-                            className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm truncate"
-                            onClick={() =>
-                                navigate(
-                                    location.pathname + "?newAffiliate=true"
-                                )
-                            }
-                        >
-                            <FiPlus className="text-xl" />
-                            Add Affiliate
-                        </button>
+                    <div className="">
+                        <div className="flex gap-6 font-bold">
+                            <button
+                                className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm truncate"
+                                onClick={() =>
+                                    navigate(
+                                        location.pathname + "?newAffiliate=true"
+                                    )
+                                }
+                            >
+                                <FiPlus className="text-xl" />
+                                Add Affiliate
+                            </button>
+                        </div>
+                        <div className="">
+                            <button
+                                onClick={() => navigate("?bulkImport=true")}
+                                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                            >
+                                Bulk Import Affiliates
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -62,6 +73,7 @@ function AffiliatesView() {
                 <AddAffiliateModal />
                 <AffiliateDetailsModal />
                 <EditAffiliateData />
+                <BulkImportModal />
             </div>
         );
 }
