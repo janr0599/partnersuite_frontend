@@ -175,23 +175,30 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                         Details
                     </button>
 
-                    <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
-                        onClick={() =>
-                            navigate(
-                                location.pathname +
-                                    `?editAffiliate=${row.original._id}`
-                            )
-                        }
-                    >
-                        <FiEdit className="size-5 group-hover:text-indigo-500 cursor-pointer transition-colors" />
-                    </button>
-                    <button
-                        className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
-                        onClick={() => handleDeleteAffiliate(row.original._id)}
-                    >
-                        <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />
-                    </button>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <button
+                            className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                            onClick={() =>
+                                navigate(
+                                    location.pathname +
+                                        `?editAffiliate=${row.original._id}`
+                                )
+                            }
+                        >
+                            <FiEdit className="size-5 group-hover:text-indigo-500 cursor-pointer transition-colors" />
+                        </button>
+                    </div>
+
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <button
+                            className="border border-slate-300 hover:bg-slate-200 rounded-md p-2 text-sm font-medium transition-colors group"
+                            onClick={() =>
+                                handleDeleteAffiliate(row.original._id)
+                            }
+                        >
+                            <FiTrash2 className="size-5 group-hover:text-red-500 hover:cursor-pointer transition-colors" />
+                        </button>
+                    </div>
                 </>
             ),
         },
@@ -350,7 +357,7 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                     {table.getRowModel().rows.map((row) => (
                         <tr
                             key={row.id}
-                            className="hover:bg-slate-100 transition-colors"
+                            className="hover:bg-slate-100 transition-colors cursor-pointer"
                             onClick={() =>
                                 navigate(
                                     location.pathname +
