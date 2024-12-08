@@ -64,7 +64,7 @@ function AffiliateForm({ register, errors, setFocus }: AffiliateFormProps) {
                             id="name"
                             type="text"
                             placeholder="affiliate's name"
-                            className="w-full p-2 border border-gray-200 rounded-md text-sm md:text-base"
+                            className="w-full p-2 border border-gray-200 rounded-md"
                             {...register("name", {
                                 required: "name is required",
                             })}
