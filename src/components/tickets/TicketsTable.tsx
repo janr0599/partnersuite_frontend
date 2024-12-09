@@ -165,11 +165,12 @@ function TicketsTable({
             id: "actions",
             enableSorting: false,
             cell: ({ row }) => (
-                <>
+                <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex gap-2"
+                >
                     <button
-                        className={`border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                            canDelete && "-translate-y-1"
-                        }`}
+                        className="border border-slate-300 hover:bg-slate-200 rounded-md px-4 py-2 text-sm font-medium transition-colors"
                         onClick={() =>
                             navigate(
                                 location.pathname +
@@ -203,7 +204,7 @@ function TicketsTable({
                             </button>
                         </>
                     )}
-                </>
+                </div>
             ),
         },
     ];
