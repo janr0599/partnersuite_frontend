@@ -16,6 +16,7 @@ export const baseAuthSchema = z.object({
     currentPassword: z.string().trim().min(1, "Current Password is required"),
     role: z.enum(["manager", "affiliate"]),
     token: z.string(),
+    image: z.string().optional(),
 });
 
 export const userLoginSchema = baseAuthSchema
@@ -44,6 +45,7 @@ export const authenticatedUserSchema = baseAuthSchema
         name: true,
         email: true,
         role: true,
+        image: true,
     })
     .extend({
         _id: z.string(),

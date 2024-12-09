@@ -31,3 +31,20 @@ export const changePassword = async (formData: ChangePasswordForm) => {
         throw new Error("An unexpected error occurred");
     }
 };
+
+export const uploadImage = async (file: File) => {
+    let formData = new FormData();
+    formData.append("file", file);
+    try {
+        const { data } = await api.post<{ image: string }>(
+            "/profile/upload",
+            formData
+        );
+        return data.image;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};

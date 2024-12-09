@@ -16,6 +16,7 @@ import { isAxiosError } from "axios";
 export const getTickets = async (): Promise<Tickets> => {
     try {
         const { data } = await api.get<{ tickets: Tickets }>("/tickets");
+        console.log(data.tickets);
         const validation = ticketsSchema.safeParse(data.tickets);
         if (!validation.success) {
             console.error(
@@ -24,6 +25,7 @@ export const getTickets = async (): Promise<Tickets> => {
             );
             throw new Error("Invalid data");
         }
+        console.log(validation.data);
         return validation.data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -181,6 +183,23 @@ export const deleteTicket = async ({
             `/tickets/${ticketId}`
         );
         return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const uploadFile = async (file: File) => {
+    let formData = new FormData();
+    formData.append("file", file);
+    try {
+        const { data } = await api.post<{ image: string }>(
+            "/tickets/upload-file",
+            formData
+        );
+        return data.image;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);

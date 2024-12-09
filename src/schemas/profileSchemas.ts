@@ -3,6 +3,7 @@ import { authenticatedUserSchema, baseAuthSchema } from "./authSchemas";
 export const userProfileSchema = authenticatedUserSchema.pick({
     name: true,
     email: true,
+    image: true,
 });
 
 export const changePasswordSchema = baseAuthSchema

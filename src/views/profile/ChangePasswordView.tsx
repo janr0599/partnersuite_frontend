@@ -86,7 +86,7 @@ export default function ChangePasswordView() {
                         <input
                             id="password"
                             type="password"
-                            placeholder="new Password"
+                            placeholder="new password"
                             className="w-full p-3 border border-gray-200 rounded-lg"
                             {...register("password", {
                                 required: "New Password is required",

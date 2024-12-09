@@ -10,6 +10,7 @@ export const ticketSchema = z.object({
     createdBy: authenticatedUserSchema,
     title: z.string().trim().min(1, "title is required"),
     description: z.string().trim().min(1, "description is required"),
+    file: z.string().optional(),
     category: z.string().min(1, "category is required"),
     comments: z.array(commentSchema),
     status: ticketStatusSchema,
@@ -30,6 +31,7 @@ export const ticketsSchema = z.array(
         createdAt: true,
         updatedAt: true,
         closedAt: true,
+        file: true,
     })
 );
 
@@ -51,6 +53,7 @@ export const ticketFormSchema = ticketSchema.pick({
     title: true,
     description: true,
     category: true,
+    file: true,
 });
 
 export const tableTicketSchema = ticketSchema.pick({

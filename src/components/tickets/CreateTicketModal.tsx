@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -42,6 +42,8 @@ export default function CreateTicketModal() {
         resolver: zodResolver(ticketFormSchema),
     });
 
+    const [file, setFile] = useState<string>("");
+
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
         mutationFn: createTicket,
@@ -55,11 +57,19 @@ export default function CreateTicketModal() {
             toast.success(message);
             navigate(location.pathname, { replace: true });
             reset();
+            setFile("");
         },
     });
 
     const handleCreateTicket = (formData: TicketFormData) => {
-        mutate(formData);
+        mutate({
+            ...formData,
+            file,
+        });
+        console.log({
+            ...formData,
+            file,
+        });
     };
 
     return (
@@ -128,6 +138,7 @@ export default function CreateTicketModal() {
                                             register={register}
                                             errors={errors}
                                             setFocus={setFocus}
+                                            setFile={setFile}
                                         />
                                         <input
                                             type="submit"

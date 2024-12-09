@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
     Dialog,
     DialogPanel,
@@ -6,7 +6,7 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { FiX } from "react-icons/fi";
+import { FiLink2, FiX } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ticket, Tickets } from "@/types/ticketsTypes";
@@ -17,12 +17,13 @@ import { categoryTranslations, statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
 import { isManager } from "@/utils/policies";
 import { useAuth } from "@/hooks/useauth";
+import { set } from "zod";
 
 type TicketDetailsModalProps = {
     tickets?: Tickets;
 };
 
-export default function TickeDetailsModal({
+export default function TicketDetailsModal({
     tickets,
 }: TicketDetailsModalProps) {
     const { data: user, isLoading: userLoading } = useAuth();
@@ -40,18 +41,19 @@ export default function TickeDetailsModal({
     });
 
     const show = !!ticketId;
+    const [imageModalOpen, setImageModalOpen] = useState(false);
 
-    useEffect(() => {
-        const html = document.documentElement;
+    // useEffect(() => {
+    //     const html = document.documentElement;
 
-        if (show) {
-            html.style.overflow = "auto"; // Allow scrolling
-        }
+    //     if (show) {
+    //         html.style.overflow = "auto";
+    //     }
 
-        return () => {
-            html.style.overflow = ""; // Reset on modal close
-        };
-    }, [show]);
+    //     return () => {
+    //         html.style.overflow = "";
+    //     };
+    // }, [show]);
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
@@ -235,7 +237,81 @@ export default function TickeDetailsModal({
                                             </p>
                                         </div>
                                     )}
-                                    <p className="font-bold text-xl text-center">
+                                    {data.file && (
+                                        <>
+                                            <p className="font-semibold text-sm md:text-base mb-2">
+                                                Attachment:
+                                            </p>
+                                            <div className="flex gap-2 items-center">
+                                                <FiLink2 className="inline-block text-xl" />
+                                                <a
+                                                    className="hover:underline cursor-pointer"
+                                                    onClick={() =>
+                                                        setImageModalOpen(true)
+                                                    }
+                                                >
+                                                    See image
+                                                </a>
+                                            </div>
+
+                                            {/* Image Modal */}
+                                            <Transition
+                                                appear
+                                                show={imageModalOpen}
+                                                as={Fragment}
+                                            >
+                                                <Dialog
+                                                    as="div"
+                                                    className="relative z-[1100]"
+                                                    onClose={() =>
+                                                        setImageModalOpen(false)
+                                                    }
+                                                >
+                                                    <TransitionChild
+                                                        as={Fragment}
+                                                        enter="ease-out duration-300"
+                                                        enterFrom="opacity-0"
+                                                        enterTo="opacity-100"
+                                                        leave="ease-in duration-200"
+                                                        leaveFrom="opacity-100"
+                                                        leaveTo="opacity-0"
+                                                    >
+                                                        <div className="fixed inset-0 bg-black/90" />
+                                                    </TransitionChild>
+                                                    <div className="fixed inset-0 flex items-center justify-center p-4">
+                                                        <TransitionChild
+                                                            as={Fragment}
+                                                            enter="ease-out duration-300"
+                                                            enterFrom="opacity-0 scale-95"
+                                                            enterTo="opacity-100 scale-100"
+                                                            leave="ease-in duration-200"
+                                                            leaveFrom="opacity-100 scale-100"
+                                                            leaveTo="opacity-0 scale-95"
+                                                        >
+                                                            <DialogPanel className="bg-white rounded-lg shadow-xl">
+                                                                <img
+                                                                    src={
+                                                                        data.file
+                                                                    }
+                                                                    alt="Ticket Attachment"
+                                                                    className="w-full"
+                                                                />
+                                                            </DialogPanel>
+                                                        </TransitionChild>
+                                                        <FiX
+                                                            className="absolute top-4 right-4 text-2xl text-white cursor-pointer"
+                                                            onClick={() =>
+                                                                setImageModalOpen(
+                                                                    false
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                </Dialog>
+                                            </Transition>
+                                        </>
+                                    )}
+                                    <p className="font-bold text-xl text-center mt-5 md:mt-0">
                                         Comments
                                     </p>
                                     <CommentsPanel
