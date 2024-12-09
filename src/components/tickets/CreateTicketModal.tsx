@@ -66,10 +66,6 @@ export default function CreateTicketModal() {
             ...formData,
             file,
         });
-        console.log({
-            ...formData,
-            file,
-        });
     };
 
     return (

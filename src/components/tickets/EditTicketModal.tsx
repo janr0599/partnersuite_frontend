@@ -10,17 +10,17 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { Ticket, TicketFormData } from "@/types/ticketsTypes";
 import { ticketFormSchema } from "@/schemas/ticketsShemas";
 import { updateTicket } from "@/api/ticketsAPI";
 import TicketForm from "./TicketForm";
 
-type EditAffiliateModalProps = {
+type EditTicketModalProps = {
     ticket: Ticket;
 };
-function EditTicketModal({ ticket }: EditAffiliateModalProps) {
+function EditTicketModal({ ticket }: EditTicketModalProps) {
     const navigate = useNavigate();
 
     const initialValues = {
@@ -41,6 +41,8 @@ function EditTicketModal({ ticket }: EditAffiliateModalProps) {
         resolver: zodResolver(ticketFormSchema),
     });
 
+    const [file, setFile] = useState<string>("");
+
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
         mutationFn: updateTicket,
@@ -57,11 +59,16 @@ function EditTicketModal({ ticket }: EditAffiliateModalProps) {
             toast.success(message);
             navigate(location.pathname, { replace: true });
             reset();
+            setFile("");
         },
     });
 
     const handleEditTicket = (formData: TicketFormData) => {
-        mutate({ formData, ticketId });
+        const data = {
+            ...formData,
+            file,
+        };
+        mutate({ formData: data, ticketId });
     };
 
     return (
@@ -124,6 +131,7 @@ function EditTicketModal({ ticket }: EditAffiliateModalProps) {
                                     <TicketForm
                                         register={register}
                                         errors={errors}
+                                        setFile={setFile}
                                     />
 
                                     <input
