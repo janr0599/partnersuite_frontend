@@ -17,7 +17,6 @@ import { categoryTranslations, statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
 import { isManager } from "@/utils/policies";
 import { useAuth } from "@/hooks/useauth";
-import { set } from "zod";
 
 type TicketDetailsModalProps = {
     tickets?: Tickets;
