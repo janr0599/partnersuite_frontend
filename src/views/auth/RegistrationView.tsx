@@ -48,7 +48,7 @@ function RegistrationView() {
                 noValidate
             >
                 <div className="text-center">
-                    <h1 className="text-5xl font-black">
+                    <h1 className="text-4xl md:text-5xl font-black">
                         Manager Registration
                     </h1>
                     <p className="text-xl font-light mt-5">
@@ -56,7 +56,7 @@ function RegistrationView() {
                     </p>
                 </div>
                 <div className="flex flex-col gap-5">
-                    <label className="font-normal text-xl">Name</label>
+                    <label className="font-normal text-lg">Name</label>
 
                     <input
                         id="name"
@@ -73,7 +73,7 @@ function RegistrationView() {
                 </div>
 
                 <div className="flex flex-col gap-5">
-                    <label className="font-normal text-xl">Email</label>
+                    <label className="font-normal text-lg">Email</label>
 
                     <input
                         id="email"
@@ -94,7 +94,7 @@ function RegistrationView() {
                 </div>
 
                 <div className="flex flex-col gap-5">
-                    <label className="font-normal text-xl">Password</label>
+                    <label className="font-normal text-lg">Password</label>
 
                     <input
                         id="password"
@@ -116,7 +116,7 @@ function RegistrationView() {
                 </div>
 
                 <div className="flex flex-col gap-5">
-                    <label className="font-normal text-xl">
+                    <label className="font-normal text-lg">
                         Confirm Password
                     </label>
 
@@ -140,10 +140,10 @@ function RegistrationView() {
                 <input
                     type="submit"
                     value="Create account"
-                    className="bg-black hover:opacity-80 w-full p-3 text-white font-black text-xl cursor-pointer transition-opacity rounded-lg"
+                    className="bg-black hover:opacity-80 w-full p-3 text-white font-black text-lg md:text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
-                <nav className="mt-10 flex flex-col space-y-4">
+                <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
                     <Link
                         to={"/auth/login"}
                         className="text-center font-normal hover:underline"

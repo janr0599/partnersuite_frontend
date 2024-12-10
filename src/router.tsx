@@ -15,6 +15,9 @@ import ChangePasswordView from "./views/profile/ChangePasswordView";
 import NotFound from "./views/404/NotFound";
 import ForgotPasswordView from "./views/auth/ForgotPasswordView";
 import NewPasswordView from "./views/auth/NewPasswordView";
+import AffiliateLoginView from "./views/auth/Affiliates/AffiliateLoginView";
+import AffiliateForgotPasswordView from "./views/auth/Affiliates/AffiliateForgotPasswordView";
+import AffiliateNewPasswordView from "./views/auth/Affiliates/AffiliateNewPasswordView";
 
 function Router() {
     return (
@@ -52,16 +55,33 @@ function Router() {
                     <Route path="/auth/login" element={<LoginView />} />
 
                     <Route
+                        path="/auth/login-affiliate"
+                        element={<AffiliateLoginView />}
+                    />
+
+                    <Route
                         path="/auth/registration"
                         element={<RegistrationView />}
                     />
+
                     <Route
                         path="/auth/forgot-password"
                         element={<ForgotPasswordView />}
                     />
+
+                    <Route
+                        path="/auth/forgot-password-affiliate"
+                        element={<AffiliateForgotPasswordView />}
+                    />
+
                     <Route
                         path="/auth/new-password"
                         element={<NewPasswordView />}
+                    />
+
+                    <Route
+                        path="/auth/new-password-affiliate"
+                        element={<AffiliateNewPasswordView />}
                     />
                 </Route>
 

@@ -5,7 +5,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forgotPasswordSchema } from "@/schemas/authSchemas";
 import { useMutation } from "@tanstack/react-query";
-import { forgotPassword } from "@/api/authAPI";
+import { forgotPasswordAffiliate } from "@/api/authAPI";
 import { toast } from "react-toastify";
 
 export default function ForgotPasswordView() {
@@ -23,7 +23,7 @@ export default function ForgotPasswordView() {
     });
 
     const { mutate } = useMutation({
-        mutationFn: forgotPassword,
+        mutationFn: forgotPasswordAffiliate,
         onError: (error) => {
             toast.error(error.message);
         },
@@ -77,18 +77,12 @@ export default function ForgotPasswordView() {
                     className="bg-black hover:opacity-80 w-full p-2 md:p-3 text-white font-black text-lg md:text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
-                <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
+                <nav className="mt-10 flex flex-col text-sm md:text-base">
                     <Link
-                        to={"/auth/login"}
+                        to={"/auth/login-affiliate"}
                         className="text-center font-normal hover:underline"
                     >
                         Already have an account? Login
-                    </Link>
-                    <Link
-                        to={"/auth/registration"}
-                        className="text-center font-normal hover:underline"
-                    >
-                        Don't have an account? Create one
                     </Link>
                 </nav>
             </form>

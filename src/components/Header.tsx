@@ -15,6 +15,7 @@ import {
     markAllNotificationsAsRead,
     markNotificationAsRead,
 } from "@/api/notificationsAPI";
+import { AuthenticatedUser } from "@/types/authTypes";
 
 type HeaderProps = {
     notifications: Notifications;
@@ -22,6 +23,7 @@ type HeaderProps = {
     isErrorNotifications: boolean;
     sidebarOpen: string | boolean | undefined;
     setSidebarOpen: (arg0: boolean) => void;
+    user: AuthenticatedUser;
 };
 
 const Header = ({
@@ -30,6 +32,7 @@ const Header = ({
     notifications,
     isLoadingNotifications,
     isErrorNotifications,
+    user,
 }: HeaderProps) => {
     const navigate = useNavigate();
 
@@ -78,7 +81,11 @@ const Header = ({
         localStorage.removeItem("AUTH_TOKEN_PARTNERSUITE");
         queryClient.removeQueries({ queryKey: ["user"] });
         queryClient.removeQueries({ queryKey: ["tickets"] });
-        navigate("/auth/login");
+        if (user.role === "manager") {
+            navigate("/auth/login");
+        } else {
+            navigate("/auth/login-affiliate");
+        }
     };
 
     return (

@@ -54,7 +54,7 @@ function LoginView() {
             >
                 <div className="text-center">
                     <h1 className="text-4xl md:text-5xl font-black">
-                        Manager Login
+                        Affiliate Login
                     </h1>
                     <p className="text-xl font-light mt-5">
                         Enter your email and password
@@ -103,15 +103,9 @@ function LoginView() {
                     className="bg-black hover:opacity-80 w-full p-2 md:p-3 text-white font-black text-lg md:text-xl cursor-pointer transition-opacity rounded-lg"
                 />
 
-                <nav className="mt-10 flex flex-col space-y-4 text-sm md:text-base">
+                <nav className="mt-10 flex flex-col text-sm md:text-base">
                     <Link
-                        to={"/auth/registration"}
-                        className="text-center font-normal hover:underline"
-                    >
-                        Don't have an account? Create one
-                    </Link>
-                    <Link
-                        to={"/auth/forgot-password"}
+                        to={"/auth/forgot-password-affiliate"}
                         className="text-center font-normal hover:underline"
                     >
                         Trouble logging in? Reset your password.

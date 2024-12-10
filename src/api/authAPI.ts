@@ -96,6 +96,20 @@ export const forgotPassword = async (formData: ForgotPasswordForm) => {
     }
 };
 
+export const forgotPasswordAffiliate = async (formData: ForgotPasswordForm) => {
+    try {
+        const { data } = await api.post<{ message: string }>(
+            "/auth/forgot-password-affiliate",
+            formData
+        );
+        return data.message;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+};
+
 export const validateToken = async (token: ConfirmToken) => {
     try {
         const { data } = await api.post<{ message: string }>(
