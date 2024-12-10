@@ -238,13 +238,13 @@ function AffiliatesTable({ affiliates, isLoading }: AffiliatesTableProps) {
                 <p className="text-slate-500 inline-flex gap-2 items-center">
                     <FiUsers /> Total: {affiliates?.length}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2 md:gap-6 font-normal items-start md:items-center flex-1 w-full lg:max-w-md mt-1">
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-2 font-normal items-start md:items-center flex-1 w-full lg:max-w-md mt-1">
                     <div className="relative flex items-center flex-1 min-w-[250px] md:w-auto">
                         <FiSearch className="absolute left-3 text-gray-500" />
                         <input
                             type="text"
                             placeholder="Search All columns..."
-                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-gray-500 outline-none"
+                            className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-gray-500 outline-none text-base md:text-sm"
                             value={filtering}
                             onChange={(e) => setFiltering(e.target.value)}
                         />

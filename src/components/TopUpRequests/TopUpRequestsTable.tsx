@@ -274,7 +274,7 @@ function TopUpRequestsTable({
                             <input
                                 type="text"
                                 placeholder="Search All columns..."
-                                className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-gray-500 outline-none"
+                                className="w-full bg-white border border-slate-300 rounded-md pl-10 py-2 text-gray-500 outline-none text-base md:text-sm"
                                 value={filtering}
                                 onChange={(e) => setFiltering(e.target.value)}
                             />
