@@ -42,18 +42,6 @@ export default function TicketDetailsModal({
     const show = !!ticketId;
     const [imageModalOpen, setImageModalOpen] = useState(false);
 
-    // useEffect(() => {
-    //     const html = document.documentElement;
-
-    //     if (show) {
-    //         html.style.overflow = "auto";
-    //     }
-
-    //     return () => {
-    //         html.style.overflow = "";
-    //     };
-    // }, [show]);
-
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
         mutationFn: updateTicketStatus,
@@ -135,11 +123,11 @@ export default function TicketDetailsModal({
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
                                             <p className="text-xs text-slate-400">
-                                                Created on:
+                                                Created on: {""}
                                                 {formatDate(data.createdAt)}
                                             </p>
                                             <p className="text-xs text-slate-400">
-                                                Last update:
+                                                Last update: {""}
                                                 {formatDate(data.updatedAt)}
                                             </p>
                                         </div>

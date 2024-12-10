@@ -8,6 +8,7 @@ export const topUpRequestStatusSchema = z.enum([
 ]);
 
 export const topUpRequestSchema = z.object({
+    topUpRequestId: z.string(),
     _id: z.string(),
     createdBy: authenticatedUserSchema,
     BonusAmount: z.number(),
