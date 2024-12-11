@@ -9,13 +9,6 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { FilterFn } from "@tanstack/react-table";
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    Transition,
-} from "@headlessui/react";
 import { Affiliate, Affiliates } from "@/types/affiliateTypes";
 import { useNavigate } from "react-router-dom";
 import {
@@ -26,7 +19,6 @@ import {
     FiChevronsRight,
     FiChevronUp,
     FiEdit,
-    FiMoreHorizontal,
     FiSearch,
     FiTrash2,
     FiUsers,
@@ -35,7 +27,7 @@ import { deleteAffiliate } from "@/api/affiliatesAPI";
 import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { AffiliateStatusTranslations } from "@/locales/en";
 
 type AffiliatesTableProps = {
