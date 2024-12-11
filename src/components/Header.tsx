@@ -12,10 +12,13 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { timeAgo } from "@/utils/utils";
 import {
+    deleteAllNotifications,
     markAllNotificationsAsRead,
     markNotificationAsRead,
 } from "@/api/notificationsAPI";
 import { AuthenticatedUser } from "@/types/authTypes";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 type HeaderProps = {
     notifications: Notifications;
@@ -77,6 +80,41 @@ const Header = ({
         markAllNotificationsAsReadMutation();
     };
 
+    const { mutate: deleteAllNotificationsMutation, isPending: isDeleting } =
+        useMutation({
+            mutationFn: deleteAllNotifications,
+            onError: (error) => {
+                toast.error(error.message);
+            },
+            onSuccess: () => {
+                queryClient.invalidateQueries({
+                    queryKey: ["notifications"],
+                });
+            },
+        });
+
+    const handleDeleteAllNotifications = () => {
+        Swal.fire({
+            title: "Delete all notifications?",
+            text: "This cannot be undone",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            confirmButtonText: "Delete",
+            reverseButtons: true,
+            customClass: {
+                cancelButton:
+                    "text-black bg-slate-200 hover:bg-slate-300 transition-colors",
+                confirmButton: "hover:bg-red-600 transition-colors",
+                popup: "w-[300px] md:w-[400px] text-sm md:text-base rounded-md",
+                title: "text-black font-bold text-left w-full p-3 rounded-md text-2xl",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteAllNotificationsMutation();
+            }
+        });
+    };
+
     const logout = () => {
         localStorage.removeItem("AUTH_TOKEN_PARTNERSUITE");
         queryClient.removeQueries({ queryKey: ["user"] });
@@ -133,19 +171,23 @@ const Header = ({
                         >
                             <div className="flex items-center justify-between p-2">
                                 <h2 className="font-semibold">Notifications</h2>
-                                <button
-                                    className={`text-xs ${
-                                        unreadNotifications === 0
-                                            ? "opacity-50"
-                                            : "hover:underline"
-                                    }`}
-                                    onClick={handleMarkAllNotificationsAsRead}
-                                    disabled={unreadNotifications === 0}
-                                >
-                                    {isPending
-                                        ? "Processing..."
-                                        : "Mark all as read"}
-                                </button>
+                                {notifications.length > 0 && (
+                                    <button
+                                        className={`text-xs ${
+                                            unreadNotifications === 0
+                                                ? "opacity-50"
+                                                : "hover:underline"
+                                        }`}
+                                        onClick={
+                                            handleMarkAllNotificationsAsRead
+                                        }
+                                        disabled={unreadNotifications === 0}
+                                    >
+                                        {isPending
+                                            ? "Processing..."
+                                            : "Mark all as read"}
+                                    </button>
+                                )}
                             </div>
                             <div className="p-2">
                                 {notifications.length > 0 ? (
@@ -153,7 +195,7 @@ const Header = ({
                                         {notifications.map((notification) => (
                                             <div
                                                 key={notification._id}
-                                                className={`flex flex-row items-center gap-2 p-2 rounded-lg mr-2 border-b border-slate-200 hover:bg-slate-200 transition-colors ${
+                                                className={`flex flex-row items-center gap-2 p-2 rounded-lg mr-2 hover:bg-slate-200 transition-colors ${
                                                     notification.status ===
                                                     "read"
                                                         ? ""
@@ -209,9 +251,23 @@ const Header = ({
                                         ))}
                                     </div>
                                 ) : (
-                                    <p>No Notifications</p>
+                                    <p className="text-center text-slate-500 my-5">
+                                        No Notifications
+                                    </p>
                                 )}
                             </div>
+                            {notifications.length > 0 && (
+                                <div className="p-2">
+                                    <button
+                                        className="text-xs hover:underline"
+                                        onClick={handleDeleteAllNotifications}
+                                    >
+                                        {isDeleting
+                                            ? "Deleting..."
+                                            : "Delete all"}
+                                    </button>
+                                </div>
+                            )}
                         </PopoverPanel>
                     </Popover>
                     <Popover>

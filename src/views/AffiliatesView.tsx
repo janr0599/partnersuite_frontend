@@ -1,7 +1,7 @@
 import AddAffiliateModal from "@/components/affiliates/AddAffiliateModal";
 import AffiliateDetailsModal from "@/components/affiliates/AffiliateDetailsModal";
 import AffiliatesTable from "@/components/affiliates/AffiliatesTable";
-import { FiPlus } from "react-icons/fi";
+import { FiMoreHorizontal, FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +10,14 @@ import { Affiliates } from "@/types/affiliateTypes";
 import { useAuth } from "@/hooks/useauth";
 import EditAffiliateData from "@/components/affiliates/EditAffiliateData";
 import BulkImportModal from "@/components/affiliates/BulkImportModal";
+import {
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    Transition,
+} from "@headlessui/react";
+import { Fragment } from "react";
 
 function AffiliatesView() {
     const { data: user, isLoading: userLoading } = useAuth();
@@ -31,7 +39,7 @@ function AffiliatesView() {
                     <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">
                         Affiliate Management
                     </h1>
-                    <div className="flex gap-6 font-bold">
+                    <div className="flex gap-2 font-bold">
                         <button
                             className="bg-black hover:opacity-80 text-white px-4 py-2 rounded-md inline-flex items-center gap-2 transition-opacity text-sm truncate"
                             onClick={() =>
@@ -43,6 +51,40 @@ function AffiliatesView() {
                             <FiPlus className="text-xl" />
                             Add Affiliate
                         </button>
+                        <Menu
+                            as="div"
+                            className="relative flex-none hidden md:block"
+                        >
+                            <MenuButton className="block p-2.5 text-gray-500 hover:text-gray-900">
+                                <span className="sr-only">options</span>
+                                <FiMoreHorizontal
+                                    className="size-5"
+                                    aria-hidden="true"
+                                />
+                            </MenuButton>
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <MenuItems className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none font-semibold">
+                                    <MenuItem>
+                                        <button
+                                            onClick={() =>
+                                                navigate("?bulkImport=true")
+                                            }
+                                            className="px-4 py-2 text-sm transition hover:underline"
+                                        >
+                                            Import from CSV
+                                        </button>
+                                    </MenuItem>
+                                </MenuItems>
+                            </Transition>
+                        </Menu>
                     </div>
                 </div>
 

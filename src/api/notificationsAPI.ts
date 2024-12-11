@@ -46,3 +46,14 @@ export const markAllNotificationsAsRead = async () => {
         throw new Error("An unexpected error occurred");
     }
 };
+
+export const deleteAllNotifications = async () => {
+    try {
+        await api.delete<{ message: string }>("/notifications");
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error("An unexpected error occurred");
+    }
+};
