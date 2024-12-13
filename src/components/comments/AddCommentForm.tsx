@@ -81,7 +81,7 @@ function AddCommentform({ comment, onCancel, ticket }: AddCommentFormProps) {
     return (
         <form
             onSubmit={handleSubmit(handleAddOrUpdateComment)}
-            className={`${comment ? "mb-6 -mt-6" : "pb-3"} space-y-3`}
+            className={`${comment ? "mb-6" : "pb-3"} space-y-3`}
             noValidate
         >
             <label htmlFor="content" className="font-bold text-sm md:text-base">
