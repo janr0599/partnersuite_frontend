@@ -13,6 +13,7 @@ export const affiliateSchema = z.object({
     Baseline: z.union([z.number(), z.string()]).optional(),
     status: z.string(),
     manager: z.string(),
+    image: z.string().optional(),
 });
 
 export const affiliateUpdateFormSchema = affiliateSchema

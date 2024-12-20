@@ -36,13 +36,16 @@ export default function ProfileForm({ data }: ProfileFormProps) {
         },
     });
 
-    const { mutate: uploadImageMutation } = useMutation({
+    const { mutate: uploadImageMutation, isPending } = useMutation({
         mutationFn: uploadImage,
         onError: (error) => {
             toast.error(error.message);
         },
         onSuccess: (data) => {
             setProfileImage(data);
+            queryClient.invalidateQueries({
+                queryKey: ["user"], // Invalidate user query to update profile image
+            });
         },
     });
 
@@ -76,6 +79,13 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                                 !profileImage && "p-2"
                             }`}
                         />
+                        {isPending && (
+                            <div className="absolute top-0 left-0 size-24 md:size-32 rounded-full bg-black bg-opacity-50 flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                                <span className="text-white text-sm font-bold">
+                                    Uploading Image...
+                                </span>
+                            </div>
+                        )}
 
                         {/* Transparent Black Overlay */}
                         <div className="absolute top-0 left-0 size-24 md:size-32 rounded-full bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

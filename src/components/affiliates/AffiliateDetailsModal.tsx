@@ -6,7 +6,7 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { FiX, FiUser } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAffiliateById, updateAffiliateStatus } from "@/api/affiliatesAPI";
@@ -31,6 +31,10 @@ export default function AffiliateModalDetails() {
         enabled: !!affiliateId,
         retry: false,
     });
+
+    // const profileImage = useMemo(() => {
+    //     return data?.image || "/default-avatar.svg";
+    // }, [data]);
 
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
@@ -100,10 +104,20 @@ export default function AffiliateModalDetails() {
                                 <DialogPanel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6 md:p-8 space-y-4 md:space-y-5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2">
-                                            <div className="rounded-full  size-14 md:size-20 bg-slate-200 inline-flex items-center justify-center">
-                                                {/* <img src={""} alt="avatar" /> */}
-                                                <FiUser className="text-xl md:text-3xl" />
-                                            </div>
+                                            {/* <div className="rounded-full  size-14 md:size-20 bg-slate-200 inline-flex items-center justify-center"> */}
+                                            {/* <img src={""} alt="avatar" /> */}
+                                            {/* <FiUser className="text-xl md:text-3xl" /> */}
+                                            <img
+                                                src={
+                                                    data.image ||
+                                                    "/default-avatar.svg"
+                                                } // Fallback image
+                                                alt="Profile Image"
+                                                className={`size-12 md:size-20 rounded-full object-cover border-2 border-gray-300 ${
+                                                    !data.image && "p-2"
+                                                }`}
+                                            />
+                                            {/* </div> */}
                                             <div className="">
                                                 <DialogTitle
                                                     as="h3"
@@ -121,7 +135,7 @@ export default function AffiliateModalDetails() {
                                         </p>
                                     </div>
                                     <FiX
-                                        className="absolute -top-2 right-3 md:right-6 text-xl cursor-pointer"
+                                        className="absolute -top-2 right-3 md:right-6 text- cursor-pointer"
                                         onClick={() =>
                                             navigate(location.pathname, {
                                                 replace: true,
