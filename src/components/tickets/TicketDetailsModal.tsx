@@ -134,10 +134,13 @@ export default function TicketDetailsModal({
                                         <div className="">
                                             <DialogTitle
                                                 as="h3"
-                                                className="font-black text-lg md:text-xl mb-2"
+                                                className="font-black text-lg md:text-xl"
                                             >
-                                                Ticket - {ticketIdentifier}
+                                                Ticket {ticketIdentifier}
                                             </DialogTitle>
+                                            <span className="text-sm text-slate-500 mb-2">
+                                                {data.createdBy.name}
+                                            </span>
                                         </div>
                                     </div>
                                     <FiX

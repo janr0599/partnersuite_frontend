@@ -8,6 +8,7 @@ import { TableTicket, Tickets } from "@/types/ticketsTypes";
 import { categoryTranslations, statusTranslations } from "@/locales/en";
 import { formatDate } from "@/utils/utils";
 import { FiAlertCircle } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 type LatestTicketsTableProps = {
     latestTickets: Tickets;
@@ -19,6 +20,8 @@ const LatestTicketsTable = ({
     isLoading,
 }: LatestTicketsTableProps) => {
     if (isLoading) return <div>Loading...</div>;
+
+    const navigate = useNavigate();
 
     const columns: ColumnDef<TableTicket>[] = [
         {
@@ -96,7 +99,16 @@ const LatestTicketsTable = ({
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className="hover:bg-slate-100">
+                        <tr
+                            key={row.id}
+                            className="hover:bg-slate-100 transition-colors cursor-pointer"
+                            onClick={() =>
+                                navigate(
+                                    location.pathname +
+                                        `?viewTicket=${row.original._id}`
+                                )
+                            }
+                        >
                             {row.getVisibleCells().map((cell) => (
                                 <td
                                     key={cell.id}

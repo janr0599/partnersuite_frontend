@@ -7,6 +7,7 @@ import AffiliatesByCountryCard from "@/components/dashboard/AffiliatesByCountry"
 import AreaChartCard from "@/components/dashboard/AreaChart";
 import LatestTicketsTable from "@/components/dashboard/LatestTicketsTable";
 import { TicketsStatCard } from "@/components/dashboard/TicketsStatCard";
+import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
 import { useQuery } from "@tanstack/react-query";
 
 function DashboardView() {
@@ -66,6 +67,8 @@ function DashboardView() {
                         isLoading={isLoading}
                     />
                 </div>
+
+                <TicketDetailsModal tickets={latestTickets} />
             </div>
         );
 }
