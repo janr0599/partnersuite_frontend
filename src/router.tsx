@@ -18,6 +18,7 @@ import NewPasswordView from "./views/auth/NewPasswordView";
 import AffiliateLoginView from "./views/auth/Affiliates/AffiliateLoginView";
 import AffiliateForgotPasswordView from "./views/auth/Affiliates/AffiliateForgotPasswordView";
 import AffiliateNewPasswordView from "./views/auth/Affiliates/AffiliateNewPasswordView";
+import { Analytics } from "@vercel/analytics/react";
 
 function Router() {
     return (
@@ -87,6 +88,7 @@ function Router() {
 
                 <Route path="*" element={<NotFound />} />
             </Routes>
+            <Analytics />
         </BrowserRouter>
     );
 }
