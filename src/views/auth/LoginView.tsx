@@ -4,12 +4,20 @@ import { useAuth } from "@/hooks/useauth";
 import { userLoginSchema } from "@/schemas/authSchemas";
 import { UserLoginForm } from "@/types/authTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function LoginView() {
+    const queryClient = useQueryClient();
+
+    const logout = () => {
+        localStorage.removeItem("AUTH_TOKEN_PARTNERSUITE");
+        queryClient.removeQueries({ queryKey: ["user"] });
+        queryClient.removeQueries({ queryKey: ["tickets"] });
+    };
+
     const navigate = useNavigate();
     const { refetch } = useAuth();
 
@@ -36,7 +44,8 @@ function LoginView() {
             if (user?.role === "manager") {
                 navigate("/");
             } else {
-                navigate("/tickets");
+                logout();
+                navigate("/auth/login-affiliate");
             }
         },
     });
@@ -115,6 +124,12 @@ function LoginView() {
                         className="text-center font-normal hover:underline"
                     >
                         Trouble logging in? Reset your password.
+                    </Link>
+                    <Link
+                        to={"/auth/login-affiliate"}
+                        className="text-center font-normal hover:underline"
+                    >
+                        Not a manager? Affiliate login
                     </Link>
                 </nav>
             </form>
