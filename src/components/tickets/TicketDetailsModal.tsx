@@ -12,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ticket, Tickets } from "@/types/ticketsTypes";
 import { getTicketById, updateTicketStatus } from "@/api/ticketsAPI";
 import { toast } from "react-toastify";
-import { formatDate } from "@/utils/utils";
+import { formatDate, timeAgo } from "@/utils/utils";
 import { categoryTranslations, statusTranslations } from "@/locales/en";
 import CommentsPanel from "../comments/CommentsPanel";
 import { isManager } from "@/utils/policies";
@@ -85,6 +85,8 @@ export default function TicketDetailsModal({
         }
     }
 
+    const today = new Date();
+
     if (userLoading) return "Loading...";
 
     if (data && user)
@@ -122,9 +124,23 @@ export default function TicketDetailsModal({
                                 <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all px-6 py-4">
                                     <div className="md:flex justify-between items-center mb-3 space-y-3 md:space-y-0">
                                         <div className="order-last mb-auto mr-10">
-                                            <p className="text-xs text-slate-400">
-                                                Created on: {""}
-                                                {formatDate(data.createdAt)}
+                                            <p className="text-xs text-slate-400 flex gap-1">
+                                                <span>
+                                                    Created on: {""}
+                                                    {formatDate(data.createdAt)}
+                                                </span>
+                                                {formatDate(data.createdAt) ===
+                                                    formatDate(
+                                                        today.toISOString()
+                                                    ) && (
+                                                    <span>
+                                                        (
+                                                        {timeAgo(
+                                                            data.createdAt
+                                                        )}
+                                                        )
+                                                    </span>
+                                                )}
                                             </p>
                                             <p className="text-xs text-slate-400">
                                                 Last update: {""}
