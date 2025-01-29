@@ -49,6 +49,7 @@ export const authenticatedUserSchema = baseAuthSchema
     })
     .extend({
         _id: z.string(),
+        manager: z.optional(z.object({ name: z.string() })).or(z.string()),
     });
 
 export const tokenSchema = baseAuthSchema.pick({

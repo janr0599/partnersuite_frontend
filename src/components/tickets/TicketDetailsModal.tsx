@@ -132,15 +132,16 @@ export default function TicketDetailsModal({
                                                 {formatDate(data.createdAt) ===
                                                     formatDate(
                                                         today.toISOString()
-                                                    ) && (
-                                                    <span>
-                                                        (
-                                                        {timeAgo(
-                                                            data.createdAt
-                                                        )}
-                                                        )
-                                                    </span>
-                                                )}
+                                                    ) &&
+                                                    user.role === "manager" && (
+                                                        <span>
+                                                            (
+                                                            {timeAgo(
+                                                                data.createdAt
+                                                            )}
+                                                            )
+                                                        </span>
+                                                    )}
                                             </p>
                                             <p className="text-xs text-slate-400">
                                                 Last update: {""}

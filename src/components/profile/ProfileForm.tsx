@@ -99,15 +99,23 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                             id="file"
                             type="file"
                             className="absolute top-0 left-0 size-24 md:size-32 opacity-0 cursor-pointer rounded-full"
-                            accept=".jpg,.jpeg,.png" // Adjust allowed formats as needed
+                            accept=".jpg,.jpeg,.png" // allowed formats
                             onChange={handleChange}
                         />
                     </div>
                 </div>
 
+                {data.manager && (
+                    <p className="mt-10 font-bold">
+                        {" "}
+                        Manager: {/* @ts-ignore */}
+                        <span className="font-normal">{data.manager.name}</span>
+                    </p>
+                )}
+
                 <form
                     onSubmit={handleSubmit(handleEditProfile)}
-                    className="space-y-5 mt-5 md:mt-10 rounded-lg"
+                    className="space-y-5 mt-5 rounded-lg"
                     noValidate
                 >
                     <div className="mb-5 space-y-3">
